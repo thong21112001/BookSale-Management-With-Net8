@@ -3,7 +3,7 @@ using Microsoft.AspNetCore.Identity;
 using Microsoft.EntityFrameworkCore;
 
 var builder = WebApplication.CreateBuilder(args);
-
+var builderRazor = builder.Services.AddRazorPages();
 // Add services to the container.
 var connectionString = builder.Configuration.GetConnectionString("DefaultConnection") ?? throw new InvalidOperationException("Connection string 'DefaultConnection' not found.");
 builder.Services.AddDbContext<ApplicationDbContext>(options =>
@@ -20,6 +20,7 @@ var app = builder.Build();
 if (app.Environment.IsDevelopment())
 {
     app.UseMigrationsEndPoint();
+    builderRazor.AddRazorRuntimeCompilation();
 }
 else
 {
@@ -35,9 +36,22 @@ app.UseRouting();
 
 app.UseAuthorization();
 
+//C1: Config route url cho Area Admin or ....
+//app.MapControllerRoute(
+//    name: "default",
+//    pattern: "{area:exists}/{controller=Home}/{action=Index}/{id?}"); //domain(tên miền)/{Area}/Controller/Action/Id?
+
+//C2: Chỉ định URL khi đã có Area Admin hoặc ...
+app.MapAreaControllerRoute(
+    name: "AdminRouting",
+    areaName: "Admin",
+    pattern: "Admin/{controller=Home}/{action=Index}/{id?}"
+    );
+
 app.MapControllerRoute(
     name: "default",
-    pattern: "{controller=Home}/{action=Index}/{id?}");
+    pattern: "{controller=Home}/{action=Index}/{id?}"); //domain(tên miền)/Controller/Action/Id? Mặc định khi khởi chạy
+
 app.MapRazorPages();
 
 app.Run();
