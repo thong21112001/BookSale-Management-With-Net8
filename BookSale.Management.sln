@@ -3,7 +3,23 @@ Microsoft Visual Studio Solution File, Format Version 12.00
 # Visual Studio Version 17
 VisualStudioVersion = 17.8.34525.116
 MinimumVisualStudioVersion = 10.0.40219.1
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "BookSale.Management.UI", "BookSale.Management.UI\BookSale.Management.UI.csproj", "{A4626FD3-05BF-4275-BABD-A5A39628C04C}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "BookSale.Management.UI", "BookSale.Management.UI\BookSale.Management.UI.csproj", "{A4626FD3-05BF-4275-BABD-A5A39628C04C}"
+EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Presentation", "Presentation", "{604B6A25-E813-47B7-B14E-F3DBC364725F}"
+EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Core", "Core", "{C2BD3A9A-55ED-4EE0-91D0-F1A8F862900D}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "BookSale.Management.Domain", "BookSale.Management.Domain\BookSale.Management.Domain.csproj", "{3B31E1D9-C104-46ED-9A61-63EB2B8C5800}"
+EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Application", "Application", "{6EAC5917-C066-4579-9CA4-9F701FD8E3D0}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "BookSale.Management.Application", "BookSale.Management.Application\BookSale.Management.Application.csproj", "{5636E564-9473-4B7F-8E4A-250D06D66875}"
+EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Infrastructure", "Infrastructure", "{38373B49-3F21-427E-A9D5-74A37597D341}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "BookSale.Management.Infrastructure", "BookSale.Management.Infrastructure\BookSale.Management.Infrastructure.csproj", "{BB326BAC-3E82-4C7B-9BAE-5DD9C0FB1F29}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "BookSale.Management.DataAccess", "BookSale.Management.DataAccess\BookSale.Management.DataAccess.csproj", "{98943D52-100A-4B78-8DFF-A5049339B906}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -15,9 +31,32 @@ Global
 		{A4626FD3-05BF-4275-BABD-A5A39628C04C}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{A4626FD3-05BF-4275-BABD-A5A39628C04C}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{A4626FD3-05BF-4275-BABD-A5A39628C04C}.Release|Any CPU.Build.0 = Release|Any CPU
+		{3B31E1D9-C104-46ED-9A61-63EB2B8C5800}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{3B31E1D9-C104-46ED-9A61-63EB2B8C5800}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{3B31E1D9-C104-46ED-9A61-63EB2B8C5800}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{3B31E1D9-C104-46ED-9A61-63EB2B8C5800}.Release|Any CPU.Build.0 = Release|Any CPU
+		{5636E564-9473-4B7F-8E4A-250D06D66875}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{5636E564-9473-4B7F-8E4A-250D06D66875}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{5636E564-9473-4B7F-8E4A-250D06D66875}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{5636E564-9473-4B7F-8E4A-250D06D66875}.Release|Any CPU.Build.0 = Release|Any CPU
+		{BB326BAC-3E82-4C7B-9BAE-5DD9C0FB1F29}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{BB326BAC-3E82-4C7B-9BAE-5DD9C0FB1F29}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{BB326BAC-3E82-4C7B-9BAE-5DD9C0FB1F29}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{BB326BAC-3E82-4C7B-9BAE-5DD9C0FB1F29}.Release|Any CPU.Build.0 = Release|Any CPU
+		{98943D52-100A-4B78-8DFF-A5049339B906}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{98943D52-100A-4B78-8DFF-A5049339B906}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{98943D52-100A-4B78-8DFF-A5049339B906}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{98943D52-100A-4B78-8DFF-A5049339B906}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
+	EndGlobalSection
+	GlobalSection(NestedProjects) = preSolution
+		{A4626FD3-05BF-4275-BABD-A5A39628C04C} = {604B6A25-E813-47B7-B14E-F3DBC364725F}
+		{3B31E1D9-C104-46ED-9A61-63EB2B8C5800} = {C2BD3A9A-55ED-4EE0-91D0-F1A8F862900D}
+		{5636E564-9473-4B7F-8E4A-250D06D66875} = {6EAC5917-C066-4579-9CA4-9F701FD8E3D0}
+		{BB326BAC-3E82-4C7B-9BAE-5DD9C0FB1F29} = {38373B49-3F21-427E-A9D5-74A37597D341}
+		{98943D52-100A-4B78-8DFF-A5049339B906} = {38373B49-3F21-427E-A9D5-74A37597D341}
 	EndGlobalSection
 	GlobalSection(ExtensibilityGlobals) = postSolution
 		SolutionGuid = {5248303D-3C23-489B-A5C6-F32E76D0C83D}

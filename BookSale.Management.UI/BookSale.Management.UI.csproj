@@ -23,4 +23,8 @@
     <Folder Include="wwwroot\images\" />
   </ItemGroup>
 
+  <ItemGroup>
+    <ProjectReference Include="..\BookSale.Management.Infrastructure\BookSale.Management.Infrastructure.csproj" />
+  </ItemGroup>
+
 </Project>
