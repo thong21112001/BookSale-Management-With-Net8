@@ -1,17 +1,14 @@
-﻿using BookSale.Management.UI.Data;
-using Microsoft.AspNetCore.Identity;
-using Microsoft.EntityFrameworkCore;
+﻿using BookSale.Management.DataAccess.Configuration;
 
 var builder = WebApplication.CreateBuilder(args);
 var builderRazor = builder.Services.AddRazorPages();
 // Add services to the container.
-var connectionString = builder.Configuration.GetConnectionString("DefaultConnection") ?? throw new InvalidOperationException("Connection string 'DefaultConnection' not found.");
-builder.Services.AddDbContext<ApplicationDbContext>(options =>
-    options.UseSqlServer(connectionString));
+
+//sau khi chuyển DbContext, IdentityUser và Role qua Infrastructure ở folder Configuration vào một chỗ thì qua lại đây để gọi
+builder.Services.RegisterDb(builder.Configuration);
+
 builder.Services.AddDatabaseDeveloperPageExceptionFilter();
 
-builder.Services.AddDefaultIdentity<IdentityUser>(options => options.SignIn.RequireConfirmedAccount = true)
-    .AddEntityFrameworkStores<ApplicationDbContext>();
 builder.Services.AddControllersWithViews();
 
 var app = builder.Build();
