@@ -1,4 +1,5 @@
 ﻿using BookSale.Management.DataAccess.DataAccess;
+using BookSale.Management.Domain.Entities;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Configuration;
@@ -17,7 +18,7 @@ namespace BookSale.Management.DataAccess.Configuration
             services.AddDbContext<BookSaleDbContext>(options => options.UseSqlServer(connectionString));
 
             //Đăng ký IdentityUser và Role
-            services.AddIdentity<IdentityUser, IdentityRole>(options => options.SignIn.RequireConfirmedAccount = true)
+            services.AddIdentity<ApplicationUser, IdentityRole>(options => options.SignIn.RequireConfirmedAccount = true)
                             .AddEntityFrameworkStores<BookSaleDbContext>();
         }
     }

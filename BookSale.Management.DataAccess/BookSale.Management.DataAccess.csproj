@@ -12,4 +12,8 @@
     <PackageReference Include="Microsoft.EntityFrameworkCore.SqlServer" Version="8.0.2" />
   </ItemGroup>
 
+  <ItemGroup>
+    <ProjectReference Include="..\BookSale.Management.Domain\BookSale.Management.Domain.csproj" />
+  </ItemGroup>
+
 </Project>
