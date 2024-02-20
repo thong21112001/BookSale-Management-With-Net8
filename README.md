@@ -7,6 +7,7 @@ Triển khai kiến trúc của dự án sử dụng Onion Architechture:
 
 ## LIÊN KẾT GIỮA CÁC TẦNG TRONG DỰ ÁN
 
-- Presentation(UI) liên kết với Infrastructure(Có 2 project là DataAcess và Infrastructure).
-- Infrastructure(project Infrastructure) liên kết với Application và Infrastructure(project DataAcess).
+- Presentation(UI) liên kết với Infrastructure(Có 2 project là DataAccess và Infrastructure).
+- Infrastructure(project Infrastructure) liên kết với Application và Infrastructure(project DataAccess).
+- Infrastructure(project DataAccess) liên kết đến Domain(Core).
 - Application liên kết đến Domain(Core).
