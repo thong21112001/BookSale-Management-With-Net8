@@ -14,5 +14,30 @@ namespace BookSale.Management.DataAccess.DataAccess
         {
 
         }
+
+        public DbSet<Book> Book { get; set; }
+        public DbSet<BookCatalogue> BookCatalogue { get; set; }
+        public DbSet<Genre> Genre { get; set; }
+        public DbSet<Catalogue> Catalogue { get; set; }
+        public DbSet<UserAddress> UserAddresse { get; set; }
+        public DbSet<Cart> Cart { get; set; }
+        public DbSet<CartDetail> CartDetails  { get; set; }
+
+        //Phương thức gọi sau khi đăng ký DbContext
+        protected override void OnModelCreating(ModelBuilder builder)
+        {
+            base.OnModelCreating(builder);
+
+            //Mặc định khi tạo Migration là AspNetUser+..
+            //Thay đổi bằng cách tự định nghĩa tên
+            //AspNetUserToken->UserToken
+            builder.Entity<ApplicationUser>().ToTable("Users");
+            builder.Entity<IdentityRole>().ToTable("Roles");
+            builder.Entity<IdentityUserRole<string>>().ToTable("UserRole");
+            builder.Entity<IdentityUserClaim<string>>().ToTable("UserClaim");
+            builder.Entity<IdentityUserToken<string>>().ToTable("UserToken");   
+            builder.Entity<IdentityUserLogin<string>>().ToTable("UserLogin");   
+            builder.Entity<IdentityRoleClaim<string>>().ToTable("RoleClaim");   
+        }
     }
 }

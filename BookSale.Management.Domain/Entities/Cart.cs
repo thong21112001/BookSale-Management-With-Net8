@@ -22,7 +22,7 @@ namespace BookSale.Management.Domain.Entities
         public bool IsActive { get; set; }
 
         [Required]
-        public int UserId { get; set; }
+        public string? UserId { get; set; }
 
         [ForeignKey(nameof(UserId))]
         public ApplicationUser ApplicationUser { get; set; }
