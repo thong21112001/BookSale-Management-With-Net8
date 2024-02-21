@@ -18,8 +18,11 @@ namespace BookSale.Management.DataAccess.Configuration
             services.AddDbContext<BookSaleDbContext>(options => options.UseSqlServer(connectionString));
 
             //Đăng ký IdentityUser và Role
-            services.AddIdentity<ApplicationUser, IdentityRole>(options => options.SignIn.RequireConfirmedAccount = true)
+            services.AddIdentity<ApplicationUser, IdentityRole>()
                             .AddEntityFrameworkStores<BookSaleDbContext>();
+
+            // Đăng ký UserManager
+            services.AddScoped<UserManager<ApplicationUser>>();
         }
     }
 }

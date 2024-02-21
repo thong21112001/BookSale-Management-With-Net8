@@ -1,4 +1,5 @@
-﻿using BookSale.Management.DataAccess.Configuration;
+﻿using BookSale.Management.DataAccess;
+using BookSale.Management.DataAccess.Configuration;
 
 var builder = WebApplication.CreateBuilder(args);
 var builderRazor = builder.Services.AddRazorPages();
@@ -12,6 +13,11 @@ builder.Services.AddDatabaseDeveloperPageExceptionFilter();
 builder.Services.AddControllersWithViews();
 
 var app = builder.Build();
+
+//Chạy qua đây check xem database có hay chưa, sẽ tạo mới
+await app.AutoMigration();
+
+await app.SeedData(builder.Configuration);
 
 // Configure the HTTP request pipeline.
 if (app.Environment.IsDevelopment())

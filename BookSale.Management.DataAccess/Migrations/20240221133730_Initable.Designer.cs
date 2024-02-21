@@ -12,8 +12,8 @@ using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 namespace BookSale.Management.DataAccess.Migrations
 {
     [DbContext(typeof(BookSaleDbContext))]
-    [Migration("20240220223440_Initiable")]
-    partial class Initiable
+    [Migration("20240221133730_Initable")]
+    partial class Initable
     {
         /// <inheritdoc />
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
@@ -34,7 +34,6 @@ namespace BookSale.Management.DataAccess.Migrations
                         .HasColumnType("int");
 
                     b.Property<string>("Address")
-                        .IsRequired()
                         .HasMaxLength(1000)
                         .HasColumnType("nvarchar(1000)");
 
@@ -50,7 +49,6 @@ namespace BookSale.Management.DataAccess.Migrations
                         .HasColumnType("bit");
 
                     b.Property<string>("Fullname")
-                        .IsRequired()
                         .HasMaxLength(250)
                         .HasColumnType("nvarchar(250)");
 

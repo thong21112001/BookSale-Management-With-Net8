@@ -31,7 +31,6 @@ namespace BookSale.Management.DataAccess.Migrations
                         .HasColumnType("int");
 
                     b.Property<string>("Address")
-                        .IsRequired()
                         .HasMaxLength(1000)
                         .HasColumnType("nvarchar(1000)");
 
@@ -47,7 +46,6 @@ namespace BookSale.Management.DataAccess.Migrations
                         .HasColumnType("bit");
 
                     b.Property<string>("Fullname")
-                        .IsRequired()
                         .HasMaxLength(250)
                         .HasColumnType("nvarchar(250)");
 
