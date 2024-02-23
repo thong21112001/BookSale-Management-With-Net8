@@ -6,7 +6,7 @@ Triển khai kiến trúc của dự án sử dụng Onion Architechture:
 
 ## LINK DOWLOAD TEMPLATE ADMIN
 
-* 🖥️  Template Admin: [CORONA]([https://www.facebook.com/quangthong211101](https://themewagon.com/themes/corona-free-responsive-bootstrap-4-admin-dashboard-template/)https://themewagon.com/themes/corona-free-responsive-bootstrap-4-admin-dashboard-template/)
+* 🖥️  Template Admin: [CORONA](https://themewagon.com/themes/corona-free-responsive-bootstrap-4-admin-dashboard-template/)
 
 ## Liên hệ
 * 🖥️  Facebook [Trần Quang Thông](https://www.facebook.com/quangthong211101)
