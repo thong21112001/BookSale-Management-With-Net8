@@ -47,7 +47,7 @@ namespace BookSale.Management.DataAccess.Repository
         public async Task Create(T entity)
         {
             //Chưa thực sự lưu vào Db với AddAsync
-            await _context.Set<T>().AddAsync(entity);
+            await _context.Set<T>().AddAsync(entity).ConfigureAwait(false);
         }
 
         //Update 1 dữ liệu đc truyền vào

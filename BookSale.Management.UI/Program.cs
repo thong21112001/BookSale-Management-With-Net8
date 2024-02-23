@@ -7,6 +7,7 @@ var builderRazor = builder.Services.AddRazorPages();
 
 //sau khi chuyển DbContext, IdentityUser và Role qua Infrastructure ở folder Configuration vào một chỗ thì qua lại đây để gọi
 builder.Services.RegisterDb(builder.Configuration);
+builder.Services.AddDependencyInjection();
 
 builder.Services.AddDatabaseDeveloperPageExceptionFilter();
 

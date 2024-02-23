@@ -1,4 +1,7 @@
-﻿using BookSale.Management.DataAccess.DataAccess;
+﻿using BookSale.Management.Application;
+using BookSale.Management.DataAccess.DataAccess;
+using BookSale.Management.DataAccess.Repository;
+using BookSale.Management.Domain.Abstracts;
 using BookSale.Management.Domain.Entities;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.EntityFrameworkCore;
@@ -23,6 +26,13 @@ namespace BookSale.Management.Infrastructure.Configuration
 
             // Đăng ký UserManager
             services.AddScoped<UserManager<ApplicationUser>>();
+        }
+
+        public static void AddDependencyInjection(this IServiceCollection services)
+        {
+            services.AddTransient<PasswordHasher<ApplicationUser>>();
+            services.AddTransient<IUnitOfWork, UnitOfWork>();
+            services.AddTransient<IGenreService,GenreService>();
         }
     }
 }
