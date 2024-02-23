@@ -1,5 +1,5 @@
 ﻿using BookSale.Management.DataAccess;
-using BookSale.Management.DataAccess.Configuration;
+using BookSale.Management.Infrastructure.Configuration;
 
 var builder = WebApplication.CreateBuilder(args);
 var builderRazor = builder.Services.AddRazorPages();

@@ -5,7 +5,7 @@ using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 
-namespace BookSale.Management.DataAccess.Configuration
+namespace BookSale.Management.Infrastructure.Configuration
 {
     public static class ConfigurationDbAccess
     {
