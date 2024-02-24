@@ -20,8 +20,15 @@ namespace BookSale.Management.UI.Areas.Admin.Controllers
         }
 
         [HttpPost]
+        [ValidateAntiForgeryToken] //Thêm cái này ngoài form Login asp-antiforgery="true"
         public IActionResult Login(LoginModel loginModel)
         {
+            //Coi thử có thoả điều kiện trong LoginModel không, nếu không trả về false
+            if (ModelState.IsValid)
+            {
+
+            }
+
             return View();
         }
     }

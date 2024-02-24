@@ -33,15 +33,19 @@
                     <div class="card col-lg-4 mx-auto">
                         <div class="card-body px-5 py-5">
                             <h2 class="card-title text-left mb-3">Login</h2>
-                            <form method="post" asp-area="Admin" asp-controller="Authentication" asp-action="Login">
+                            <form method="post" asp-area="Admin" asp-controller="Authentication" asp-action="Login" asp-antiforgery="true">
                                 <div class="form-group">
                                     <label>Username or email *</label>
                                     <input type="text" class="form-control p_input" asp-for="Username">
                                 </div>
+                                <span class="text-danger" asp-validation-for="Username"></span>
+
                                 <div class="form-group">
                                     <label>Password *</label>
                                     <input type="password" class="form-control p_input" asp-for="Password">
                                 </div>
+                                <span class="text-danger" asp-validation-for="Password"></span>
+
                                 <div class="form-group d-flex align-items-center justify-content-between">
                                     <div class="form-check">
                                         <label class="form-check-label">
@@ -82,6 +86,8 @@
     <script src="~/Admin/assets/js/misc.js"></script>
     <script src="~/Admin/assets/js/settings.js"></script>
     <script src="~/Admin/assets/js/todolist.js"></script>
+    <script src="~/lib/jquery-validation/dist/jquery.validate.min.js"></script>
+    <script src="~/lib/jquery-validation-unobtrusive/jquery.validate.unobtrusive.min.js"></script>
     <!-- endinject -->
 </body>
 </html>
