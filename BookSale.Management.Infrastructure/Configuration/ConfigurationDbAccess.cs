@@ -1,4 +1,6 @@
 ﻿using BookSale.Management.Application;
+using BookSale.Management.Application.Abstracts;
+using BookSale.Management.Application.Services;
 using BookSale.Management.DataAccess.DataAccess;
 using BookSale.Management.DataAccess.Repository;
 using BookSale.Management.Domain.Abstracts;
@@ -22,17 +24,27 @@ namespace BookSale.Management.Infrastructure.Configuration
 
             //Đăng ký IdentityUser và Role
             services.AddIdentity<ApplicationUser, IdentityRole>()
-                            .AddEntityFrameworkStores<BookSaleDbContext>();
+                            .AddEntityFrameworkStores<BookSaleDbContext>()
+                            .AddDefaultTokenProviders();
 
             // Đăng ký UserManager
             services.AddScoped<UserManager<ApplicationUser>>();
+
+            //Đăng ký cookies
+            services.ConfigureApplicationCookie(options =>
+            {
+                options.Cookie.Name = "BookSaleManagementCookie";
+                options.ExpireTimeSpan = TimeSpan.FromHours(8);
+                //Nếu chưa chứng thực người dùng thì sẽ bị đá ra ngoài login
+                options.LoginPath = "/admin/authentication/login";  //Thêm [Authorize] ở trong các Controller Admin
+            });
         }
 
         public static void AddDependencyInjection(this IServiceCollection services)
         {
             services.AddTransient<PasswordHasher<ApplicationUser>>();
             services.AddTransient<IUnitOfWork, UnitOfWork>();
-            services.AddTransient<IGenreService,GenreService>();
+            services.AddTransient<IUserService,UserService>();
         }
     }
 }

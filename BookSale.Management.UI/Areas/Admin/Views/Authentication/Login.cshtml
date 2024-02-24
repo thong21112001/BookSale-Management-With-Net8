@@ -33,6 +33,11 @@
                     <div class="card col-lg-4 mx-auto">
                         <div class="card-body px-5 py-5">
                             <h2 class="card-title text-left mb-3">Login</h2>
+
+                            <span class="text-danger">@Html.Raw(ViewBag.Error)</span>
+
+                            @* Sử dụng tài khoản có sẵn trong appsettings.json để login *@
+
                             <form method="post" asp-area="Admin" asp-controller="Authentication" asp-action="Login" asp-antiforgery="true">
                                 <div class="form-group">
                                     <label>Username or email *</label>

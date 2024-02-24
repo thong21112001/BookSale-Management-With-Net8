@@ -1,6 +1,7 @@
-﻿using BookSale.Management.Domain.Abstracts;
+﻿using BookSale.Management.Application.Abstracts;
+using BookSale.Management.Domain.Abstracts;
 
-namespace BookSale.Management.Application
+namespace BookSale.Management.Application.Services
 {
     public class GenreService : IGenreService
     {
