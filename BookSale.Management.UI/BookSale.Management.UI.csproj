@@ -8,13 +8,9 @@
   </PropertyGroup>
 
   <ItemGroup>
-    <Compile Remove="Areas\Admin\Models\**" />
     <Compile Remove="wwwroot\images\**" />
-    <Content Remove="Areas\Admin\Models\**" />
     <Content Remove="wwwroot\images\**" />
-    <EmbeddedResource Remove="Areas\Admin\Models\**" />
     <EmbeddedResource Remove="wwwroot\images\**" />
-    <None Remove="Areas\Admin\Models\**" />
     <None Remove="wwwroot\images\**" />
   </ItemGroup>
 
