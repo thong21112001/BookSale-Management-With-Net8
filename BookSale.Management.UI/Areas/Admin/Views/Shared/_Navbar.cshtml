@@ -27,12 +27,11 @@
                     <div class="navbar-profile">
                         <img class="img-xs rounded-circle" src="~/Admin/assets/images/faces/face15.jpg" alt="">
                         <p class="mb-0 d-none d-sm-block navbar-profile-name">@User.Identity?.Name</p>
-                        <p class="mb-0 d-none d-sm-block navbar-profile-name">@User.FindFirst(ClaimTypes.Email)?.ValueType</p>
                         <i class="mdi mdi-menu-down d-none d-sm-block"></i>
                     </div>
                 </a>
                 <div class="dropdown-menu dropdown-menu-right navbar-dropdown preview-list" aria-labelledby="profileDropdown">
-                    <h6 class="p-3 mb-0">Profile</h6>
+                    <h6 class="p-3 mb-0">@User.FindFirst(ClaimTypes.Email)?.Value</h6>
                     <div class="dropdown-divider"></div>
                     <a class="dropdown-item preview-item" asp-area="Admin" asp-controller="Authentication" asp-action="Logout">
                         <div class="preview-thumbnail">
