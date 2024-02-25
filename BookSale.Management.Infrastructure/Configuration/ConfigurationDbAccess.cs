@@ -34,9 +34,18 @@ namespace BookSale.Management.Infrastructure.Configuration
             services.ConfigureApplicationCookie(options =>
             {
                 options.Cookie.Name = "BookSaleManagementCookie";
-                options.ExpireTimeSpan = TimeSpan.FromHours(8);
+                options.ExpireTimeSpan = TimeSpan.FromHours(2);
                 //Nếu chưa chứng thực người dùng thì sẽ bị đá ra ngoài login
                 options.LoginPath = "/admin/authentication/login";  //Thêm [Authorize] ở trong các Controller Admin
+                options.SlidingExpiration = true; //Nếu còn ở hệ thống sẽ gia hạn thêm cookies
+            });
+
+            //Đăng ký khi sử dụng khoá tài khoản
+            services.Configure<IdentityOptions>(options =>
+            {
+                options.Lockout.AllowedForNewUsers = true;
+                options.Lockout.DefaultLockoutTimeSpan = TimeSpan.FromMinutes(1);
+                options.Lockout.MaxFailedAccessAttempts = 3;    //Bao nhiêu lần đc login false
             });
         }
 

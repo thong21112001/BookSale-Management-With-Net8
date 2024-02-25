@@ -32,28 +32,25 @@ namespace BookSale.Management.UI.Areas.Admin.Controllers
         public async Task<IActionResult> Login(LoginModel loginModel)
         {
             //Coi thử có thoả điều kiện trong LoginModel không, nếu không trả về false
-            if (ModelState.IsValid)
-            {
-               bool result = await _userService.CheckLogin(loginModel.Username,loginModel.Password);
-
-                if (!result) //false
-                {
-                    ViewBag.Error = "Username hoặc Password không đúng :<";
-                }
-                else
-                {
-                    return RedirectToAction("Index", "Home");
-                }
-            }
-            else
+            if (!ModelState.IsValid)
             {
                 //Lấy tất cả lỗi ở trong ModelState trả về dưới dạng ToList
-                var errors = ModelState.Values.SelectMany(x=>x.Errors).Select(x=>x.ErrorMessage).ToList();
 
-                ViewBag.Error = string.Join("<br/>", errors);
+                var errors = ModelState.Values.SelectMany(x => x.Errors).Select(x => x.ErrorMessage).ToList();
+
+                TempData["Errors"] = string.Join("<br/>", errors);
+
+                return View();
             }
 
-            return View();
+            var result = await _userService.CheckLogin(loginModel.Username, loginModel.Password, loginModel.HasRememberMe);
+
+            if (result.Status) //true
+                return RedirectToAction("Index", "Home");
+
+            TempData["Errors"] = result.Message;
+
+            return View(loginModel);
         }
 
         public async Task<IActionResult> Logout()

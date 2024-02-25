@@ -34,7 +34,7 @@
                         <div class="card-body px-5 py-5">
                             <h2 class="card-title text-left mb-3">Login</h2>
 
-                            <span class="text-danger">@Html.Raw(ViewBag.Error)</span>
+                            <span class="text-danger">@Html.Raw(TempData["Errors"])</span>
 
                             @* Sử dụng tài khoản có sẵn trong appsettings.json để login *@
 
