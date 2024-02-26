@@ -1,0 +1,65 @@
+﻿
+@{
+    ViewData["Title"] = "Account List";
+    Layout = "~/Areas/Admin/Views/Shared/_Layout.cshtml";
+}
+
+<h1>Account List</h1>
+
+<table id="tbl-account" class="display" style="width:100%">
+    <thead>
+        <tr>
+            <th>ID</th>
+            <th>UserName</th>
+            <th>FullName</th>
+            <th>Email</th>
+            <th>Phone</th>
+            <th>IsActive</th>
+        </tr>
+    </thead>
+    <tbody>
+        <tr>
+            <td>Tiger Nixon</td>
+            <td>System Architect</td>
+            <td>Edinburgh</td>
+            <td>61</td>
+            <td>2011-04-25</td>
+            <td>$320,800</td>
+        </tr>
+        <tr>
+            <td>Tiger Nixon</td>
+            <td>System Architect</td>
+            <td>Edinburgh</td>
+            <td>61</td>
+            <td>2011-04-25</td>
+            <td>$320,800</td>
+        </tr>
+        <tr>
+            <td>Tiger Nixon</td>
+            <td>System Architect</td>
+            <td>Edinburgh</td>
+            <td>61</td>
+            <td>2011-04-25</td>
+            <td>$320,800</td>
+        </tr>
+    </tbody>
+</table>
+
+@section Scripts{
+    <script src="~/admin/settingsjs/registerdatatable.js"></script>
+    <script>
+        const elementName = "#tbl-account";
+        const columns = [
+            {data:'id',name:'id',width:'100'},
+            { data: 'username', name: 'username', autoWidth: true },
+            { data: 'fullname', name: 'fullname', autoWidth: true },
+            { data: 'email', name: 'email', autoWidth: true },
+            { data: 'phone', name: 'phone', autoWidth: true },
+            { data: 'isActive', name: 'isActive', autoWidth: true }
+        ];
+        const urlApi = "/admin/account/getaccountpagination";
+
+        registerDatatable(elementName, columns, urlApi)
+
+    </script>
+}
