@@ -31,13 +31,14 @@ namespace BookSale.Management.UI.Areas.Admin.Controllers
         [HttpGet]
         public IActionResult SaveData(string id)
         {
-
-            return View();
+            var accountDTO = new CreateAccountDTO();
+            return View(accountDTO);
         }
 
         [HttpPost]
-        public IActionResult SaveData()
+        public IActionResult SaveData(CreateAccountDTO accountDTO)
         {
+            var md = accountDTO;
 
             return View();
         }
