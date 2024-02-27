@@ -27,5 +27,19 @@ namespace BookSale.Management.UI.Areas.Admin.Controllers
             var data = await _userService.GetAllUser(requestDataTable);
             return Json(data);
         }
+
+        [HttpGet]
+        public IActionResult SaveData(string id)
+        {
+
+            return View();
+        }
+
+        [HttpPost]
+        public IActionResult SaveData()
+        {
+
+            return View();
+        }
     }
 }

@@ -7,13 +7,16 @@
 <div class="col-lg-12 grid-margin stretch-card">
     <div class="card">
         <div class="card-body">
-            <h4 class="card-title">Account List</h4>
+            <div class="row d-flex align-items-center">
+                <h4 class="text-center">Account List</h4>
+                @Html.ActionLink("Add", "savedata", "Account", null, new { @class = "btn btn-primary ml-1" })
+            </div>
 
             <div class="table-responsive">
                 <table id="tbl-account" class="display table table-striped" style="width:100%">
                     <thead>
                         <tr>
-                            <th>ID</th>
+                            <th>Action</th>
                             <th>UserName</th>
                             <th>FullName</th>
                             <th>Email</th>
