@@ -2,6 +2,7 @@
 using BookSale.Management.Application.DTOs;
 using BookSale.Management.Domain.Entities;
 using Microsoft.AspNetCore.Identity;
+using Microsoft.EntityFrameworkCore;
 
 namespace BookSale.Management.Application.Services
 {
@@ -14,6 +15,42 @@ namespace BookSale.Management.Application.Services
         {
             _userManager = userManager;
             _signInManager = signInManager;
+        }
+
+        public async Task<ResponseDataTable<UserModel>> GetAllUser(RequestDataTable request)
+        {
+            var users = await _userManager.Users
+                                    .Where
+                                    (
+                                        x=> string.IsNullOrEmpty(request.keyword)
+                                        || (x.UserName.Contains(request.keyword))
+                                        || (x.Fullname.Contains(request.keyword))
+                                        || (x.Email.Contains(request.keyword))
+                                        || (x.PhoneNumber.Contains(request.keyword))
+                                    )
+                                    .Select
+                                    (x => new UserModel{
+                                        Email = x.Email,
+                                        Fullname = x.Fullname,
+                                        Username = x.UserName,
+                                        Phone = x.PhoneNumber,
+                                        Id = x.Id,
+                                        IsActive = x.IsActive ? "Yes" : "No"
+                                    })
+                                    .ToListAsync();
+
+            //Pagination
+            int totalRecords =users.Count();
+
+            var result = users.Skip(request.SkipItems).Take(request.PageSize).ToList();
+
+            return new ResponseDataTable<UserModel>
+            {
+                Draw = request.Draw,
+                RecordsTotal = totalRecords,
+                RecordsFiltered = totalRecords,
+                Data = result
+            };
         }
 
         public async Task<ResponseModel> CheckLogin(string username, string password, bool hasRememberMe)

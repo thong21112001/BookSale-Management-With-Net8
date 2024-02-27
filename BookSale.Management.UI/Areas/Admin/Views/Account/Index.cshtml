@@ -4,53 +4,43 @@
     Layout = "~/Areas/Admin/Views/Shared/_Layout.cshtml";
 }
 
-<h1>Account List</h1>
+<div class="col-lg-12 grid-margin stretch-card">
+    <div class="card">
+        <div class="card-body">
+            <h4 class="card-title">Account List</h4>
 
-<table id="tbl-account" class="display" style="width:100%">
-    <thead>
-        <tr>
-            <th>ID</th>
-            <th>UserName</th>
-            <th>FullName</th>
-            <th>Email</th>
-            <th>Phone</th>
-            <th>IsActive</th>
-        </tr>
-    </thead>
-    <tbody>
-        <tr>
-            <td>Tiger Nixon</td>
-            <td>System Architect</td>
-            <td>Edinburgh</td>
-            <td>61</td>
-            <td>2011-04-25</td>
-            <td>$320,800</td>
-        </tr>
-        <tr>
-            <td>Tiger Nixon</td>
-            <td>System Architect</td>
-            <td>Edinburgh</td>
-            <td>61</td>
-            <td>2011-04-25</td>
-            <td>$320,800</td>
-        </tr>
-        <tr>
-            <td>Tiger Nixon</td>
-            <td>System Architect</td>
-            <td>Edinburgh</td>
-            <td>61</td>
-            <td>2011-04-25</td>
-            <td>$320,800</td>
-        </tr>
-    </tbody>
-</table>
+            <div class="table-responsive">
+                <table id="tbl-account" class="display table table-striped" style="width:100%">
+                    <thead>
+                        <tr>
+                            <th>ID</th>
+                            <th>UserName</th>
+                            <th>FullName</th>
+                            <th>Email</th>
+                            <th>Phone</th>
+                            <th>IsActive</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                    </tbody>
+                </table>
+            </div>
+        </div>
+    </div>
+</div>
+
 
 @section Scripts{
     <script src="~/admin/settingsjs/registerdatatable.js"></script>
     <script>
         const elementName = "#tbl-account";
         const columns = [
-            {data:'id',name:'id',width:'100'},
+            { data: 'id', name: 'id', width: '100', render: function (key) {
+                    return `<a href="/admin/account/savedata?id=${key}"><i class="mdi mdi-grease-pencil"></i></a>
+                            &nbsp
+                            <a href="#"><i class="mdi mdi-delete"></i></a>`
+                }
+            },
             { data: 'username', name: 'username', autoWidth: true },
             { data: 'fullname', name: 'fullname', autoWidth: true },
             { data: 'email', name: 'email', autoWidth: true },

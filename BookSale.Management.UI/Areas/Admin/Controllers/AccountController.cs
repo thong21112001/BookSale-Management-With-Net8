@@ -1,4 +1,5 @@
-﻿using BookSale.Management.Application.DTOs;
+﻿using BookSale.Management.Application.Abstracts;
+using BookSale.Management.Application.DTOs;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 
@@ -8,16 +9,23 @@ namespace BookSale.Management.UI.Areas.Admin.Controllers
     [Authorize]
     public class AccountController : Controller
     {
+        private readonly IUserService _userService;
+
+        public AccountController(IUserService userService)
+        {
+            _userService = userService;
+        }
+
         public IActionResult Index()
         {
             return View();
         }
 
         [HttpPost]
-        public IActionResult GetAccountPagination(RequestDataTable requestDataTable)
+        public async Task<IActionResult> GetAccountPagination(RequestDataTable requestDataTable)
         {
-
-            return Json(1);
+            var data = await _userService.GetAllUser(requestDataTable);
+            return Json(data);
         }
     }
 }

@@ -5,6 +5,7 @@ namespace BookSale.Management.Application.Abstracts
     public interface IUserService
     {
         Task<ResponseModel> CheckLogin(string username, string password, bool hasRememberMe);
+        Task<ResponseDataTable<UserModel>> GetAllUser(RequestDataTable request);
         Task SignOut();
     }
 }
