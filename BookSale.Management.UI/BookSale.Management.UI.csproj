@@ -730,4 +730,8 @@
     <None Include="wwwroot\Admin\assets\vendors\typeahead.js\typeahead.bundle.min.js" />
   </ItemGroup>
 
+  <ItemGroup>
+    <Folder Include="wwwroot\images\users\" />
+  </ItemGroup>
+
 </Project>

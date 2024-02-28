@@ -2,6 +2,7 @@
 using BookSale.Management.Application.Abstracts;
 using BookSale.Management.Application.DTOs;
 using BookSale.Management.Domain.Entities;
+using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.EntityFrameworkCore;
 using System.Net;
@@ -12,11 +13,13 @@ namespace BookSale.Management.Application.Services
     {
         private readonly UserManager<ApplicationUser> _userManager;
         private readonly IMapper _mapper;
+        private readonly IImageService _imageService;
 
-        public UserService(UserManager<ApplicationUser> userManager, IMapper mapper)
+        public UserService(UserManager<ApplicationUser> userManager, IMapper mapper, IImageService imageService)
         {
             _userManager = userManager;
             _mapper = mapper;
+            _imageService = imageService;
         }
 
         public async Task<ResponseDataTable<UserModel>> GetAllUser(RequestDataTable request)
@@ -91,6 +94,8 @@ namespace BookSale.Management.Application.Services
                 {
                     await _userManager.AddToRoleAsync(applicationUser, request.RoleName);
 
+                    await _imageService.SaveImage(new List<IFormFile> { request.Avatar }, "images/users", $"{applicationUser.Id}.png");
+
                     return new ResponseModel
                     {
                         Action = Domain.Enums.ActionType.Insert,
@@ -115,6 +120,8 @@ namespace BookSale.Management.Application.Services
 
                 if (identityUser.Succeeded)
                 {
+                    await _imageService.SaveImage(new List<IFormFile> { request.Avatar }, "images/users", $"{userUpdate.Id}.png");
+
                     var hasRole = await _userManager.IsInRoleAsync(userUpdate, request.RoleName);
 
                     if (!hasRole)
