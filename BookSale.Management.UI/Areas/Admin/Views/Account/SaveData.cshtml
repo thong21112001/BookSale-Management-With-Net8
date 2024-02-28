@@ -5,21 +5,19 @@
     Layout = "~/Areas/Admin/Views/Shared/_Layout.cshtml";
 }
 
-<h1>@(string.IsNullOrEmpty(Model.Id) ? "Create" : "Update") Data</h1>
+<h1>@(string.IsNullOrEmpty(ViewBag.IdUser?.ToString()) ? "Create" : "Update") Data</h1>
 
 <form class="forms-sample" asp-area="admin" asp-controller="account" asp-action="savedata" 
         method="post" enctype="multipart/form-data" asp-antiforgery="true">
+    @Html.Raw("<div asp-validation-summary='All' class='text-danger'></div>")
     <input asp-for="Id" hidden />
 
     <div class="row">
         <div class="col-12">
             <div class="form-group">
                 <label for="Username">Role <span class="text-danger">*</span></label>
-                <select class="form-control p-input">
-                    <option>Please select</option>
-                    <option>Super admin</option>
-                    <option>Administrator</option>
-                </select>
+                @Html.DropDownListFor(x => x.RoleName, (IEnumerable<SelectListItem>) ViewBag.Roles,
+                                        "Please select", new { @class = "form-control" })
                 <span class="text-danger" asp-validation-for="RoleName"></span>
             </div>
         </div>

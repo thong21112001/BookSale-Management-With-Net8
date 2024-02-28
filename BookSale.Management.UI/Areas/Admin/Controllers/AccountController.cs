@@ -2,7 +2,6 @@
 using BookSale.Management.Application.DTOs;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
-using Microsoft.AspNetCore.Mvc.ModelBinding;
 
 namespace BookSale.Management.UI.Areas.Admin.Controllers
 {
@@ -11,10 +10,12 @@ namespace BookSale.Management.UI.Areas.Admin.Controllers
     public class AccountController : Controller
     {
         private readonly IUserService _userService;
+        private readonly IRoleService _roleService;
 
-        public AccountController(IUserService userService)
+        public AccountController(IUserService userService, IRoleService roleService)
         {
             _userService = userService;
+            _roleService = roleService;
         }
 
         public IActionResult Index()
@@ -30,28 +31,43 @@ namespace BookSale.Management.UI.Areas.Admin.Controllers
         }
 
         [HttpGet]
-        public IActionResult SaveData(string id)
+        public async Task<IActionResult> SaveData(string? id)
         {
             var accountDTO = new CreateAccountDTO();
+
+            var roles = await _roleService.GetRoleForDropDownList();
+            ViewBag.Roles = roles;
+            ViewBag.IdUser = id;
+
             if (string.IsNullOrEmpty(id))
             {
                 
                 return View(accountDTO);
             }
-
-            return View(accountDTO);
+            return View();
         }
 
         [HttpPost]
         [ValidateAntiForgeryToken] //Thêm cái này ngoài form SaveData asp-antiforgery="true"
-        public IActionResult SaveData(CreateAccountDTO accountDTO)
+        public async Task<IActionResult> SaveData(CreateAccountDTO accountDTO)
         {
-            if (!ModelState.IsValid)
+            if (ModelState.IsValid)
             {
-                return View();
-            }
+                var result = await _userService.Save(accountDTO);
 
-            var md = accountDTO;
+                if (result.Status)
+                {
+                    return RedirectToAction("", "Account");
+                }
+                else
+                {
+                    ModelState.AddModelError("", result.Message);
+                }
+            }
+            else
+            {
+                ModelState.AddModelError("", "");
+            }
 
             return View();
         }

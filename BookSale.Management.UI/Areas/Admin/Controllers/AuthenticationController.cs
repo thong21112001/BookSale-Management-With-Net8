@@ -8,11 +8,11 @@ namespace BookSale.Management.UI.Areas.Admin.Controllers
     [Area("Admin")]
     public class AuthenticationController : Controller
     {
-        private readonly IUserService _userService;
+        private readonly IAuthenticationService _authenticationService;
 
-        public AuthenticationController(IUserService userService)
+        public AuthenticationController(IAuthenticationService authenticationService)
         {
-            _userService = userService;
+            _authenticationService = authenticationService;
         }
 
         public IActionResult Index()
@@ -43,7 +43,7 @@ namespace BookSale.Management.UI.Areas.Admin.Controllers
                 return View();
             }
 
-            var result = await _userService.CheckLogin(loginModel.Username, loginModel.Password, loginModel.HasRememberMe);
+            var result = await _authenticationService.CheckLogin(loginModel.Username, loginModel.Password, loginModel.HasRememberMe);
 
             if (result.Status) //true
                 return RedirectToAction("Index", "Home");
@@ -55,7 +55,7 @@ namespace BookSale.Management.UI.Areas.Admin.Controllers
 
         public async Task<IActionResult> Logout()
         {
-            await _userService.SignOut();
+            await _authenticationService.SignOut();
 
             return RedirectToAction("Login", "Authentication");
         }

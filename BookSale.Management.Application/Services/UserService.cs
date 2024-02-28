@@ -9,12 +9,10 @@ namespace BookSale.Management.Application.Services
     public class UserService : IUserService
     {
         private readonly UserManager<ApplicationUser> _userManager;
-        private readonly SignInManager<ApplicationUser> _signInManager;
 
-        public UserService(UserManager<ApplicationUser> userManager, SignInManager<ApplicationUser> signInManager)
+        public UserService(UserManager<ApplicationUser> userManager)
         {
             _userManager = userManager;
-            _signInManager = signInManager;
         }
 
         public async Task<ResponseDataTable<UserModel>> GetAllUser(RequestDataTable request)
@@ -22,14 +20,15 @@ namespace BookSale.Management.Application.Services
             var users = await _userManager.Users
                                     .Where
                                     (
-                                        x=> string.IsNullOrEmpty(request.keyword)
+                                        x => string.IsNullOrEmpty(request.keyword)
                                         || (x.UserName.Contains(request.keyword))
                                         || (x.Fullname.Contains(request.keyword))
                                         || (x.Email.Contains(request.keyword))
                                         || (x.PhoneNumber.Contains(request.keyword))
                                     )
                                     .Select
-                                    (x => new UserModel{
+                                    (x => new UserModel
+                                    {
                                         Email = x.Email,
                                         Fullname = x.Fullname,
                                         Username = x.UserName,
@@ -40,7 +39,7 @@ namespace BookSale.Management.Application.Services
                                     .ToListAsync();
 
             //Pagination
-            int totalRecords =users.Count();
+            int totalRecords = users.Count();
 
             var result = users.Skip(request.SkipItems).Take(request.PageSize).ToList();
 
@@ -53,65 +52,49 @@ namespace BookSale.Management.Application.Services
             };
         }
 
-        public async Task<ResponseModel> CheckLogin(string username, string password, bool hasRememberMe)
+        public async Task<ResponseModel> Save(CreateAccountDTO request)
         {
-            var user = await _userManager.FindByNameAsync(username);
+            string errors = string.Empty;
 
-            if (user is null)
+            var applicationUser = new ApplicationUser
             {
-                return new ResponseModel
-                {
-                    Status = false,
-                    Message = "Username hoặc Password sai"
+                Fullname = request.Fullname,
+                Email = request.Email,
+                UserName = request.Username,
+                IsActive = request.IsActive,
+                PhoneNumber = request.Phone,
+                Address = request.Address,
+            };
 
-                };
-            }
-
-            //PasswordSignInAsync(user, password, false, false)
-            //đối số thứ 1 user: nếu tìm thành công thì truyền vào đây
-            //đối số thứ 2 password: truyền password vào để đăng nhập
-            //đối số thứ 3 false -> hasRememberMe: là HasRememberMe (tự động gia hạn cookies) có trong model ở Area Admin
-            //đối số thứ 4 false: đếm số lần thất bại của người dùng
-            var result = await _signInManager.PasswordSignInAsync(user, password, isPersistent: hasRememberMe, lockoutOnFailure: true);
-            //Sau khi SignIn trả về SignResult -> SignIn thành công tạo cookies cho chúng ta -> trả về true, thất bại về false
-
-            //Thêm thời gian khoá thì vào ConfigurationDbAccess để xử lý
-            if (result.IsLockedOut)
+            if (string.IsNullOrEmpty(request.Id))
             {
-                var remainingLockout = user.LockoutEnd.Value - DateTimeOffset.UtcNow;
+                var identityUser = await _userManager.CreateAsync(applicationUser, request.Password);
 
-                return new ResponseModel
+                if (identityUser.Succeeded)
                 {
-                    Status = false,
-                    Message = $"Tài khoản bị khoá. Hãy thử lại trong {Math.Round(remainingLockout.TotalMinutes)} phút"
+                    await _userManager.AddToRoleAsync(applicationUser, request.RoleName);
 
-                };
-            }
-
-            if (result.Succeeded)
-            {
-                //Khi người dùng login sai 2 lần nhưng lần 3 đúng thì sẽ xoá 2 lần lỗi, reset lại
-                if (user.AccessFailedCount > 0)
-                {
-                    await _userManager.ResetAccessFailedCountAsync(user);
+                    return new ResponseModel
+                    {
+                        Action = Domain.Enums.ActionType.Insert,
+                        Message = "Insert Complete",
+                        Status = true
+                    };
                 }
 
-                return new ResponseModel
-                {
-                    Status = true
-                };
+                errors = string.Join("<br/>", identityUser.Errors.Select(x => x.Description));
+            }
+            else
+            {
+                //var identityUser = await _userManager.UpdateAsync(applicationUser);
             }
 
             return new ResponseModel
             {
-                Status = false,
-                Message = "Username hoặc Password sai"
+                Action = Domain.Enums.ActionType.Insert,
+                Message = $"{(string.IsNullOrEmpty(request.Id) ? "Insert" : "Update")} fail. {errors}",
+                Status = false
             };
-        }
-
-        public async Task SignOut()
-        {
-            await _signInManager.SignOutAsync();
         }
     }
 }
