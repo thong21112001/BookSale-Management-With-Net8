@@ -2,6 +2,7 @@
 using BookSale.Management.Application.DTOs;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
+using Microsoft.AspNetCore.Mvc.ModelBinding;
 
 namespace BookSale.Management.UI.Areas.Admin.Controllers
 {
@@ -32,12 +33,24 @@ namespace BookSale.Management.UI.Areas.Admin.Controllers
         public IActionResult SaveData(string id)
         {
             var accountDTO = new CreateAccountDTO();
+            if (string.IsNullOrEmpty(id))
+            {
+                
+                return View(accountDTO);
+            }
+
             return View(accountDTO);
         }
 
         [HttpPost]
+        [ValidateAntiForgeryToken] //Thêm cái này ngoài form SaveData asp-antiforgery="true"
         public IActionResult SaveData(CreateAccountDTO accountDTO)
         {
+            if (!ModelState.IsValid)
+            {
+                return View();
+            }
+
             var md = accountDTO;
 
             return View();
