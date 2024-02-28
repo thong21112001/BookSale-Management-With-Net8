@@ -5,6 +5,7 @@ using BookSale.Management.DataAccess.DataAccess;
 using BookSale.Management.DataAccess.Repository;
 using BookSale.Management.Domain.Abstracts;
 using BookSale.Management.Domain.Entities;
+using Microsoft.AspNetCore.Hosting;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Configuration;
@@ -56,6 +57,11 @@ namespace BookSale.Management.Infrastructure.Configuration
             services.AddTransient<IUserService,UserService>();
             services.AddTransient<IRoleService, RoleService>();
             services.AddTransient<IAuthenticationService, AuthenticationService>();
+        }
+
+        public static void AddAutoMapper(this IServiceCollection services)
+        {
+            services.AddAutoMapper(AppDomain.CurrentDomain.GetAssemblies());
         }
     }
 }

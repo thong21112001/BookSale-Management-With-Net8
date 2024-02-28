@@ -5,7 +5,7 @@
     Layout = "~/Areas/Admin/Views/Shared/_Layout.cshtml";
 }
 
-<h1>@(string.IsNullOrEmpty(ViewBag.IdUser?.ToString()) ? "Create" : "Update") Data</h1>
+<h1>@(string.IsNullOrEmpty(Model.Id) ? "Create" : "Update") Data</h1>
 
 <form class="forms-sample" asp-area="admin" asp-controller="account" asp-action="savedata" 
         method="post" enctype="multipart/form-data" asp-antiforgery="true">
@@ -27,14 +27,31 @@
         <div class="col-6">
             <div class="form-group">
                 <label for="Username">Username <span class="text-danger">*</span></label>
-                <input type="text" class="form-control p-input" id="Username" placeholder="Enter username" asp-for="Username">
+                @{
+                    if (!string.IsNullOrEmpty(Model.Id))
+                    {
+                        <input type="text" readonly class="form-control p-input" id="Username" placeholder="Enter username" asp-for="Username">
+                    }else
+                    {
+                        <input type="text" class="form-control p-input" id="Username" placeholder="Enter username" asp-for="Username">
+                    }
+                }
                 <span class="text-danger" asp-validation-for="Username"></span>
             </div>
         </div>
         <div class="col-6">
             <div class="form-group">
                 <label for="Password">Password <span class="text-danger">*</span></label>
-                <input type="password" class="form-control p-input" id="Password" placeholder="Enter password" asp-for="Password">
+                @{
+                    if (!string.IsNullOrEmpty(Model.Id))
+                    {
+                        <input readonly type="password" class="form-control p-input" id="Password" placeholder="Enter password" asp-for="Password">
+                    }
+                    else
+                    {
+                        <input type="password" class="form-control p-input" id="Password" placeholder="Enter password" asp-for="Password">
+                    }
+                }
                 <span class="text-danger" asp-validation-for="Password"></span>
             </div>
         </div>

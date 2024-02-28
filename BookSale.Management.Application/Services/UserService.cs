@@ -1,18 +1,22 @@
-﻿using BookSale.Management.Application.Abstracts;
+﻿using AutoMapper;
+using BookSale.Management.Application.Abstracts;
 using BookSale.Management.Application.DTOs;
 using BookSale.Management.Domain.Entities;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.EntityFrameworkCore;
+using System.Net;
 
 namespace BookSale.Management.Application.Services
 {
     public class UserService : IUserService
     {
         private readonly UserManager<ApplicationUser> _userManager;
+        private readonly IMapper _mapper;
 
-        public UserService(UserManager<ApplicationUser> userManager)
+        public UserService(UserManager<ApplicationUser> userManager, IMapper mapper)
         {
             _userManager = userManager;
+            _mapper = mapper;
         }
 
         public async Task<ResponseDataTable<UserModel>> GetAllUser(RequestDataTable request)
@@ -52,6 +56,19 @@ namespace BookSale.Management.Application.Services
             };
         }
 
+        public async Task<CreateAccountDTO> GetUserById(string id)
+        {
+            var user = await _userManager.FindByIdAsync(id);
+            
+            var getRole = (await _userManager.GetRolesAsync(user)).First();
+
+            var userDTOs = _mapper.Map<CreateAccountDTO>(user);
+
+            userDTOs.RoleName = getRole;
+            
+            return userDTOs;
+        }
+
         public async Task<ResponseModel> Save(CreateAccountDTO request)
         {
             string errors = string.Empty;
@@ -86,7 +103,38 @@ namespace BookSale.Management.Application.Services
             }
             else
             {
-                //var identityUser = await _userManager.UpdateAsync(applicationUser);
+                var userUpdate = await _userManager.FindByIdAsync(request.Id);
+
+                userUpdate.Fullname = request.Fullname;
+                userUpdate.Email = request.Email;
+                userUpdate.IsActive = request.IsActive;
+                userUpdate.PhoneNumber = request.Phone;
+                userUpdate.Address = request.Address;
+
+                var identityUser = await _userManager.UpdateAsync(userUpdate);
+
+                if (identityUser.Succeeded)
+                {
+                    var hasRole = await _userManager.IsInRoleAsync(userUpdate, request.RoleName);
+
+                    if (!hasRole)
+                    {
+                        var oldRole = (await _userManager.GetRolesAsync(userUpdate)).FirstOrDefault();
+                        var removeOldRole = await _userManager.RemoveFromRoleAsync(userUpdate, oldRole);
+                        if (removeOldRole != null)
+                        {
+                            await _userManager.AddToRoleAsync(userUpdate, request.RoleName);
+                        }
+                    }
+
+                    return new ResponseModel
+                    {
+                        Action = Domain.Enums.ActionType.Update,
+                        Message = "Update successfully !!!",
+                        Status = true
+                    };
+                }
+                errors = string.Join("<br/>", identityUser.Errors.Select(x => x.Description));
             }
 
             return new ResponseModel

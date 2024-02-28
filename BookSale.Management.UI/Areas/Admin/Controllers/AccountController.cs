@@ -33,43 +33,37 @@ namespace BookSale.Management.UI.Areas.Admin.Controllers
         [HttpGet]
         public async Task<IActionResult> SaveData(string? id)
         {
-            var accountDTO = new CreateAccountDTO();
+            CreateAccountDTO accountDTO = !string.IsNullOrEmpty(id) ? await _userService.GetUserById(id) : new();
 
-            var roles = await _roleService.GetRoleForDropDownList();
-            ViewBag.Roles = roles;
+            ViewBag.Roles = await _roleService.GetRoleForDropDownList();
             ViewBag.IdUser = id;
 
-            if (string.IsNullOrEmpty(id))
-            {
-                
-                return View(accountDTO);
-            }
-            return View();
+            return View(accountDTO);
         }
 
         [HttpPost]
         [ValidateAntiForgeryToken] //Thêm cái này ngoài form SaveData asp-antiforgery="true"
         public async Task<IActionResult> SaveData(CreateAccountDTO accountDTO)
         {
-            if (ModelState.IsValid)
+            if (!ModelState.IsValid)
             {
-                var result = await _userService.Save(accountDTO);
+                ViewBag.Roles = await _roleService.GetRoleForDropDownList();
+                ModelState.AddModelError("", "Invalid model");
 
-                if (result.Status)
-                {
-                    return RedirectToAction("", "Account");
-                }
-                else
-                {
-                    ModelState.AddModelError("", result.Message);
-                }
-            }
-            else
-            {
-                ModelState.AddModelError("", "");
+                return View(accountDTO);
             }
 
-            return View();
+            var result = await _userService.Save(accountDTO);
+
+            if (result.Status)
+            {
+                return RedirectToAction("", "Account");
+            }
+
+            ModelState.AddModelError("", result.Message);
+            ViewBag.Roles = await _roleService.GetRoleForDropDownList();
+            
+            return View(accountDTO);
         }
     }
 }

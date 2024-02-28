@@ -6,5 +6,6 @@ namespace BookSale.Management.Application.Abstracts
     {
         Task<ResponseDataTable<UserModel>> GetAllUser(RequestDataTable request);
         Task<ResponseModel> Save(CreateAccountDTO request);
+        Task<CreateAccountDTO> GetUserById(string id);
     }
 }

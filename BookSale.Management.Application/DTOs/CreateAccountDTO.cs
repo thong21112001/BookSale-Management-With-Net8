@@ -16,7 +16,6 @@ namespace BookSale.Management.Application.DTOs
         [Required(ErrorMessage = "Fullname không bỏ trống")]
         public string? Fullname { get; set; }
 
-        [Required(ErrorMessage = "Password không bỏ trống")]
         [MinLength(6, ErrorMessage = "Password từ 6 ký tự")]
         public string? Password { get; set; }
 
