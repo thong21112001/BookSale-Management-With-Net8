@@ -67,5 +67,11 @@ namespace BookSale.Management.UI.Areas.Admin.Controllers
             
             return View(accountDTO);
         }
-    }
+
+		[HttpPost]
+		public async Task<IActionResult> Delete(string id)
+		{
+			return Json(await _userService.Delete(id));
+		}
+	}
 }

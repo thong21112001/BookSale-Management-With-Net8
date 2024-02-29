@@ -27,7 +27,7 @@ namespace BookSale.Management.Application.Services
             var users = await _userManager.Users
                                     .Where
                                     (
-                                        x => string.IsNullOrEmpty(request.keyword)
+                                        x => x.IsActive && string.IsNullOrEmpty(request.keyword)
                                         || (x.UserName.Contains(request.keyword))
                                         || (x.Fullname.Contains(request.keyword))
                                         || (x.Email.Contains(request.keyword))
@@ -150,6 +150,20 @@ namespace BookSale.Management.Application.Services
                 Message = $"{(string.IsNullOrEmpty(request.Id) ? "Insert" : "Update")} fail. {errors}",
                 Status = false
             };
+        }
+    
+        public async Task<bool> Delete(string id)
+        {
+            var user = await _userManager.FindByIdAsync(id);
+
+            if (user is not null)
+            {
+                user.IsActive = false;
+                await _userManager.UpdateAsync(user);
+
+                return true;
+            }
+            return false;
         }
     }
 }
