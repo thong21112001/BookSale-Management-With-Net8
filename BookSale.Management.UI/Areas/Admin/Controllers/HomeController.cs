@@ -1,4 +1,5 @@
-﻿using Microsoft.AspNetCore.Authorization;
+﻿using BookSale.Management.UI.Ultility;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 
 namespace BookSale.Management.UI.Areas.Admin.Controllers
@@ -8,7 +9,8 @@ namespace BookSale.Management.UI.Areas.Admin.Controllers
     [Authorize]
     public class HomeController : Controller
     {
-        public IActionResult Index()
+		[Breadscrum("Home")]
+		public IActionResult Index()
         {
             return View();
         }

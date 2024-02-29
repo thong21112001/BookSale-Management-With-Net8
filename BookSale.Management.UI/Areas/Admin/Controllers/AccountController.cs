@@ -1,5 +1,6 @@
 ﻿using BookSale.Management.Application.Abstracts;
 using BookSale.Management.Application.DTOs;
+using BookSale.Management.UI.Ultility;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 
@@ -18,6 +19,7 @@ namespace BookSale.Management.UI.Areas.Admin.Controllers
             _roleService = roleService;
         }
 
+        [Breadscrum("Account List","Management")]
         public IActionResult Index()
         {
             return View();
