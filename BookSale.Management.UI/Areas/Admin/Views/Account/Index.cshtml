@@ -1,47 +1,71 @@
-﻿
-@{
+﻿@{
     ViewData["Title"] = "Account List";
     Layout = "~/Areas/Admin/Views/Shared/_Layout.cshtml";
 }
 
-<div class="col-lg-12 grid-margin stretch-card">
-    <div class="card">
-        <div class="card-body">
-            <div class="row d-flex align-items-center">
-                <h4 class="text-center">Account List</h4>
-                @Html.ActionLink("Add", "savedata", "Account", null, new { @class = "btn btn-primary ml-1" })
-            </div>
+@section Stylesheet{
+	<!--begin::Page Vendors Styles(used by this page)-->
+	<link href="assets/plugins/custom/datatables/datatables.bundle.css" rel="stylesheet" type="text/css" />
+}
 
-            <div class="table-responsive">
-                <table id="tbl-account" class="display table table-striped" style="width:100%">
-                    <thead>
-                        <tr>
-                            <th>Action</th>
-                            <th>UserName</th>
-                            <th>FullName</th>
-                            <th>Email</th>
-                            <th>Phone</th>
-                            <th>IsActive</th>
-                        </tr>
-                    </thead>
-                    <tbody>
-                    </tbody>
-                </table>
-            </div>
-        </div>
-    </div>
+<!--begin::Card-->
+<div class="card card-custom">
+	<div class="card-header flex-wrap py-5">
+		<div class="card-title">
+			<h3 class="card-label">
+				DANH SÁCH TÀI KHOẢN
+			</h3>
+		</div>
+		<div class="card-toolbar">
+			<!--begin::Button-->
+			<a asp-controller="Account" asp-action="SaveData" class="btn btn-primary font-weight-bolder">
+				<span class="svg-icon svg-icon-md">
+					<!--begin::Svg Icon | path:assets/media/svg/icons/Design/Flatten.svg-->
+					<svg xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" width="24px" height="24px" viewBox="0 0 24 24" version="1.1">
+						<g stroke="none" stroke-width="1" fill="none" fill-rule="evenodd">
+							<rect x="0" y="0" width="24" height="24" />
+							<circle fill="#000000" cx="9" cy="15" r="6" />
+							<path d="M8.8012943,7.00241953 C9.83837775,5.20768121 11.7781543,4 14,4 C17.3137085,4 20,6.6862915 20,10 C20,12.2218457 18.7923188,14.1616223 16.9975805,15.1987057 C16.9991904,15.1326658 17,15.0664274 17,15 C17,10.581722 13.418278,7 9,7 C8.93357256,7 8.86733422,7.00080962 8.8012943,7.00241953 Z" fill="#000000" opacity="0.3" />
+						</g>
+					</svg>
+					<!--end::Svg Icon-->
+				</span>New Record
+			</a>
+			<!--end::Button-->
+		</div>
+	</div>
+	<div class="card-body">
+		<!--begin: Datatable-->
+        <table class="table table-separate table-head-custom table-checkable" id="tbl-account">
+			<thead>
+				<tr>
+                    <th>Action</th>
+                    <th>UserName</th>
+                    <th>FullName</th>
+                    <th>Email</th>
+                    <th>Phone</th>
+                    <th>IsActive</th>
+				</tr>
+			</thead>
+			<tbody>
+			</tbody>
+		</table>
+		<!--end: Datatable-->
+	</div>
 </div>
-
+<!--end::Card-->
 
 @section Scripts{
+	<script src="~/Admin/assets/plugins/custom/datatables/datatables.bundle.js"></script>
+	<script src="~/Admin/assets/js/pages/crud/datatables/basic/paginations.js"></script>
     <script src="~/admin/settingsjs/registerdatatable.js"></script>
     <script>
         const elementName = "#tbl-account";
         const columns = [
             { data: 'id', name: 'id', width: '100', render: function (key) {
-                    return `<a href="/admin/account/savedata?id=${key}"><i class="mdi mdi-grease-pencil"></i></a>
+					return `<a href="/admin/account/savedata?id=${key}" class="btn btn-icon btn-warning btn-sm mr-2"><i class="fas fa-pencil-alt"></i></a>
                             &nbsp
-                            <a href="#"><i class="mdi mdi-delete"></i></a>`
+							<a href="#" class="btn btn-icon btn-danger btn-sm mr-2"><i class="far fa-trash-alt"></i></a>`
                 }
             },
             { data: 'username', name: 'username', autoWidth: true },
@@ -53,6 +77,6 @@
         const urlApi = "/admin/account/getaccountpagination";
 
         registerDatatable(elementName, columns, urlApi)
-
     </script>
 }
+

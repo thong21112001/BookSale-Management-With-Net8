@@ -6,7 +6,7 @@ namespace BookSale.Management.UI.Areas.Admin.Controllers
 {
     //domain/Admin/Authentication/{Action}
     [Area("Admin")]
-    public class AuthenticationController : Controller
+	public class AuthenticationController : Controller
     {
         private readonly IAuthenticationService _authenticationService;
 

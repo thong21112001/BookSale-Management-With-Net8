@@ -1,88 +1,90 @@
 ﻿<!DOCTYPE html>
 <html lang="en">
+
+<!--begin::Head-->
 <head>
-    <!-- Required meta tags -->
-    <meta charset="utf-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
-    <title>Corona Admin</title>
-    <!-- plugins:css -->
-    <link rel="stylesheet" href="~/Admin/assets/vendors/mdi/css/materialdesignicons.min.css">
-    <link rel="stylesheet" href="~/Admin/assets/vendors/css/vendor.bundle.base.css">
-    <!-- endinject -->
-    <!-- Plugin css for this page -->
-    <link rel="stylesheet" href="~/Admin/assets/vendors/jvectormap/jquery-jvectormap.css">
-    <link rel="stylesheet" href="~/Admin/assets/vendors/flag-icon-css/css/flag-icon.min.css">
-    <link rel="stylesheet" href="~/Admin/assets/vendors/owl-carousel-2/owl.carousel.min.css">
-    <link rel="stylesheet" href="~/Admin/assets/vendors/owl-carousel-2/owl.theme.default.min.css">
-    <!-- End plugin css for this page -->
-    <!-- inject:css -->
-    <!-- endinject -->
-    <!-- Layout styles -->
-    <link rel="stylesheet" href="~/Admin/assets/css/style.css">
-    <link rel="stylesheet" href="https://cdn.datatables.net/2.0.0/css/dataTables.dataTables.css" />
-    <!-- End layout styles -->
-    <link rel="shortcut icon" href="~/Admin/assets/images/favicon.png" />
-
+    <base href="">
+    <meta charset="utf-8" />
+    <title>Metronic Live preview | Keenthemes</title>
+    <meta name="description" content="Metronic admin dashboard live demo. Check out all the features of the admin panel. A large number of settings, additional services and widgets." />
+    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no" />
+    <link rel="canonical" href="https://keenthemes.com/metronic" />
+    <!--begin::Fonts-->
+    <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Poppins:300,400,500,600,700" />
+    <!--end::Fonts-->
+    <!--begin::Global Theme Styles(used by all pages)-->
+    <link href="~/Admin/assets/plugins/global/plugins.bundle.css" rel="stylesheet" type="text/css" />
+    <link href="~/Admin/assets/plugins/custom/prismjs/prismjs.bundle.css" rel="stylesheet" type="text/css" />
+    <link href="~/Admin/assets/css/style.bundle.css" rel="stylesheet" type="text/css" />
+    <!--end::Global Theme Styles-->
+    <!--begin::Layout Themes(used by all pages)-->
+    <link href="~/Admin/assets/css/themes/layout/header/base/light.css" rel="stylesheet" type="text/css" />
+    <link href="~/Admin/assets/css/themes/layout/header/menu/light.css" rel="stylesheet" type="text/css" />
+    <link href="~/Admin/assets/css/themes/layout/brand/dark.css" rel="stylesheet" type="text/css" />
+    <link href="~/Admin/assets/css/themes/layout/aside/dark.css" rel="stylesheet" type="text/css" />
+    <!--end::Layout Themes-->
+    <link rel="shortcut icon" href="~/Admin/assets/media/logos/favicon.ico" />
+    @await RenderSectionAsync("Stylesheet", required: false)
 </head>
-<body>
-    <div class="container-scroller">
-
-        <!-- Render sidebar thanh bên -->
-        <!-- Add partial view nên dùng -->
-        @await Html.PartialAsync("_Sidebar.cshtml")
-        <!-- End render -->
-
-        <div class="container-fluid page-body-wrapper">
-
-            <!-- Render navbar thanh trên -->
-            <!-- Add partial view nên dùng -->
-            @await Html.PartialAsync("_Navbar.cshtml")
-            <!-- End render -->
+<!--end::Head-->
 
 
-            <div class="main-panel">
-                <!-- MAIN -->
-                <!-- content-wrapper starts -->
-                <div class="content-wrapper">
-                    @RenderBody()
+<body id="kt_body" class="header-fixed header-mobile-fixed subheader-enabled subheader-fixed aside-enabled aside-fixed aside-minimize-hoverable page-loading">
+    <!--begin::Main-->
+		<div class="d-flex flex-column flex-root">
+			<!--begin::Page-->
+			<div class="d-flex flex-row flex-column-fluid page">
+				<!--begin::Aside-->
+				@await Html.PartialAsync("_Sidebar.cshtml")
+				<!--end::Aside-->
+
+				<!--begin::Wrapper-->
+				<div class="d-flex flex-column flex-row-fluid wrapper" id="kt_wrapper">
+					<!--begin::Header-->
+					@await Html.PartialAsync("_Navbar.cshtml")
+					<!--end::Header-->
+
+
+                <!--begin::Content-->
+                <div class="content d-flex flex-column flex-column-fluid" id="kt_content">
+                    <!--begin::Subheader-->
+                    @await Html.PartialAsync("_Subheader.cshtml")
+                    <!--end::Subheader-->
+
+                    <!--begin::Main-->
+                    <div class="d-flex flex-column-fluid">
+                        <!--begin::Container-->
+                        <div class="container">
+                            @RenderBody()
+                        </div>
+                        <!--end::Container-->
+                    </div>
+                    <!--end::Main-->
                 </div>
-                <!-- content-wrapper ends -->
-                <!-- END MAIN -->
+                <!--end::Content-->
+
+					<!--begin::Footer-->
+					@await Html.PartialAsync("_Footer.cshtml")
+					<!--end::Footer-->
+				</div>
+				<!--end::Wrapper-->
+			</div>
+			<!--end::Page-->
+		</div>
+	<!--end::Main-->
 
 
-                <!-- FOOTER -->
-                @await Html.PartialAsync("_Footer.cshtml")
-                <!-- END FOOTER -->
-            </div>
-            <!-- main-panel ends -->
-        </div>
-        <!-- page-body-wrapper ends -->
-    </div>
 
 
-
-    <!-- container-scroller -->
     <!-- plugins:js -->
-    <script src="~/Admin/assets/vendors/js/vendor.bundle.base.js"></script>
-    <!-- endinject -->
-    <script src="https://cdn.datatables.net/2.0.0/js/dataTables.js"></script>
-    <!-- Plugin js for this page -->
-    <script src="~/Admin/assets/vendors/chart.js/Chart.min.js"></script>
-    <script src="~/Admin/assets/vendors/progressbar.js/progressbar.min.js"></script>
-    <script src="~/Admin/assets/vendors/jvectormap/jquery-jvectormap.min.js"></script>
-    <script src="~/Admin/assets/vendors/jvectormap/jquery-jvectormap-world-mill-en.js"></script>
-    <script src="~/Admin/assets/vendors/owl-carousel-2/owl.carousel.min.js"></script>
-    <!-- End plugin js for this page -->
-    <!-- inject:js -->
-    <script src="~/Admin/assets/js/off-canvas.js"></script>
-    <script src="~/Admin/assets/js/hoverable-collapse.js"></script>
-    <script src="~/Admin/assets/js/misc.js"></script>
-    <script src="~/Admin/assets/js/settings.js"></script>
-    <script src="~/Admin/assets/js/todolist.js"></script>
-    <!-- endinject -->
-    <!-- Custom js for this page -->
-    <script src="assets/js/dashboard.js"></script>
-    <!-- End custom js for this page -->
+    <!--begin::Global Theme Bundle(used by all pages)-->
+    <script src="~/Admin/assets/plugins/global/plugins.bundle.js"></script>
+    <script src="~/Admin/assets/plugins/custom/prismjs/prismjs.bundle.js"></script>
+    <script src="~/Admin/assets/js/scripts.bundle.js"></script>
+    <!--end::Global Theme Bundle-->
     @await RenderSectionAsync("Scripts", required: false)
 </body>
 </html>
+
+
+
