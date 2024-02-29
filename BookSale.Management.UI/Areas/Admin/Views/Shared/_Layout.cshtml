@@ -24,6 +24,9 @@
     <link href="~/Admin/assets/css/themes/layout/aside/dark.css" rel="stylesheet" type="text/css" />
     <!--end::Layout Themes-->
     <link rel="shortcut icon" href="~/Admin/assets/media/logos/favicon.ico" />
+    <!--Begin::Toaster-->
+    <link href="~/js/toaster/jquery.toast.min.css" rel="stylesheet" />
+    <!--End::Toaster-->
     @await RenderSectionAsync("Stylesheet", required: false)
 </head>
 <!--end::Head-->
@@ -77,10 +80,14 @@
     <!--end::Global Config-->
     <!-- plugins:js -->
     <!--begin::Global Theme Bundle(used by all pages)-->
+    <script src="~/lib/jquery/dist/jquery.min.js"></script>
+    <script src="~/js/toaster/jquery.toast.min.js"></script>
     <script src="~/Admin/assets/plugins/global/plugins.bundle.js"></script>
     <script src="~/Admin/assets/plugins/custom/prismjs/prismjs.bundle.js"></script>
     <script src="~/Admin/assets/js/scripts.bundle.js"></script>
     <!--end::Global Theme Bundle-->
+    <!--begin::Show Toast-->
+    <script src="~/admin/settingsjs/common.js"></script>
     @await RenderSectionAsync("Scripts", required: false)
 </body>
 </html>
