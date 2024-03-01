@@ -7,8 +7,9 @@ namespace BookSale.Management.DataAccess.Repository
     {
         private readonly BookSaleDbContext _context;
 
-        private IGenreRepository? _genreRepository;
-        private IBookRepository? _bookRepository;
+        IGenreRepository? _genreRepository;
+        IBookRepository? _bookRepository;
+        private bool disposedValue;
 
         public UnitOfWork(BookSaleDbContext context)
         {
@@ -25,14 +26,25 @@ namespace BookSale.Management.DataAccess.Repository
             await _context.SaveChangesAsync();
         }
 
-
         //Tránh tình trạng tràn bộ nhớ
+        protected virtual void Dispose(bool disposing)
+        {
+            if (!disposedValue)
+            {
+                if (disposing)
+                {
+                    _context.Dispose();
+                }
+
+                disposedValue = true;
+            }
+        }
+
+       
         public void Dispose()
         {
-            if (_context != null)
-            {
-                _context.Dispose();
-            }
+            Dispose(disposing: true);
+            GC.SuppressFinalize(this);
         }
     }
 }

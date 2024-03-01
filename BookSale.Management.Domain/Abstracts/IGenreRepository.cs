@@ -1,6 +1,9 @@
-﻿namespace BookSale.Management.Domain.Abstracts
+﻿using BookSale.Management.Domain.Entities;
+
+namespace BookSale.Management.Domain.Abstracts
 {
     public interface IGenreRepository
     {
+        Task<IEnumerable<Genre>> GetAllGenre();
     }
 }

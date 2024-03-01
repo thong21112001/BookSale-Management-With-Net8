@@ -5,6 +5,7 @@
         IBookRepository BookRepository { get; }
         IGenreRepository GenreRepository { get; }
 
+        void Dispose();
 
         Task SaveChangeAsync();
     }
