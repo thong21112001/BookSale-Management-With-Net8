@@ -6,7 +6,7 @@
  */
 
 function showToast(type, text, timeOut = 3000) {
-    $.toast({
+    $(document).toast({
         heading: type,
         text: text,
         position: 'top-right',

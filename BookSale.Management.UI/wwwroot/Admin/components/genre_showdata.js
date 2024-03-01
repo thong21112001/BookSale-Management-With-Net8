@@ -46,4 +46,25 @@
     $(document).on('click', '.btn-warning', function () {
         $('#genre-modal').modal('show');
     });
+
+    $('#formGenre').submit(function (e) {
+        e.preventDefault();
+
+        const formData = $(this).serialize();//Get toàn bộ trong form input trả về json data
+
+        $.ajax({
+            url: $(this).attr('action'),
+            method: $(this).attr('method'),
+            data: formData,
+            success: function (response) {
+                $(elementName).DataTable().ajax.reload();
+                showToast("Success", "Delete successfully!!!");
+                $('#genre-modal').modal('hide');
+            },
+            error: function () {
+
+            }
+        })
+
+    });
 })();

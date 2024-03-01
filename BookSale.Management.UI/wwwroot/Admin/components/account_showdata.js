@@ -5,9 +5,9 @@
             data: 'id', name: 'id', width: '100', render: function (key) {
                 return `
                     <span data-key="${key}">
-                            <a href="/admin/account/savedata?id=${key}" class="btn btn-icon btn-warning btn-sm mr-2"><i class="fas fa-pencil-alt"></i></a>
-                            &nbsp
-							<a href="#" class="btn btn-icon btn-danger btn-sm mr-2"><i class="far fa-trash-alt"></i></a>
+                        <a href="/admin/account/savedata?id=${key}" class="btn btn-icon btn-warning btn-sm mr-2"><i class="fas fa-pencil-alt"></i></a>
+                        &nbsp
+						<a href="#" class="btn btn-icon btn-danger btn-sm mr-2"><i class="far fa-trash-alt"></i></a>
                     </span>
                 `
             }
@@ -21,24 +21,30 @@
     const urlApi = "/admin/account/getaccountpagination";
 
     registerDatatable(elementName, columns, urlApi)
+});
 
-    $(document).on('click', '.btn-danger', function () {
-        const key = $(this).closest('span').data('key');
+//Hàm khi bấm nút xóa
+//function Delete(url) {
+//    Swal.fire({
+//        title: 'Are you sure?',
+//        text: "You won't be able to revert this!",
+//        icon: 'warning',
+//        showCancelButton: true,
+//        confirmButtonColor: '#3085d6',
+//        cancelButtonColor: '#d33',
+//        confirmButtonText: 'Yes, delete it!'
+//    }).then((result) => {
+//        if (result.isConfirmed) {
+//            $.ajax({
+//                url: url,
+//                type: 'DELETE',
+//                success: function (data) {
+//                    $(elementName).DataTable().ajax.reload();
+//                    toastr.success(data.message);
+//                }
+//            })
+//        }
+//    })
+//}
 
-        $.ajax({
-            url: `/admin/account/delete/${key}`,
-            dataType: 'json',
-            method: 'POST',
-            success: function (response) {
-                if (!response) {
-                    showToast("Error", "Error bug :<");
-                    return;
-                }
-                $(elementName).DataTable().ajax.reload();
-                showToast("Success", "Delete successfully!!!");
-
-            }
-        })
-    });
-
-})();
+//onClick = Delete('/admin/account/delete/${key}')

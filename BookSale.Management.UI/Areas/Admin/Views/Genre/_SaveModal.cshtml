@@ -1,22 +1,39 @@
-﻿<!-- Modal -->
-<div class="modal fade" id="genre-modal" tabindex="-1" role="dialog" aria-hidden="true" data-backdrop="static">
-    <div class="modal-dialog" role="document">
-        <div class="modal-content">
-            <div class="modal-header">
-                <h5 class="modal-title" id="exampleModalLabel">Genre Form</h5>
-                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
-                    <span aria-hidden="true">&times;</span>
-                </button>
-            </div>
+﻿@model BookSale.Management.Application.DTOs.ViewModels.GenreViewModel;
 
-            <div class="modal-body">
-                FORM GENRE
-            </div>
-
-            <div class="modal-footer">
-                <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
-                <button type="button" class="btn btn-primary">Save changes</button>
+<!-- Modal -->
+<div class="modal fade" id="genre-modal" data-bs-backdrop="static" data-bs-keyboard="false" tabindex="-1" aria-labelledby="staticBackdropLabel" aria-hidden="true">
+    <form id="formGenre" class="forms-sample" method="post" asp-area="admin" asp-controller="genre" asp-action="savedata" asp-antiforgery="true">
+        <div class="modal-dialog">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h1 class="modal-title fs-5" id="staticBackdropLabel">Modal title</h1>
+                    <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close">
+                        &times;
+                    </button>
+                </div>
+                <div class="modal-body">
+                    <input type="hidden" asp-for="Id" />
+                    <div class="form-group">
+                        <label for="Name">Name<span class="text-danger">*</span></label>
+                        <input type="text" class="form-control p-input" asp-for="Name" placeholder="Enter name">
+                        <span class="text-danger" asp-validation-for="Name"></span>
+                    </div>
+                    <div class="form-group">
+                        <label for="Description">Description</label>
+                        <input type="text" class="form-control p-input" asp-for="Description" placeholder="Enter description">
+                    </div>
+                    <div class="form-check">
+                        <label class="form-check-label">
+                            <input type="checkbox" class="form-check-input" asp-for="IsActive">
+                            IsActive
+                        </label>
+                    </div>
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
+                    <button type="submit" class="btn btn-primary">Save</button>
+                </div>
             </div>
         </div>
-    </div>
+    </form>
 </div>

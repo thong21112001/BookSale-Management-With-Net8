@@ -1,4 +1,5 @@
-﻿
+﻿@model BookSale.Management.Application.DTOs.ViewModels.GenreViewModel;
+
 @{
     ViewData["Title"] = "Index";
     Layout = "~/Areas/Admin/Views/Shared/_Layout.cshtml";
@@ -57,14 +58,19 @@
 <!--end::Card-->
 
 <!--begin::Form Edit-->
-<partial name="_SaveModal.cshtml" />
+@* <partial name="_SaveModal.cshtml" model="Model"/> *@
+<!--Nên sử dụng bất đồng bộ-->
+@await Html.PartialAsync("_SaveModal.cshtml", Model)
 <!--end::Form Edit-->
 
 
 @section Scripts {
 	<script src="~/Admin/assets/plugins/custom/datatables/datatables.bundle.js"></script>
 	<script src="~/Admin/assets/js/pages/crud/datatables/basic/paginations.js"></script>
+	<script src="~/lib/jquery-validation/dist/jquery.validate.min.js"></script>
+	<script src="~/lib/jquery-validation-unobtrusive/jquery.validate.unobtrusive.min.js"></script>
 	<script src="~/admin/settingsjs/registerdatatable.js"></script>
+	<script src="~/admin/settingsjs/common.js"></script>
 	<script src="~/admin/components/genre_showdata.js"></script>
 }
 

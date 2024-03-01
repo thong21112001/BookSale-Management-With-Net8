@@ -1,9 +1,10 @@
 ﻿using BookSale.Management.Application.Abstracts;
 using BookSale.Management.Application.DTOs;
+using BookSale.Management.Application.DTOs.ViewModels;
+using BookSale.Management.Application.Services;
 using BookSale.Management.UI.Ultility;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
-using static System.Runtime.InteropServices.JavaScript.JSType;
 
 namespace BookSale.Management.UI.Areas.Admin.Controllers
 {
@@ -21,7 +22,8 @@ namespace BookSale.Management.UI.Areas.Admin.Controllers
         [Breadscrum("Genre List","Management")]
         public IActionResult Index()
         {
-            return View();
+            var genreVM = new GenreViewModel();
+            return View(genreVM);
         }
 
         [HttpPost]
@@ -31,5 +33,16 @@ namespace BookSale.Management.UI.Areas.Admin.Controllers
 			return Json(data);
 		}
 
+
+		[HttpPost]
+		[ValidateAntiForgeryToken] //Thêm cái này ngoài form SaveData asp-antiforgery="true"
+		public async Task<IActionResult> SaveData(GenreViewModel genreViewModel)
+		{
+            if (ModelState.IsValid)
+            {
+                var data = genreViewModel;
+            }
+			return Json(1);
+		}
 	}
 }
