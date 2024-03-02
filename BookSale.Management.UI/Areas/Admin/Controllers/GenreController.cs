@@ -26,6 +26,12 @@ namespace BookSale.Management.UI.Areas.Admin.Controllers
             return View(genreVM);
         }
 
+        [HttpGet]
+        public async Task<IActionResult> GetById(int id)
+        {
+            return Json(await _genreService.GetById(id));
+        }
+
         [HttpPost]
         public async Task<IActionResult> GetGenrePagination(RequestDataTable requestDataTable)
         {

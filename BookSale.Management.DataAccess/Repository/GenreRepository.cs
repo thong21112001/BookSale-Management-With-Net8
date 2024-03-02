@@ -17,5 +17,9 @@ namespace BookSale.Management.DataAccess.Repository
             return await GetALlAsync();
         }
 
+        public async Task<Genre> GetById(int id)
+        {
+            return await GetSingleAsync(x => x.Id == id);
+        }
 	}
 }

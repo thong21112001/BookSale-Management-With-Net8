@@ -1,5 +1,6 @@
 ﻿using AutoMapper;
 using BookSale.Management.Application.DTOs;
+using BookSale.Management.Application.DTOs.ViewModels;
 using BookSale.Management.Domain.Entities;
 
 namespace BookSale.Management.Application.Configuration
@@ -14,6 +15,9 @@ namespace BookSale.Management.Application.Configuration
 
             CreateMap<Genre, GenreDTO>()
                 .ReverseMap();
+
+            CreateMap<Genre, GenreViewModel>()
+               .ReverseMap();
         }
 
     }

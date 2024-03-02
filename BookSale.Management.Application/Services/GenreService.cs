@@ -1,6 +1,7 @@
 ﻿using AutoMapper;
 using BookSale.Management.Application.Abstracts;
 using BookSale.Management.Application.DTOs;
+using BookSale.Management.Application.DTOs.ViewModels;
 using BookSale.Management.Domain.Abstracts;
 using Microsoft.AspNetCore.Identity;
 
@@ -16,6 +17,14 @@ namespace BookSale.Management.Application.Services
             _unitOfWork = unitOfWork;
             _mapper = mapper;
         }
+
+		public async Task<GenreViewModel> GetById(int id)
+		{
+			 var genre = await _unitOfWork.GenreRepository.GetById(id);
+
+			//Map dữ liệu get đc thông qua Id sau đó map từ genre -> GenreDTO
+			return _mapper.Map<GenreViewModel>(genre);
+		}
 
 		public async Task<ResponseDataTable<GenreDTO>> GetAllGenre(RequestDataTable request)
 		{
