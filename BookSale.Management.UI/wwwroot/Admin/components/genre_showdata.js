@@ -20,25 +20,6 @@
 
     registerDatatable(elementName, columns, urlApi)
 
-    //$(document).on('click', '.btn-danger', function () {
-    //    const key = $(this).closest('span').data('key');
-
-    //    $.ajax({
-    //        url: `/admin/account/delete/${key}`,
-    //        dataType: 'json',
-    //        method: 'POST',
-    //        success: function (response) {
-    //            if (!response) {
-    //                showToast("Error", "Error bug :<");
-    //                return;
-    //            }
-    //            $(elementName).DataTable().ajax.reload();
-    //            showToast("Success", "Delete successfully!!!");
-
-    //        }
-    //    })
-    //});
-
     $(document).on('click', '#btn-add', function () {
         $('#genre-modal').modal('show');
     });

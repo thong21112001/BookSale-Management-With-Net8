@@ -24,31 +24,3 @@
     registerDatatable(elementName, columns, urlApi)
 })();
 
-/*Hàm khi bấm nút xóa*/
-function Delete(url) {
-    Swal.fire({
-        title: 'Are you sure?',
-        text: "You won't be able to revert this!",
-        icon: 'warning',
-        showCancelButton: true,
-        confirmButtonColor: '#3085d6',
-        cancelButtonColor: '#d33',
-        confirmButtonText: 'Yes, delete it!'
-    }).then((result) => {
-        if (result.isConfirmed) {
-            $.ajax({
-                url: url,
-                dataType: 'json',
-                method: 'POST',
-                success: function (data) {
-                    if (!data) {
-                        toastr["error"]('Lỗi khi xoá !!!');
-                        return;
-                    }
-                    $(elementName).DataTable().ajax.reload();
-                    toastr["success"]('Xoá thành công !!!');
-                }
-            })
-        }
-    })
-}

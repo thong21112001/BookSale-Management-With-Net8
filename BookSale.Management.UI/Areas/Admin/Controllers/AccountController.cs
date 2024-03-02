@@ -60,14 +60,24 @@ namespace BookSale.Management.UI.Areas.Admin.Controllers
 
             if (result.Status)
             {
-                TempData["Type"] = "success";
-                TempData["Message"] = "Updated successfully!!!";
+                if (string.IsNullOrEmpty(accountDTO.Id))
+                {
+                    TempData["Type"] = "success";
+                    TempData["Message"] = "Thêm thành công !!!";
+                }
+                else
+                {
+                    TempData["Type"] = "info";
+                    TempData["Message"] = "Cập nhập thành công !!!";
+                }
                 return RedirectToAction("", "Account");
             }
 
             ModelState.AddModelError("", result.Message);
             ViewBag.Roles = await _roleService.GetRoleForDropDownList();
-            
+            TempData["Type"] = "warning";
+            TempData["Message"] = "Có lỗi xảy ra !!!";
+
             return View(accountDTO);
         }
 
