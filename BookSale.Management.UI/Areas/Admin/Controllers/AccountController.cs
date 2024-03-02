@@ -3,6 +3,7 @@ using BookSale.Management.Application.DTOs;
 using BookSale.Management.UI.Ultility;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
+using Newtonsoft.Json;
 
 namespace BookSale.Management.UI.Areas.Admin.Controllers
 {
@@ -59,6 +60,8 @@ namespace BookSale.Management.UI.Areas.Admin.Controllers
 
             if (result.Status)
             {
+                TempData["Type"] = "success";
+                TempData["Message"] = "Updated successfully!!!";
                 return RedirectToAction("", "Account");
             }
 
@@ -71,7 +74,7 @@ namespace BookSale.Management.UI.Areas.Admin.Controllers
 		[HttpPost]
 		public async Task<IActionResult> Delete(string id)
 		{
-			return Json(await _userService.Delete(id));
+            return Json(await _userService.Delete(id));
 		}
 	}
 }

@@ -7,9 +7,11 @@
 	<!--begin::Page Vendors Styles(used by this page)-->
 	<link href="~/Admin/assets/plugins/custom/datatables/datatables.bundle.css" rel="stylesheet" type="text/css" />
 }
+
 <!--begin::Subheader-->
 @await Html.PartialAsync("~/Areas/Admin/Views/Shared/_Subheader.cshtml")
 <!--end::Subheader-->
+
 
 <!--begin::Card-->
 <div class="card card-custom">
@@ -57,6 +59,7 @@
 	</div>
 </div>
 <!--end::Card-->
+@await Html.PartialAsync("_Toast")
 
 @section Scripts{
 	<script src="~/Admin/assets/plugins/custom/datatables/datatables.bundle.js"></script>
