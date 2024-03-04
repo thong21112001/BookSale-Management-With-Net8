@@ -21,5 +21,25 @@ namespace BookSale.Management.DataAccess.Repository
         {
             return await GetSingleAsync(x => x.Id == id);
         }
+
+        public async Task CreateGenre(Genre genre)
+        {
+            await Create(genre);
+        }
+
+        public void UpdateGenre(Genre genre)
+        {
+           Update(genre);
+        }
+
+        public void DeleteGenre(Genre genre)
+        {
+            Delete(genre);
+        }
+
+        public async Task SaveGenre()
+        {
+            await Commit();
+        }
 	}
 }

@@ -1,11 +1,9 @@
-﻿using BookSale.Management.Application;
-using BookSale.Management.Application.Abstracts;
+﻿using BookSale.Management.Application.Abstracts;
 using BookSale.Management.Application.Services;
 using BookSale.Management.DataAccess.DataAccess;
 using BookSale.Management.DataAccess.Repository;
 using BookSale.Management.Domain.Abstracts;
 using BookSale.Management.Domain.Entities;
-using Microsoft.AspNetCore.Hosting;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Configuration;
@@ -13,7 +11,7 @@ using Microsoft.Extensions.DependencyInjection;
 
 namespace BookSale.Management.Infrastructure.Configuration
 {
-    public static class ConfigurationDbAccess
+	public static class ConfigurationDbAccess
     {
         public static void RegisterDb(this IServiceCollection services, IConfiguration configuration)
         {

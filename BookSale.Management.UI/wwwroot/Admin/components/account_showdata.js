@@ -17,7 +17,11 @@
         { data: 'fullname', name: 'fullname', autoWidth: true },
         { data: 'email', name: 'email', autoWidth: true },
         { data: 'phone', name: 'phone', autoWidth: true },
-        { data: 'isActive', name: 'isActive', autoWidth: true }
+        {
+            data: 'isActive', name: 'isActive', autoWidth: true, render: function (data) {
+                return data ? 'Hoạt động' : 'Khoá';
+            }
+        }
     ];
     const urlApi = "/admin/account/getaccountpagination";
 

@@ -53,8 +53,15 @@ namespace BookSale.Management.DataAccess.Repository
         //Update 1 dữ liệu đc truyền vào
         public void Update(T entity)
         {
-            _context.Set<T>().Attach(entity);
-            _context.Entry(entity).State = EntityState.Modified;
+            //_context.Set<T>().Attach(entity);
+            //_context.Entry(entity).State = EntityState.Modified;
+            var entry = _context.Entry(entity);
+            if (entry.State == EntityState.Detached)
+            {
+                _context.Set<T>().Attach(entity);
+            }
+
+            entry.State = EntityState.Modified;
         }
 
         //Xoá 1 dữ liệu đc truyền vào

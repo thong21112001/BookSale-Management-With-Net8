@@ -39,16 +39,37 @@ namespace BookSale.Management.UI.Areas.Admin.Controllers
 			return Json(data);
 		}
 
-
 		[HttpPost]
 		[ValidateAntiForgeryToken] //Thêm cái này ngoài form SaveData asp-antiforgery="true"
 		public async Task<IActionResult> SaveData(GenreViewModel genreViewModel)
 		{
             if (ModelState.IsValid)
             {
-                var data = genreViewModel;
+                if (genreViewModel.Id == 0) //Thực hiện thêm genre
+                {
+                    var result = await _genreService.Save(genreViewModel);
+                    if (result.Status)
+                    {
+						return Json(new { status = "success", message = result.Message });
+					}
+                }
+                else //Thực hiện cập nhập genre
+                {
+                    var result = await _genreService.Save(genreViewModel);
+                    if (result.Status)
+                    {
+						return Json(new { status = "info", message = result.Message });
+					}
+                }
+                
             }
-			return Json(1);
+			return Json(new { status = "warning", message = "Lỗi xảy ra !!!" });
 		}
-	}
+
+        [HttpPost]
+        public async Task<IActionResult> Delete(int id)
+        {
+            return Json(await _genreService.Delete(id));
+        }
+    }
 }

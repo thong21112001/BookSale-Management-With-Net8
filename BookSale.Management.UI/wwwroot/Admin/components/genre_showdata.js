@@ -1,20 +1,25 @@
-﻿(function () {
-    const elementName = "#tbl-genre";
+﻿const elementName = "#tbl-genre";
+
+(function () {
     const columns = [
         {
             data: 'id', name: 'id', width: '100', render: function (key) {
                 return `
                     <span data-key="${key}">
-                            <a href="#" class="btn-edit btn btn-icon btn-warning btn-sm mr-2"><i class="fas fa-pencil-alt"></i></a>
+                            <a class="btn-edit btn btn-icon btn-warning btn-sm mr-2"><i class="fas fa-pencil-alt"></i></a>
                             &nbsp
-							<a href="#" class="btn btn-icon btn-danger btn-sm mr-2"><i class="far fa-trash-alt"></i></a>
+							<a onClick = Delete('/admin/genre/delete/${key}') class="btn btn-icon btn-danger btn-sm mr-2"><i class="far fa-trash-alt"></i></a>
                     </span>
                 `
             }
         },
         { data: 'name', name: 'name', autoWidth: true },
         { data: 'description', name: 'description', autoWidth: true },
-        { data: 'isActive', name: 'isActive', autoWidth: true }
+        {
+            data: 'isActive', name: 'isActive', autoWidth: true, render: function (data) {
+                return data ? 'Hiển thị' : 'Không';
+            }
+        }
     ];
     const urlApi = "/admin/genre/getgenrepagination";
 
@@ -37,22 +42,13 @@
             url: `/admin/genre/getbyid?id=${key}`,
             method: "GET",
             success: function (response) {
-                //console.log(response);//-> chạy debug ở console client  {id: 2, name: 'Book', description: 'BOOK', isActive: true}
-                //$('#Id').val(response.id);
-                //$('#Name').val(response.name);
-                //$('#Description').val(response.description);
-                //$('#IsActive').val(response.isActive);
-                //--> bỏ qua các cách trên viết hàm ở một js khác sau làm tiện hơn
                 mapObjectToModalView(response);
                 $('#genre-modal').modal('show');
             }
         })
     });
 
-    $(document).on('click', '.btn-warning', function () {
-        $('#genre-modal').modal('show');
-    });
-
+    //Dùng để get data truyền vào controller tiến hành thêm hoặc sửa
     $('#formGenre').submit(function (e) {
         e.preventDefault();
 
@@ -63,14 +59,19 @@
             method: $(this).attr('method'),
             data: formData,
             success: function (response) {
-                $(elementName).DataTable().ajax.reload();
-                showToast("Success", "Delete successfully!!!");
-                $('#genre-modal').modal('hide');
-            },
-            error: function () {
-
+                if (response.status === "success") {
+                    $(elementName).DataTable().ajax.reload();
+                    showToastAllPage("success", response.message);
+                    $('#genre-modal').modal('hide');
+                } else if (response.status === "info") {
+                    $(elementName).DataTable().ajax.reload();
+                    showToastAllPage("info", response.message);
+                    $('#genre-modal').modal('hide');
+                } else {
+                    showToastAllPage("warning", response.message);
+                    $('#genre-modal').modal('hide');
+                }
             }
         })
-
     });
 })();

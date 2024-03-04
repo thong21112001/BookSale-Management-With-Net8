@@ -3,11 +3,11 @@ using BookSale.Management.Application.Abstracts;
 using BookSale.Management.Application.DTOs;
 using BookSale.Management.Application.DTOs.ViewModels;
 using BookSale.Management.Domain.Abstracts;
-using Microsoft.AspNetCore.Identity;
+using BookSale.Management.Domain.Entities;
 
 namespace BookSale.Management.Application.Services
 {
-    public class GenreService : IGenreService
+	public class GenreService : IGenreService
     {
         private readonly IUnitOfWork _unitOfWork;
         private readonly IMapper _mapper;
@@ -45,5 +45,57 @@ namespace BookSale.Management.Application.Services
 				Data = result
 			};
 		}
-	}
+
+        public async Task<ResponseModel> Save(GenreViewModel request)
+        {
+            string errors = string.Empty;
+
+
+            if (request.Id == 0)
+            {
+                var genreSave = new Genre
+                {
+                    Name = request.Name,
+                    Description = request.Description,
+                    IsActive = request.IsActive
+                };
+
+                await _unitOfWork.GenreRepository.CreateGenre(genreSave);
+                await _unitOfWork.GenreRepository.SaveGenre();
+
+                return new ResponseModel
+                {
+                    Action = Domain.Enums.ActionType.Insert,
+                    Message = "Thêm thành công !!!",
+                    Status = true
+                };
+            }
+            else
+            {
+				_unitOfWork.GenreRepository.UpdateGenre(_mapper.Map<Genre>(request));
+                await _unitOfWork.GenreRepository.SaveGenre();
+
+                return new ResponseModel
+                {
+                    Action = Domain.Enums.ActionType.Update,
+                    Message = "Cập nhập thành công !!!",
+                    Status = true
+                };
+            }
+        }
+
+        public async Task<bool> Delete(int id)
+        {
+            var genre = await _unitOfWork.GenreRepository.GetById(id);
+
+            if (genre is not null)
+            {
+                _unitOfWork.GenreRepository.DeleteGenre(genre);
+                await _unitOfWork.GenreRepository.SaveGenre();
+
+                return true;
+            }
+            return false;
+        }
+    }
 }

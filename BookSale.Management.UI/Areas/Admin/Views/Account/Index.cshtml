@@ -59,11 +59,13 @@
 	</div>
 </div>
 <!--end::Card-->
-@await Html.PartialAsync("_Toast")
 
 @section Scripts{
 	<script src="~/Admin/assets/plugins/custom/datatables/datatables.bundle.js"></script>
 	<script src="~/Admin/assets/js/pages/crud/datatables/basic/paginations.js"></script>
+	@* Add toast *@
+	@* <script src="~/lib/jquery/dist/jquery.min.js"></script> *@
+	<script src="//cdnjs.cloudflare.com/ajax/libs/toastr.js/latest/js/toastr.min.js"></script>
 
     <script src="~/admin/settingsjs/registerdatatable.js"></script>
 	@* Gọi hàm xoá viết riêng cho button delete ở cột action *@
