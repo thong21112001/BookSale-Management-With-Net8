@@ -1,16 +1,12 @@
 ﻿using BookSale.Management.Application.Abstracts;
 using BookSale.Management.Application.DTOs;
 using BookSale.Management.UI.Ultility;
-using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
-using Newtonsoft.Json;
 
 namespace BookSale.Management.UI.Areas.Admin.Controllers
 {
-    [Area("Admin")]
-    [Authorize]
-    public class AccountController : Controller
-    {
+	public class AccountController : BaseController
+	{
         private readonly IUserService _userService;
         private readonly IRoleService _roleService;
 

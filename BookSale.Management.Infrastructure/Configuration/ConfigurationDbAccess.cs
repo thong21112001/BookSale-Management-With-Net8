@@ -4,6 +4,7 @@ using BookSale.Management.DataAccess.DataAccess;
 using BookSale.Management.DataAccess.Repository;
 using BookSale.Management.Domain.Abstracts;
 using BookSale.Management.Domain.Entities;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Configuration;
@@ -62,6 +63,17 @@ namespace BookSale.Management.Infrastructure.Configuration
         public static void AddAutoMapper(this IServiceCollection services)
         {
             services.AddAutoMapper(AppDomain.CurrentDomain.GetAssemblies());
+        }
+        
+        //Xác thực người dùng với Authorize ở trên mỗi controller, làm ngắn gọn code, không lặp
+        public static void AddAuthorizationGlobal(this IServiceCollection services)
+        {
+            var authorizedAdmin = new AuthorizationPolicyBuilder().RequireAuthenticatedUser().Build();
+
+            services.AddAuthorization(options =>
+            {
+                options.AddPolicy("AuthorizedAdminPolicy", authorizedAdmin);
+            });
         }
     }
 }

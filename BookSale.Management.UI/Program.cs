@@ -14,6 +14,8 @@ builder.Services.AddDatabaseDeveloperPageExceptionFilter();
 
 builder.Services.AddControllersWithViews();
 
+builder.Services.AddAuthorizationGlobal();
+
 var app = builder.Build();
 
 //Chạy qua đây check xem database có hay chưa, sẽ tạo mới
@@ -51,7 +53,7 @@ app.MapAreaControllerRoute(
     name: "AdminRouting",
     areaName: "Admin",
     pattern: "Admin/{controller=Home}/{action=Index}/{id?}"
-    );
+    ).RequireAuthorization("AuthorizedAdminPolicy");
 
 app.MapControllerRoute(
     name: "default",

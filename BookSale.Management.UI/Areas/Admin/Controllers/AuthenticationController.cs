@@ -1,11 +1,13 @@
 ﻿using BookSale.Management.Application.Abstracts;
 using BookSale.Management.UI.Areas.Admin.Models;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 
 namespace BookSale.Management.UI.Areas.Admin.Controllers
 {
     //domain/Admin/Authentication/{Action}
     [Area("Admin")]
+    [AllowAnonymous]    //Ai vao cx dc ko can chung thuc
 	public class AuthenticationController : Controller
     {
         private readonly IAuthenticationService _authenticationService;

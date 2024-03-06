@@ -5,10 +5,8 @@ using Microsoft.AspNetCore.Mvc;
 namespace BookSale.Management.UI.Areas.Admin.Controllers
 {
     //domain/Admin/Home/Index
-    [Area("Admin")]
-    [Authorize]
-    public class HomeController : Controller
-    {
+    public class HomeController : BaseController
+	{
 		[Breadscrum("Home")]
 		public IActionResult Index()
         {
