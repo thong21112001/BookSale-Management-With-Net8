@@ -1,5 +1,6 @@
 ﻿using BookSale.Management.Application.Abstracts;
 using BookSale.Management.Application.Services;
+using BookSale.Management.DataAccess.Dapper;
 using BookSale.Management.DataAccess.DataAccess;
 using BookSale.Management.DataAccess.Repository;
 using BookSale.Management.Domain.Abstracts;
@@ -49,10 +50,12 @@ namespace BookSale.Management.Infrastructure.Configuration
             });
         }
 
+        //Cấu hình đăng ký dịch dụ, repository, dapper
         public static void AddDependencyInjection(this IServiceCollection services)
         {
             services.AddTransient<PasswordHasher<ApplicationUser>>();
             services.AddTransient<IUnitOfWork, UnitOfWork>();
+            services.AddTransient<ISQLQueryHandler, SQLQueryHandler>();
             services.AddTransient<IImageService, ImageService>();
             services.AddTransient<IUserService,UserService>();
             services.AddTransient<IRoleService, RoleService>();
