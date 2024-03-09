@@ -6,10 +6,13 @@ namespace BookSale.Management.DataAccess.Repository
 {
     public class BookRepository : GenericRepository<Book>, IBookRepository
     {
-        private readonly BookSaleDbContext _context;
-
         public BookRepository(BookSaleDbContext context) : base(context)
         {
         }
-    }
+
+		public async Task<IEnumerable<Book>> GetAllBook()
+		{
+			return await GetALlAsync();
+		}
+	}
 }
