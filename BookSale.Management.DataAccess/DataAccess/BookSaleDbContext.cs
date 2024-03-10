@@ -17,6 +17,7 @@ namespace BookSale.Management.DataAccess.DataAccess
 
         public DbSet<Book> Book { get; set; }
         public DbSet<BookCatalogue> BookCatalogue { get; set; }
+        public DbSet<BookImages> BookImages { get; set; }
         public DbSet<Genre> Genre { get; set; }
         public DbSet<Catalogue> Catalogue { get; set; }
         public DbSet<UserAddress> UserAddresse { get; set; }

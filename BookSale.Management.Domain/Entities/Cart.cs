@@ -7,13 +7,13 @@ namespace BookSale.Management.Domain.Entities
     {
         [Required]
         [StringLength(250)]
-        public string Code { get; set; }
+        public string Code { get; set; } = string.Empty;
 
         public DateTime CreatedOn { get; set; }
 
         [Required]
         [StringLength(1000)]
-        public string Note { get; set; }
+        public string Note { get; set; } = string.Empty;
 
         [Required]
         public bool Status { get; set; }

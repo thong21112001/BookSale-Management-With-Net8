@@ -14,7 +14,7 @@ namespace BookSale.Management.Domain.Entities
         public string? PhoneNumber { get; set; }
 
         [StringLength(200)]
-        public string Email { get; set; }
+        public string Email { get; set; } = string.Empty;
 
         [StringLength(500)]
         public string? Address { get; set; }

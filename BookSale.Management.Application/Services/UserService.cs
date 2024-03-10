@@ -83,6 +83,7 @@ namespace BookSale.Management.Application.Services
                 UserName = request.Username,
                 IsActive = request.IsActive,
                 PhoneNumber = request.Phone,
+                MobilePhone = request.MobilePhone,
                 Address = request.Address,
             };
 
@@ -114,6 +115,7 @@ namespace BookSale.Management.Application.Services
                 userUpdate.Email = request.Email;
                 userUpdate.IsActive = request.IsActive;
                 userUpdate.PhoneNumber = request.Phone;
+                userUpdate.MobilePhone = request.MobilePhone;
                 userUpdate.Address = request.Address;
 
                 var identityUser = await _userManager.UpdateAsync(userUpdate);

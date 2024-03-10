@@ -13,5 +13,6 @@ namespace BookSale.Management.Domain.Entities
 
         [Required]
         public bool IsActive { get; set; }
+        public string? MobilePhone { get; set; }
     }
 }

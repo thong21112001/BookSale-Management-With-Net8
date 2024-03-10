@@ -9,9 +9,12 @@ namespace BookSale.Management.Domain.Entities
 
         public int Quantity { get; set; }
 
+        //Description
         [Required]
         [StringLength(500)]
-        public string Note { get; set; }
+        public string Note { get; set; } = string.Empty;
+
+        public bool IsActive { get; set; }
 
         [Required]
         public int BookId { get; set; }
