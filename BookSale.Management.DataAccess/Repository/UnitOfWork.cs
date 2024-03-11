@@ -6,19 +6,19 @@ namespace BookSale.Management.DataAccess.Repository
     public class UnitOfWork : IUnitOfWork, IDisposable
     {
         private readonly BookSaleDbContext _context;
-
-        IGenreRepository? _genreRepository;
+		private readonly ISQLQueryHandler _queryHandler;
+		IGenreRepository? _genreRepository;
         IBookRepository? _bookRepository;
         private bool disposedValue;
 
-        public UnitOfWork(BookSaleDbContext context)
+        public UnitOfWork(BookSaleDbContext context, ISQLQueryHandler queryHandler)
         {
             _context = context;
-        }
+			_queryHandler = queryHandler;
+		}
 
         public IGenreRepository GenreRepository => _genreRepository ??= new GenreRepository(_context);
-        public IBookRepository BookRepository => _bookRepository ??= new BookRepository(_context);
-
+        public IBookRepository BookRepository => _bookRepository ??= new BookRepository(_context,_queryHandler);
 
 
         public async Task SaveChangeAsync()

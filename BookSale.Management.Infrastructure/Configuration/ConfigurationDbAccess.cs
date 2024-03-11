@@ -54,8 +54,8 @@ namespace BookSale.Management.Infrastructure.Configuration
         public static void AddDependencyInjection(this IServiceCollection services)
         {
             services.AddTransient<PasswordHasher<ApplicationUser>>();
-            services.AddTransient<IUnitOfWork, UnitOfWork>();
-            services.AddTransient<ISQLQueryHandler, SQLQueryHandler>();
+			services.AddTransient<ISQLQueryHandler, SQLQueryHandler>();
+			services.AddTransient<IUnitOfWork, UnitOfWork>();
             services.AddTransient<IImageService, ImageService>();
             services.AddTransient<IUserService,UserService>();
             services.AddTransient<IRoleService, RoleService>();

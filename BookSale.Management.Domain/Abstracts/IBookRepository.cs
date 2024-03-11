@@ -1,9 +1,7 @@
-﻿using BookSale.Management.Domain.Entities;
-
-namespace BookSale.Management.Domain.Abstracts
+﻿namespace BookSale.Management.Domain.Abstracts
 {
 	public interface IBookRepository
 	{
-		Task<IEnumerable<Book>> GetAllBook();
+		Task<(IEnumerable<T>, int)> GetAllBookByPagination<T>(int pageIndex, int pageSize, string keyword);
 	}
 }

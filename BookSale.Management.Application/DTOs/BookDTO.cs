@@ -1,21 +1,16 @@
-﻿using BookSale.Management.Domain.Entities;
-using System.ComponentModel.DataAnnotations.Schema;
-
-namespace BookSale.Management.Application.DTOs
+﻿namespace BookSale.Management.Application.DTOs
 {
+	//Phải đặt đúng thứ tự như trong store procedure Select
 	public class BookDTO
 	{
-		public int Id { get; set; }
+		public string? GenreName { get; set; }
+		public string? Code { get; set; }
 		public string? Title { get; set; }
-		public string? Author { get; set; }
-		public string? Publisher { get; set; }
 		public int Available { get; set; }
 		public double Price { get; set; }
+		public string? Publisher { get; set; }
+		public string? Author { get; set; }
 		public DateTime CreatedOn { get; set; }
-		public bool IsActive { get; set; }
-		public int GenreId { get; set; }
-
-		[ForeignKey(nameof(GenreId))]
-		public Genre Genre { get; set; }
+		public int Id { get; set; }
 	}
 }

@@ -1,18 +1,33 @@
 ﻿using BookSale.Management.DataAccess.DataAccess;
 using BookSale.Management.Domain.Abstracts;
 using BookSale.Management.Domain.Entities;
+using Dapper;
 
 namespace BookSale.Management.DataAccess.Repository
 {
     public class BookRepository : GenericRepository<Book>, IBookRepository
     {
-        public BookRepository(BookSaleDbContext context) : base(context)
-        {
-        }
+		private readonly ISQLQueryHandler _queryHandler;
 
-		public async Task<IEnumerable<Book>> GetAllBook()
+		public BookRepository(BookSaleDbContext context, ISQLQueryHandler queryHandler) : base(context)
+        {
+			_queryHandler = queryHandler;
+		}
+
+		public async Task<(IEnumerable<T>, int)> GetAllBookByPagination<T>(int pageIndex, int pageSize, string keyword)
 		{
-			return await GetALlAsync();
+			DynamicParameters parameters = new DynamicParameters();
+
+			parameters.Add("keyword", keyword,System.Data.DbType.String,System.Data.ParameterDirection.Input);
+			parameters.Add("pageIndex", pageIndex,System.Data.DbType.Int32, System.Data.ParameterDirection.Output);
+			parameters.Add("pageSize", pageSize, System.Data.DbType.Int32, System.Data.ParameterDirection.Output);
+			parameters.Add("totalRecords", 0,System.Data.DbType.Int32,System.Data.ParameterDirection.Output);
+
+			var result = await _queryHandler.ExecuteStoreProcedureReturnListAsync<T>("GetAllBookByPagination", parameters);
+
+			var totalRecords = parameters.Get<int>("totalRecords");
+
+			return (result, totalRecords);	//Trả về list T từ storeProcedure trong Db và tổng records.
 		}
 	}
 }

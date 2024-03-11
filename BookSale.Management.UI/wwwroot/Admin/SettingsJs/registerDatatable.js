@@ -1,4 +1,4 @@
-﻿function registerDatatable(elementName, columns, urlApi) {
+﻿function registerDatatable(elementName, columns, urlApi, callback) {
     $(elementName).DataTable({
         scrollX: true,
         scrollY: 300,

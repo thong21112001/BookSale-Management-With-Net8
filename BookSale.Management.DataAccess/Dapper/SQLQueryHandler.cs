@@ -47,12 +47,12 @@ namespace BookSale.Management.DataAccess.Dapper
 		}
 
 		//Trả về 1 list object vs storedprocedure
-		public async Task<IEnumerable<T>> ExecuteStoreProcedureReturnListAsync<T>(string qr,
+		public async Task<IEnumerable<T>> ExecuteStoreProcedureReturnListAsync<T>(string storeName,
 										DynamicParameters dynamicParameters, IDbTransaction dbTransaction = null)
 		{
 			using (var connection = new SqlConnection(_connectionString))
 			{
-				return await connection.QueryAsync<T>(qr, dynamicParameters, dbTransaction, commandType: CommandType.StoredProcedure);
+				return await connection.QueryAsync<T>(storeName, dynamicParameters, dbTransaction, commandType: CommandType.StoredProcedure);
 			}
 		}
 	}
