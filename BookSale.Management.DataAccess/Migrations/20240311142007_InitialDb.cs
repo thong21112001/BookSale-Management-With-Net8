@@ -3,10 +3,12 @@ using Microsoft.EntityFrameworkCore.Migrations;
 
 #nullable disable
 
+#pragma warning disable CA1814 // Prefer jagged arrays over multidimensional
+
 namespace BookSale.Management.DataAccess.Migrations
 {
     /// <inheritdoc />
-    public partial class Initable : Migration
+    public partial class InitialDb : Migration
     {
         /// <inheritdoc />
         protected override void Up(MigrationBuilder migrationBuilder)
@@ -63,6 +65,7 @@ namespace BookSale.Management.DataAccess.Migrations
                     Fullname = table.Column<string>(type: "nvarchar(250)", maxLength: 250, nullable: true),
                     Address = table.Column<string>(type: "nvarchar(1000)", maxLength: 1000, nullable: true),
                     IsActive = table.Column<bool>(type: "bit", nullable: false),
+                    MobilePhone = table.Column<string>(type: "nvarchar(max)", nullable: true),
                     UserName = table.Column<string>(type: "nvarchar(256)", maxLength: 256, nullable: true),
                     NormalizedUserName = table.Column<string>(type: "nvarchar(256)", maxLength: 256, nullable: true),
                     Email = table.Column<string>(type: "nvarchar(256)", maxLength: 256, nullable: true),
@@ -89,9 +92,11 @@ namespace BookSale.Management.DataAccess.Migrations
                 {
                     Id = table.Column<int>(type: "int", nullable: false)
                         .Annotation("SqlServer:Identity", "1, 1"),
+                    Code = table.Column<string>(type: "nvarchar(max)", nullable: true),
                     Title = table.Column<string>(type: "nvarchar(250)", maxLength: 250, nullable: false),
                     Author = table.Column<string>(type: "nvarchar(250)", maxLength: 250, nullable: false),
-                    Publisher = table.Column<string>(type: "nvarchar(250)", maxLength: 250, nullable: false),
+                    Publisher = table.Column<string>(type: "nvarchar(250)", maxLength: 250, nullable: true),
+                    Description = table.Column<string>(type: "nvarchar(1000)", maxLength: 1000, nullable: true),
                     Available = table.Column<int>(type: "int", nullable: false),
                     Price = table.Column<double>(type: "float", nullable: false),
                     CreatedOn = table.Column<DateTime>(type: "datetime2", nullable: false),
@@ -271,7 +276,8 @@ namespace BookSale.Management.DataAccess.Migrations
                         .Annotation("SqlServer:Identity", "1, 1"),
                     CreatedOn = table.Column<DateTime>(type: "datetime2", nullable: false),
                     BookId = table.Column<int>(type: "int", nullable: false),
-                    CatalogueId = table.Column<int>(type: "int", nullable: false)
+                    CatalogueId = table.Column<int>(type: "int", nullable: false),
+                    IsActive = table.Column<bool>(type: "bit", nullable: false)
                 },
                 constraints: table =>
                 {
@@ -291,6 +297,26 @@ namespace BookSale.Management.DataAccess.Migrations
                 });
 
             migrationBuilder.CreateTable(
+                name: "BookImages",
+                columns: table => new
+                {
+                    Id = table.Column<int>(type: "int", nullable: false)
+                        .Annotation("SqlServer:Identity", "1, 1"),
+                    Name = table.Column<string>(type: "nvarchar(250)", maxLength: 250, nullable: false),
+                    BookId = table.Column<int>(type: "int", nullable: false)
+                },
+                constraints: table =>
+                {
+                    table.PrimaryKey("PK_BookImages", x => x.Id);
+                    table.ForeignKey(
+                        name: "FK_BookImages_Book_BookId",
+                        column: x => x.BookId,
+                        principalTable: "Book",
+                        principalColumn: "Id",
+                        onDelete: ReferentialAction.Cascade);
+                });
+
+            migrationBuilder.CreateTable(
                 name: "CartDetails",
                 columns: table => new
                 {
@@ -299,6 +325,7 @@ namespace BookSale.Management.DataAccess.Migrations
                     Price = table.Column<double>(type: "float", nullable: false),
                     Quantity = table.Column<int>(type: "int", nullable: false),
                     Note = table.Column<string>(type: "nvarchar(500)", maxLength: 500, nullable: false),
+                    IsActive = table.Column<bool>(type: "bit", nullable: false),
                     BookId = table.Column<int>(type: "int", nullable: false),
                     CartId = table.Column<int>(type: "int", nullable: false)
                 },
@@ -319,6 +346,26 @@ namespace BookSale.Management.DataAccess.Migrations
                         onDelete: ReferentialAction.Cascade);
                 });
 
+            migrationBuilder.InsertData(
+                table: "Genre",
+                columns: new[] { "Id", "Description", "IsActive", "Name" },
+                values: new object[,]
+                {
+                    { 1, "Book", true, "Book" },
+                    { 2, "Comic", true, "Comic" },
+                    { 3, "Anime", true, "Anime" }
+                });
+
+            migrationBuilder.InsertData(
+                table: "Book",
+                columns: new[] { "Id", "Author", "Available", "Code", "CreatedOn", "Description", "GenreId", "IsActive", "Price", "Publisher", "Title" },
+                values: new object[,]
+                {
+                    { 1, "Conan", 20, "cn", new DateTime(2024, 3, 11, 21, 20, 6, 482, DateTimeKind.Local).AddTicks(6133), "Conan", 1, true, 20000.0, "Quang Thong", "Conan" },
+                    { 2, "Doraemon", 25, "drm", new DateTime(2024, 3, 11, 21, 20, 6, 482, DateTimeKind.Local).AddTicks(6149), "Doraemon", 2, true, 22000.0, "Anh", "Doraemon" },
+                    { 3, "OPM", 30, "opm", new DateTime(2024, 3, 11, 21, 20, 6, 482, DateTimeKind.Local).AddTicks(6151), "OPM", 3, true, 40000.0, "Minh", "OPM" }
+                });
+
             migrationBuilder.CreateIndex(
                 name: "IX_Book_GenreId",
                 table: "Book",
@@ -333,6 +380,11 @@ namespace BookSale.Management.DataAccess.Migrations
                 name: "IX_BookCatalogue_CatalogueId",
                 table: "BookCatalogue",
                 column: "CatalogueId");
+
+            migrationBuilder.CreateIndex(
+                name: "IX_BookImages_BookId",
+                table: "BookImages",
+                column: "BookId");
 
             migrationBuilder.CreateIndex(
                 name: "IX_Cart_UserId",
@@ -399,6 +451,9 @@ namespace BookSale.Management.DataAccess.Migrations
         {
             migrationBuilder.DropTable(
                 name: "BookCatalogue");
+
+            migrationBuilder.DropTable(
+                name: "BookImages");
 
             migrationBuilder.DropTable(
                 name: "CartDetails");

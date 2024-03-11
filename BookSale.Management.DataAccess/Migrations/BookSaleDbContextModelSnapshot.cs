@@ -150,6 +150,50 @@ namespace BookSale.Management.DataAccess.Migrations
                     b.HasIndex("GenreId");
 
                     b.ToTable("Book");
+
+                    b.HasData(
+                        new
+                        {
+                            Id = 1,
+                            Author = "Conan",
+                            Available = 20,
+                            Code = "cn",
+                            CreatedOn = new DateTime(2024, 3, 11, 21, 20, 6, 482, DateTimeKind.Local).AddTicks(6133),
+                            Description = "Conan",
+                            GenreId = 1,
+                            IsActive = true,
+                            Price = 20000.0,
+                            Publisher = "Quang Thong",
+                            Title = "Conan"
+                        },
+                        new
+                        {
+                            Id = 2,
+                            Author = "Doraemon",
+                            Available = 25,
+                            Code = "drm",
+                            CreatedOn = new DateTime(2024, 3, 11, 21, 20, 6, 482, DateTimeKind.Local).AddTicks(6149),
+                            Description = "Doraemon",
+                            GenreId = 2,
+                            IsActive = true,
+                            Price = 22000.0,
+                            Publisher = "Anh",
+                            Title = "Doraemon"
+                        },
+                        new
+                        {
+                            Id = 3,
+                            Author = "OPM",
+                            Available = 30,
+                            Code = "opm",
+                            CreatedOn = new DateTime(2024, 3, 11, 21, 20, 6, 482, DateTimeKind.Local).AddTicks(6151),
+                            Description = "OPM",
+                            GenreId = 3,
+                            IsActive = true,
+                            Price = 40000.0,
+                            Publisher = "Minh",
+                            Title = "OPM"
+                        });
                 });
 
             modelBuilder.Entity("BookSale.Management.Domain.Entities.BookCatalogue", b =>
@@ -327,6 +371,29 @@ namespace BookSale.Management.DataAccess.Migrations
                     b.HasKey("Id");
 
                     b.ToTable("Genre");
+
+                    b.HasData(
+                        new
+                        {
+                            Id = 1,
+                            Description = "Book",
+                            IsActive = true,
+                            Name = "Book"
+                        },
+                        new
+                        {
+                            Id = 2,
+                            Description = "Comic",
+                            IsActive = true,
+                            Name = "Comic"
+                        },
+                        new
+                        {
+                            Id = 3,
+                            Description = "Anime",
+                            IsActive = true,
+                            Name = "Anime"
+                        });
                 });
 
             modelBuilder.Entity("BookSale.Management.Domain.Entities.UserAddress", b =>

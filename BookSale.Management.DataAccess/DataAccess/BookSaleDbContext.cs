@@ -38,7 +38,57 @@ namespace BookSale.Management.DataAccess.DataAccess
             builder.Entity<IdentityUserClaim<string>>().ToTable("UserClaim");
             builder.Entity<IdentityUserToken<string>>().ToTable("UserToken");   
             builder.Entity<IdentityUserLogin<string>>().ToTable("UserLogin");   
-            builder.Entity<IdentityRoleClaim<string>>().ToTable("RoleClaim");   
-        }
+            builder.Entity<IdentityRoleClaim<string>>().ToTable("RoleClaim");
+
+            builder.Entity<Genre>().HasData(
+                new Genre { Id = 1, Name = "Book", Description = "Book", IsActive = true },
+                new Genre { Id = 2, Name = "Comic", Description = "Comic", IsActive = true },
+                new Genre { Id = 3, Name = "Anime", Description = "Anime", IsActive = true }
+            );
+
+			builder.Entity<Book>().HasData(
+				new Book { 
+                    Id = 1,
+                    Title = "Conan",
+                    Code = "cn",
+                    Author = "Conan",
+                    Publisher = "Quang Thong",
+                    Description = "Conan",
+                    Available = 20,
+                    Price = 20000,
+                    CreatedOn = DateTime.Now,
+                    IsActive = true,
+                    GenreId = 1,
+                },
+				new Book
+				{
+                    Id = 2,
+					Title = "Doraemon",
+					Code = "drm",
+					Author = "Doraemon",
+					Publisher = "Anh",
+					Description = "Doraemon",
+					Available = 25,
+					Price = 22000,
+					CreatedOn = DateTime.Now,
+					IsActive = true,
+					GenreId = 2,
+				}, 
+                new Book
+				{
+                    Id = 3,
+					Title = "OPM",
+					Code = "opm",
+					Author = "OPM",
+					Publisher = "Minh",
+					Description = "OPM",
+					Available = 30,
+					Price = 40000,
+					CreatedOn = DateTime.Now,
+					IsActive = true,
+					GenreId = 3,
+				}
+			);
+		}
     }
 }
