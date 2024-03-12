@@ -347,13 +347,32 @@ namespace BookSale.Management.DataAccess.Migrations
                 });
 
             migrationBuilder.InsertData(
+                table: "Catalogue",
+                columns: new[] { "Id", "Description", "IsActive", "Title" },
+                values: new object[,]
+                {
+                    { 1, "Văn học", true, "Văn học" },
+                    { 2, "Kinh tế", true, "Kinh tế" },
+                    { 3, "Sách thiếu nhi", true, "Sách thiếu nhi" }
+                });
+
+            migrationBuilder.InsertData(
                 table: "Genre",
                 columns: new[] { "Id", "Description", "IsActive", "Name" },
                 values: new object[,]
                 {
-                    { 1, "Book", true, "Book" },
-                    { 2, "Comic", true, "Comic" },
-                    { 3, "Anime", true, "Anime" }
+                    { 1, "Light Novel", true, "Light Novel" },
+                    { 2, "Marketing", true, "Marketing" },
+                    { 3, "Comic", true, "Comic" }
+                });
+
+            migrationBuilder.InsertData(
+                table: "Roles",
+                columns: new[] { "Id", "ConcurrencyStamp", "Name", "NormalizedName" },
+                values: new object[,]
+                {
+                    { "62150f4f-db4e-49f3-8f1c-0f2e2188ca1b", null, "User", "USER" },
+                    { "796919ae-8ffd-48da-9a30-0433929684cc", null, "Manager", "MANAGER" }
                 });
 
             migrationBuilder.InsertData(
@@ -361,9 +380,9 @@ namespace BookSale.Management.DataAccess.Migrations
                 columns: new[] { "Id", "Author", "Available", "Code", "CreatedOn", "Description", "GenreId", "IsActive", "Price", "Publisher", "Title" },
                 values: new object[,]
                 {
-                    { 1, "Conan", 20, "cn", new DateTime(2024, 3, 11, 21, 20, 6, 482, DateTimeKind.Local).AddTicks(6133), "Conan", 1, true, 20000.0, "Quang Thong", "Conan" },
-                    { 2, "Doraemon", 25, "drm", new DateTime(2024, 3, 11, 21, 20, 6, 482, DateTimeKind.Local).AddTicks(6149), "Doraemon", 2, true, 22000.0, "Anh", "Doraemon" },
-                    { 3, "OPM", 30, "opm", new DateTime(2024, 3, 11, 21, 20, 6, 482, DateTimeKind.Local).AddTicks(6151), "OPM", 3, true, 40000.0, "Minh", "OPM" }
+                    { 1, "Conan", 20, "cn", new DateTime(2024, 3, 12, 7, 22, 38, 284, DateTimeKind.Local).AddTicks(722), "Conan", 1, true, 20000.0, "Quang Thong", "Conan" },
+                    { 2, "Doraemon", 25, "drm", new DateTime(2024, 3, 12, 7, 22, 38, 284, DateTimeKind.Local).AddTicks(740), "Doraemon", 2, true, 22000.0, "Anh", "Doraemon" },
+                    { 3, "OPM", 30, "opm", new DateTime(2024, 3, 12, 7, 22, 38, 284, DateTimeKind.Local).AddTicks(742), "OPM", 3, true, 40000.0, "Minh", "OPM" }
                 });
 
             migrationBuilder.CreateIndex(

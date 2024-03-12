@@ -40,10 +40,16 @@ namespace BookSale.Management.DataAccess.DataAccess
             builder.Entity<IdentityUserLogin<string>>().ToTable("UserLogin");   
             builder.Entity<IdentityRoleClaim<string>>().ToTable("RoleClaim");
 
-            builder.Entity<Genre>().HasData(
-                new Genre { Id = 1, Name = "Book", Description = "Book", IsActive = true },
-                new Genre { Id = 2, Name = "Comic", Description = "Comic", IsActive = true },
-                new Genre { Id = 3, Name = "Anime", Description = "Anime", IsActive = true }
+			builder.Entity<Catalogue>().HasData(
+				new Catalogue { Id = 1, Title = "Văn học", Description = "Văn học", IsActive = true },
+				new Catalogue { Id = 2, Title = "Kinh tế", Description = "Kinh tế", IsActive = true },
+				new Catalogue { Id = 3, Title = "Sách thiếu nhi", Description = "Sách thiếu nhi", IsActive = true }
+			);
+
+			builder.Entity<Genre>().HasData(
+                new Genre { Id = 1, Name = "Light Novel", Description = "Light Novel", IsActive = true },
+                new Genre { Id = 2, Name = "Marketing", Description = "Marketing", IsActive = true },
+                new Genre { Id = 3, Name = "Comic", Description = "Comic", IsActive = true }
             );
 
 			builder.Entity<Book>().HasData(
@@ -89,6 +95,21 @@ namespace BookSale.Management.DataAccess.DataAccess
 					GenreId = 3,
 				}
 			);
+
+            builder.Entity<IdentityRole>().HasData(
+                new IdentityRole
+                {
+                    Id = "62150f4f-db4e-49f3-8f1c-0f2e2188ca1b",
+                    Name = "User",
+                    NormalizedName = "USER"
+                },
+                new IdentityRole
+                {
+					Id = "796919ae-8ffd-48da-9a30-0433929684cc",
+					Name = "Manager",
+					NormalizedName = "MANAGER"
+				}
+            );
 		}
     }
 }

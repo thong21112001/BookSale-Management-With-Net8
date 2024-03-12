@@ -12,7 +12,7 @@ using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 namespace BookSale.Management.DataAccess.Migrations
 {
     [DbContext(typeof(BookSaleDbContext))]
-    [Migration("20240311142007_InitialDb")]
+    [Migration("20240312002239_InitialDb")]
     partial class InitialDb
     {
         /// <inheritdoc />
@@ -161,7 +161,7 @@ namespace BookSale.Management.DataAccess.Migrations
                             Author = "Conan",
                             Available = 20,
                             Code = "cn",
-                            CreatedOn = new DateTime(2024, 3, 11, 21, 20, 6, 482, DateTimeKind.Local).AddTicks(6133),
+                            CreatedOn = new DateTime(2024, 3, 12, 7, 22, 38, 284, DateTimeKind.Local).AddTicks(722),
                             Description = "Conan",
                             GenreId = 1,
                             IsActive = true,
@@ -175,7 +175,7 @@ namespace BookSale.Management.DataAccess.Migrations
                             Author = "Doraemon",
                             Available = 25,
                             Code = "drm",
-                            CreatedOn = new DateTime(2024, 3, 11, 21, 20, 6, 482, DateTimeKind.Local).AddTicks(6149),
+                            CreatedOn = new DateTime(2024, 3, 12, 7, 22, 38, 284, DateTimeKind.Local).AddTicks(740),
                             Description = "Doraemon",
                             GenreId = 2,
                             IsActive = true,
@@ -189,7 +189,7 @@ namespace BookSale.Management.DataAccess.Migrations
                             Author = "OPM",
                             Available = 30,
                             Code = "opm",
-                            CreatedOn = new DateTime(2024, 3, 11, 21, 20, 6, 482, DateTimeKind.Local).AddTicks(6151),
+                            CreatedOn = new DateTime(2024, 3, 12, 7, 22, 38, 284, DateTimeKind.Local).AddTicks(742),
                             Description = "OPM",
                             GenreId = 3,
                             IsActive = true,
@@ -349,6 +349,29 @@ namespace BookSale.Management.DataAccess.Migrations
                     b.HasKey("Id");
 
                     b.ToTable("Catalogue");
+
+                    b.HasData(
+                        new
+                        {
+                            Id = 1,
+                            Description = "Văn học",
+                            IsActive = true,
+                            Title = "Văn học"
+                        },
+                        new
+                        {
+                            Id = 2,
+                            Description = "Kinh tế",
+                            IsActive = true,
+                            Title = "Kinh tế"
+                        },
+                        new
+                        {
+                            Id = 3,
+                            Description = "Sách thiếu nhi",
+                            IsActive = true,
+                            Title = "Sách thiếu nhi"
+                        });
                 });
 
             modelBuilder.Entity("BookSale.Management.Domain.Entities.Genre", b =>
@@ -379,23 +402,23 @@ namespace BookSale.Management.DataAccess.Migrations
                         new
                         {
                             Id = 1,
-                            Description = "Book",
+                            Description = "Light Novel",
                             IsActive = true,
-                            Name = "Book"
+                            Name = "Light Novel"
                         },
                         new
                         {
                             Id = 2,
-                            Description = "Comic",
+                            Description = "Marketing",
                             IsActive = true,
-                            Name = "Comic"
+                            Name = "Marketing"
                         },
                         new
                         {
                             Id = 3,
-                            Description = "Anime",
+                            Description = "Comic",
                             IsActive = true,
-                            Name = "Anime"
+                            Name = "Comic"
                         });
                 });
 
@@ -465,6 +488,20 @@ namespace BookSale.Management.DataAccess.Migrations
                         .HasFilter("[NormalizedName] IS NOT NULL");
 
                     b.ToTable("Roles", (string)null);
+
+                    b.HasData(
+                        new
+                        {
+                            Id = "62150f4f-db4e-49f3-8f1c-0f2e2188ca1b",
+                            Name = "User",
+                            NormalizedName = "USER"
+                        },
+                        new
+                        {
+                            Id = "796919ae-8ffd-48da-9a30-0433929684cc",
+                            Name = "Manager",
+                            NormalizedName = "MANAGER"
+                        });
                 });
 
             modelBuilder.Entity("Microsoft.AspNetCore.Identity.IdentityRoleClaim<string>", b =>
