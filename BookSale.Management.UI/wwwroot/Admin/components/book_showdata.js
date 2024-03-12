@@ -6,10 +6,21 @@
         { data: 'code', name: 'code', autoWidth: true },
         { data: 'title', name: 'title', autoWidth: true },
         { data: 'available', name: 'available', autoWidth: true },
-        { data: 'price', name: 'price', autoWidth: true },
+        {
+            data: 'price', name: 'price', autoWidth: true, render: function (data) {
+                return `<div class="text-left">${data.toLocaleString('vi-VN', {
+                    style: 'currency',
+                    currency: 'VND'
+                })}</div>`
+            }
+        },
         { data: 'publisher', name: 'publisher', autoWidth: true },
         { data: 'author', name: 'author', autoWidth: true },
-        { data: 'createdOn', name: 'createdOn', autoWidth: true },
+        {
+            data: 'createdOn', name: 'createdOn', autoWidth: true, render: function (data){
+                return `<div class="text-left">${moment(data).format("DD/MM/YYYY")}</div>`
+            }
+        },
         {
             data: 'id', name: 'id', width: '100', render: function (key) {
                 return `
