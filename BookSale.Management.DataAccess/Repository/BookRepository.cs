@@ -14,7 +14,12 @@ namespace BookSale.Management.DataAccess.Repository
 			_queryHandler = queryHandler;
 		}
 
-		public async Task<(IEnumerable<T>, int)> GetAllBookByPagination<T>(int pageIndex, int pageSize, string keyword)
+        public async Task<Book> GetById(int id)
+        {
+            return await GetSingleAsync(x => x.Id == id);
+        }
+
+        public async Task<(IEnumerable<T>, int)> GetAllBookByPagination<T>(int pageIndex, int pageSize, string keyword)
 		{
 			DynamicParameters parameters = new DynamicParameters();
 

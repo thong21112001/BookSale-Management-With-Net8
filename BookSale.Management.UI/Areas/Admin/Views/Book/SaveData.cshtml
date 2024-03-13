@@ -1,0 +1,77 @@
+﻿@model BookSale.Management.Application.DTOs.ViewModels.BookViewModel
+
+@{
+    ViewData["Title"] = "SaveData";
+    Layout = "~/Areas/Admin/Views/Shared/_Layout.cshtml";
+}
+
+<h1>@(Model.Id == 0 ? "Create" : "Update") Data</h1>
+
+<form class="forms-sample" asp-area="admin" asp-controller="book" asp-action="savedata"
+      method="post" asp-antiforgery="true">
+    @Html.Raw("<div asp-validation-summary='All' class='text-danger'></div>")
+    <input asp-for="Id" hidden />
+
+    <div class="row">
+        <div class="col-12">
+            <div class="form-group">
+                <label asp-for="GenreId"></label><span class="text-danger">*</span>
+                @Html.DropDownListFor(x => x.GenreId, (IEnumerable<SelectListItem>)ViewBag.Genre,
+                         "Please select", new { @class = "form-control" })
+                <span class="text-danger" asp-validation-for="GenreId"></span>
+            </div>
+        </div>
+    </div>
+
+    <div class="row">
+        <div class="col-6">
+            <div class="form-group">
+                <label asp-for="Title"></label><span class="text-danger">*</span>
+                <input type="text" class="form-control p-input" id="Title" placeholder="Enter title" asp-for="Title">
+                <span class="text-danger" asp-validation-for="Title"></span>
+            </div>
+        </div>
+        <div class="col-6">
+            <div class="form-group">
+                <label asp-for="Available"></label><span class="text-danger">*</span>
+                <input type="text" class="form-control p-input" id="Available" placeholder="Enter available" asp-for="Available">
+                <span class="text-danger" asp-validation-for="Available"></span>
+            </div>
+        </div>
+    </div>
+
+    <div class="row">
+        <div class="col-4">
+            <div class="form-group">
+                <label asp-for="Price"></label><span class="text-danger">*</span>
+                <input type="text" class="form-control p-input" id="Price" placeholder="Enter price" asp-for="Price">
+                <span class="text-danger" asp-validation-for="Price"></span>
+            </div>
+        </div>
+        <div class="col-4">
+            <div class="form-group">
+                <label asp-for="Publisher"></label><span class="text-danger">*</span>
+                <input type="text" class="form-control p-input" id="Publisher" placeholder="Enter publisher" asp-for="Publisher">
+                <span class="text-danger" asp-validation-for="Publisher"></span>
+            </div>
+        </div>
+        <div class="col-4">
+            <div class="form-group">
+                <label asp-for="Author"></label><span class="text-danger">*</span>
+                <input type="text" class="form-control p-input" id="Author" placeholder="Enter author" asp-for="Author">
+                <span class="text-danger" asp-validation-for="Author"></span>
+            </div>
+        </div>
+    </div>
+
+    <div class="d-flex justify-content-end">
+        <button type="submit" class="btn btn-primary">Submit</button>
+        @Html.ActionLink("Cancel", "Index", "Book", null, new { @class = "btn btn-secondary ml-1" })
+    </div>
+</form>
+
+@section Scripts {
+    <script src="~/lib/jquery-validation/dist/jquery.validate.min.js"></script>
+    <script src="~/lib/jquery-validation-unobtrusive/jquery.validate.unobtrusive.min.js"></script>
+}
+

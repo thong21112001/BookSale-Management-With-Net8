@@ -25,7 +25,7 @@
             data: 'id', name: 'id', width: '100', render: function (key) {
                 return `
                     <span data-key="${key}">
-                            <a class="btn-edit btn btn-icon btn-warning btn-sm mr-2"><i class="fas fa-pencil-alt"></i></a>
+                            <a href="/admin/book/savedata?id=${key}" class="btn-edit btn btn-icon btn-warning btn-sm mr-2"><i class="fas fa-pencil-alt"></i></a>
                             &nbsp
 							<a onClick = Delete('/admin/genre/delete/${key}') class="btn btn-icon btn-danger btn-sm mr-2"><i class="far fa-trash-alt"></i></a>
                     </span>
