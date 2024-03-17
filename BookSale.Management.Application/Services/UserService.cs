@@ -22,6 +22,7 @@ namespace BookSale.Management.Application.Services
             _imageService = imageService;
         }
 
+        //Lấy toàn bộ user và phân trang
         public async Task<ResponseDataTable<UserModel>> GetAllUser(RequestDataTable request)
         {
             var users = await _userManager.Users
@@ -59,6 +60,7 @@ namespace BookSale.Management.Application.Services
             };
         }
 
+        //Lấy user và role thông qua id
         public async Task<CreateAccountDTO> GetUserById(string id)
         {
             var user = await _userManager.FindByIdAsync(id);
@@ -72,6 +74,7 @@ namespace BookSale.Management.Application.Services
             return userDTOs;
         }
 
+        //Hàm tạo và cập nhập tài khoản
         public async Task<ResponseModel> Save(CreateAccountDTO request)
         {
             string errors = string.Empty;
@@ -153,7 +156,8 @@ namespace BookSale.Management.Application.Services
                 Status = false
             };
         }
-    
+        
+        //Hàm xoá (ẩn tài khoản không xoá hẳn)
         public async Task<bool> Delete(string id)
         {
             var user = await _userManager.FindByIdAsync(id);

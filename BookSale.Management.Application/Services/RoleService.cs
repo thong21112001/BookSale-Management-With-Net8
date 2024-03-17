@@ -14,7 +14,8 @@ namespace BookSale.Management.Application.Services
             _roleManager = roleManager;
         }
 
-        public async Task<IEnumerable<SelectListItem>> GetRoleForDropDownList()
+		//Hàm lấy tất cả role của web hiển thị lên dropdown list trong tạo tài khoản Account/SaveData
+		public async Task<IEnumerable<SelectListItem>> GetRoleForDropDownList()
         {
             var roles = await _roleManager.Roles.ToListAsync();
 

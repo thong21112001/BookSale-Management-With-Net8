@@ -5,7 +5,8 @@ using Microsoft.AspNetCore.Hosting;
 
 namespace BookSale.Management.Application.Services
 {
-    public class ImageService : IImageService
+	//Class dùng để lưu ảnh
+	public class ImageService : IImageService
     {
         private readonly IWebHostEnvironment _webHostEnvironment;
 

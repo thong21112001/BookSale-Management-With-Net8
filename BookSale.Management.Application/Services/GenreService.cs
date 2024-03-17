@@ -26,6 +26,7 @@ namespace BookSale.Management.Application.Services
 			return _mapper.Map<GenreViewModel>(genre);
 		}
 
+        //Hàm lấy tất cả thể loại hiển thị lên datatable ở Genre/Index
 		public async Task<ResponseDataTable<GenreDTO>> GetAllGenre(RequestDataTable request)
 		{
 			var genres = await _unitOfWork.GenreRepository.GetAllGenre();
@@ -46,7 +47,8 @@ namespace BookSale.Management.Application.Services
 			};
 		}
 
-        public async Task<ResponseModel> Save(GenreViewModel request)
+		//Hàm tạo mới và cập nhập
+		public async Task<ResponseModel> Save(GenreViewModel request)
         {
             if (request.Id == 0)
             {
@@ -56,32 +58,25 @@ namespace BookSale.Management.Application.Services
                     Description = request.Description,
                     IsActive = request.IsActive
                 };
-
                 await _unitOfWork.GenreRepository.CreateGenre(genreSave);
-                await _unitOfWork.GenreRepository.SaveGenre();
-
-                return new ResponseModel
-                {
-                    Action = Domain.Enums.ActionType.Insert,
-                    Message = "Thêm thành công !!!",
-                    Status = true
-                };
             }
             else
             {
 				_unitOfWork.GenreRepository.UpdateGenre(_mapper.Map<Genre>(request));
-                await _unitOfWork.GenreRepository.SaveGenre();
-
-                return new ResponseModel
-                {
-                    Action = Domain.Enums.ActionType.Update,
-                    Message = "Cập nhập thành công !!!",
-                    Status = true
-                };
             }
-        }
 
-        public async Task<bool> Delete(int id)
+			await _unitOfWork.GenreRepository.SaveGenre();
+
+			return new ResponseModel
+			{
+				Action = Domain.Enums.ActionType.Update,
+				Message = $"{(request.Id == 0 ? "Thêm mới" : "Cập nhập")} thành công !!!",
+				Status = true
+			};
+		}
+
+		//Hàm xoá genre
+		public async Task<bool> Delete(int id)
         {
             var genre = await _unitOfWork.GenreRepository.GetById(id);
 

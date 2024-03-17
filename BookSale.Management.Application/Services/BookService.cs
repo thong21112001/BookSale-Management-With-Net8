@@ -21,7 +21,8 @@ namespace BookSale.Management.Application.Services
             _commonService = commonService;
         }
 
-        public async Task<IEnumerable<SelectListItem>> GetGenreForDropDownList()
+		//Hàm lấy tất cả các thể loại hiển thị lên dropdown list ở Book/SaveData
+		public async Task<IEnumerable<SelectListItem>> GetGenreForDropDownList()
         {
             var genres = await _unitOfWork.GenreRepository.GetAllGenre();
 
@@ -32,7 +33,8 @@ namespace BookSale.Management.Application.Services
             });
         }
 
-        public async Task<BookViewModel> GetBookById(int id)
+		//Hàm lấy 1 sách khi truyền vào Id của book
+		public async Task<BookViewModel> GetBookById(int id)
         {
             var book = await _unitOfWork.BookRepository.GetById(id);
 
@@ -41,7 +43,8 @@ namespace BookSale.Management.Application.Services
 			return bookDTO;
 		}
 
-        public async Task<ResponseDataTable<BookDTO>> GetAllBookPaginationAsync(RequestDataTable request)
+		//Hàm phân trang, hiển thị danh sách book lên Book/Index
+		public async Task<ResponseDataTable<BookDTO>> GetAllBookPaginationAsync(RequestDataTable request)
 		{
 			try
 			{
@@ -66,6 +69,7 @@ namespace BookSale.Management.Application.Services
 			}
 		}
 
+		//Hàm tạo mới và cập nhập sách
 		public async Task<ResponseModel> SaveAsync(BookViewModel bookVM)
 		{
 			var book = _mapper.Map<Book>(bookVM);
@@ -93,7 +97,8 @@ namespace BookSale.Management.Application.Services
 			};
 		}
 
-        public async Task<string> GenerateCodeAsync(int number = 8)
+		//Hàm tạo code random khi bấm button tạo mới cho book
+		public async Task<string> GenerateCodeAsync(int number = 8)
         {
             //Tránh trùng code book
             string newCode = string.Empty;
