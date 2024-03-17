@@ -12,6 +12,8 @@ namespace BookSale.Management.Application.DTOs
 
         [BindProperty(Name = "search[value]")]
         public string? keyword { get; set; }
-        public int Draw { get; set; }
+
+		[BindProperty(Name = "draw")]
+		public int Draw { get; set; }
     }
 }

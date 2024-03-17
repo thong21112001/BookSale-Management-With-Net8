@@ -3,7 +3,7 @@ using BookSale.Management.Application.Abstracts;
 using BookSale.Management.Application.DTOs;
 using BookSale.Management.Application.DTOs.ViewModels;
 using BookSale.Management.Domain.Abstracts;
-using Microsoft.AspNetCore.Identity;
+using BookSale.Management.Domain.Entities;
 using Microsoft.AspNetCore.Mvc.Rendering;
 
 namespace BookSale.Management.Application.Services
@@ -12,11 +12,13 @@ namespace BookSale.Management.Application.Services
 	{
 		private readonly IUnitOfWork _unitOfWork;
         private readonly IMapper _mapper;
+        private readonly ICommonService _commonService;
 
-        public BookService(IUnitOfWork unitOfWork, IMapper mapper)
+        public BookService(IUnitOfWork unitOfWork, IMapper mapper, ICommonService commonService)
         {
 			_unitOfWork = unitOfWork;
             _mapper = mapper;
+            _commonService = commonService;
         }
 
         public async Task<IEnumerable<SelectListItem>> GetGenreForDropDownList()
@@ -46,7 +48,7 @@ namespace BookSale.Management.Application.Services
 				int totalRecords = 0;
 				IEnumerable<BookDTO> books;
 
-				(books, totalRecords) = await _unitOfWork.BookRepository.GetAllBookByPagination<BookDTO>(request.SkipItems, request.PageSize, request.keyword);
+				(books, totalRecords) = await _unitOfWork.BookRepository.GetAllBookByPagination<BookDTO>((request.SkipItems/request.PageSize) + 1, request.PageSize, request.keyword);
 
 				return new ResponseDataTable<BookDTO>
 				{
@@ -63,5 +65,51 @@ namespace BookSale.Management.Application.Services
 				throw; // Rethrow the exception
 			}
 		}
+
+		public async Task<ResponseModel> SaveAsync(BookViewModel bookVM)
+		{
+			var book = _mapper.Map<Book>(bookVM);
+
+			if (bookVM.Id == 0)
+			{
+				book.CreatedOn = DateTime.Now;
+				book.IsActive = true;
+                book.Code = bookVM.Code;
+
+                await _unitOfWork.BookRepository.CreateBook(book);
+            }
+			else
+			{
+                _unitOfWork.BookRepository.UpdateBook(book);
+            }
+
+			await _unitOfWork.BookRepository.SaveBook();
+
+			return new ResponseModel
+			{
+				Action = Domain.Enums.ActionType.Update,
+				Message = $"{(bookVM.Id == 0 ? "Thêm mới" : "Cập nhập")} thành công !!!",
+				Status = true
+			};
+		}
+
+        public async Task<string> GenerateCodeAsync(int number = 8)
+        {
+            //Tránh trùng code book
+            string newCode = string.Empty;
+
+            while (true)
+            {
+                newCode = _commonService.GenerateRandomCode(number);
+                var bookCode = await _unitOfWork.BookRepository.GetCodeBook(newCode);
+
+                if (bookCode is null)
+                {
+                    break;
+                }
+            };
+
+            return newCode;
+        }
 	}
 }

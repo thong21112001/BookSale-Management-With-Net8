@@ -1,7 +1,6 @@
 ﻿using BookSale.Management.Application.Abstracts;
 using BookSale.Management.Application.DTOs;
 using BookSale.Management.Application.DTOs.ViewModels;
-using BookSale.Management.Application.Services;
 using BookSale.Management.UI.Ultility;
 using Microsoft.AspNetCore.Mvc;
 
@@ -32,9 +31,17 @@ namespace BookSale.Management.UI.Areas.Admin.Controllers
         [HttpGet]
         public async Task<IActionResult> SaveData(int id)
         {
-            BookViewModel bookVM = !(id == 0) ? await _bookService.GetBookById(id) : new();
+            var bookVM = new BookViewModel();
 
             ViewBag.Genre = await _bookService.GetGenreForDropDownList();
+
+            string code = await _bookService.GenerateCodeAsync();
+            bookVM.Code = code;
+
+            if (id != 0)
+            {
+                bookVM = await _bookService.GetBookById(id);
+            }
 
             return View(bookVM);
         }
@@ -50,30 +57,36 @@ namespace BookSale.Management.UI.Areas.Admin.Controllers
                 return View(bookVM);
             }
 
-            //var result = await _userService.Save(accountDTO);
+            var result = await _bookService.SaveAsync(bookVM);
 
-            //if (result.Status)
-            //{
-            //    if (string.IsNullOrEmpty(accountDTO.Id))
-            //    {
-            //        TempData["Type"] = "success";
-            //        TempData["Message"] = "Thêm thành công !!!";
-            //    }
-            //    else
-            //    {
-            //        TempData["Type"] = "info";
-            //        TempData["Message"] = "Cập nhập thành công !!!";
-            //    }
-            //    return RedirectToAction("", "Account");
-            //}
+            if (result.Status)
+            {
+                if (bookVM.Id == 0)
+                {
+                    TempData["Type"] = "success";
+                    TempData["Message"] = result.Message;
+                }
+                else
+                {
+                    TempData["Type"] = "info";
+                    TempData["Message"] = result.Message;
+                }
+                return RedirectToAction("", "Book");
+            }
 
-            //ModelState.AddModelError("", result.Message);
-            //ViewBag.Roles = await _roleService.GetRoleForDropDownList();
-            //TempData["Type"] = "warning";
-            //TempData["Message"] = "Có lỗi xảy ra !!!";
+            ModelState.AddModelError("", "Invalid model");
+            ViewBag.Genre = await _bookService.GetGenreForDropDownList();
+            TempData["Type"] = "warning";
+            TempData["Message"] = "Có lỗi xảy ra !!!";
 
             return View(bookVM);
         }
 
+        [HttpGet]
+        public async Task<IActionResult> GenerateCodeBook()
+        {
+            var result = await _bookService.GenerateCodeAsync();
+            return Json(result);
+        }
     }
 }

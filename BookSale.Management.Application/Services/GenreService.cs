@@ -48,9 +48,6 @@ namespace BookSale.Management.Application.Services
 
         public async Task<ResponseModel> Save(GenreViewModel request)
         {
-            string errors = string.Empty;
-
-
             if (request.Id == 0)
             {
                 var genreSave = new Genre

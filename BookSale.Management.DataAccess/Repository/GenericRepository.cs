@@ -51,10 +51,8 @@ namespace BookSale.Management.DataAccess.Repository
         }
 
         //Update 1 dữ liệu đc truyền vào
-        public void Update(T entity)
+        public void Update(T entity, params string[] excludeProperties)
         {
-            //_context.Set<T>().Attach(entity);
-            //_context.Entry(entity).State = EntityState.Modified;
             var entry = _context.Entry(entity);
             if (entry.State == EntityState.Detached)
             {
@@ -62,7 +60,12 @@ namespace BookSale.Management.DataAccess.Repository
             }
 
             entry.State = EntityState.Modified;
-        }
+
+			foreach (var property in excludeProperties)
+			{
+				entry.Property(property).IsModified = false;
+			}
+		}
 
         //Xoá 1 dữ liệu đc truyền vào
         public void Delete(T entity)

@@ -15,6 +15,13 @@ namespace BookSale.Management.Application.DTOs.ViewModels
         public string? Title { get; set; }
 
         [Required(ErrorMessage = "Không để trống")]
+        [DisplayName("THÔNG TIN")]
+        public string? Description { get; set; }
+
+        [DisplayName("CODE")]
+        public string? Code { get; set; }
+
+        [Required(ErrorMessage = "Không để trống")]
         [DisplayName("SỐ LƯỢNG")]
         public int Available { get; set; }
 
@@ -29,5 +36,7 @@ namespace BookSale.Management.Application.DTOs.ViewModels
         [Required(ErrorMessage = "Không để trống")]
         [DisplayName("TÁC GIẢ")]
         public string? Author { get; set; }
+
+        public bool IsActive { get; set; }
     }
 }
