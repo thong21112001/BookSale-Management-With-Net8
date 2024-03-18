@@ -24,6 +24,8 @@
     <link href="~/Admin/assets/css/themes/layout/aside/dark.css" rel="stylesheet" type="text/css" />
     <!--end::Layout Themes-->
     <link rel="shortcut icon" href="~/Admin/assets/media/logos/favicon.ico" />
+    <!--Begin::Background Waiting-->
+    <link href="~/admin/settingscss/backgroundwaiting.css" rel="stylesheet" />
     <!--Begin::Toaster-->
     <link href="https://cdnjs.cloudflare.com/ajax/libs/toastr.js/latest/css/toastr.min.css" rel="stylesheet" />
     <!--End::Toaster-->
@@ -91,6 +93,9 @@
     <!--end::Global Theme Bundle-->
     <!--begin::Add moment js-->
     <script src="~/lib/moment/moment.min.js"></script>
+    <!--begin::Add background waiting js-->
+    <script src="~/lib/background-waiting/jquery.blockui.js"></script>
+    <script src="~/admin/settingsjs/background_waiting.js"></script>
     @await RenderSectionAsync("Scripts", required: false)
 </body>
 </html>
