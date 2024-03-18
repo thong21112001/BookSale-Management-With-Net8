@@ -60,5 +60,19 @@ namespace BookSale.Management.DataAccess.Repository
         {
             await Commit();
         }
+
+        //Show book to Customer
+        public async Task<(IEnumerable<Book>, int)> GetAllBookByCustomer(int genreId, int pageIndex, int pageSize = 10)
+        {
+            IEnumerable<Book> books;
+
+            books = await base.GetALlAsync(x => genreId == 0 || x.GenreId == genreId);
+
+            var totalRecords = books.Count();
+
+            books = books.Skip((pageIndex - 1) * pageSize).Take(pageIndex * pageSize).ToList();
+
+            return (books, totalRecords);
+        }
     }
 }

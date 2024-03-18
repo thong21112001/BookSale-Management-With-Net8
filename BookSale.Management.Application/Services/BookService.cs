@@ -116,5 +116,27 @@ namespace BookSale.Management.Application.Services
 
             return newCode;
         }
-	}
+
+        //
+        public async Task<(IEnumerable<BookDTO>,int)> GetAllBookByCustomer(int genreId, int pageIndex, int pageSize = 10)
+        {
+            try
+            {
+                IEnumerable<Book> books;
+                int totalRecords = 0;
+
+                (books, totalRecords) = await _unitOfWork.BookRepository.GetAllBookByCustomer(genreId, pageIndex, pageSize);
+
+                var bookDTOs = _mapper.Map<IEnumerable<BookDTO>>(books);
+
+                return (bookDTOs,totalRecords);
+            }
+            catch (Exception ex)
+            {
+                // Log or handle the exception here
+                Console.WriteLine($"Error in GetAllBookByCustomer: {ex.Message}");
+                throw; // Rethrow the exception
+            }
+        }
+    }
 }

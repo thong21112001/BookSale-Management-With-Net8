@@ -4,6 +4,7 @@ using BookSale.Management.Application.DTOs;
 using BookSale.Management.Application.DTOs.ViewModels;
 using BookSale.Management.Domain.Abstracts;
 using BookSale.Management.Domain.Entities;
+using Microsoft.AspNetCore.Mvc.Rendering;
 
 namespace BookSale.Management.Application.Services
 {
@@ -26,8 +27,20 @@ namespace BookSale.Management.Application.Services
 			return _mapper.Map<GenreViewModel>(genre);
 		}
 
+        //
+        public async Task<IEnumerable<SelectListItem>> GetGenreForCategory()
+        {
+            var genres = await _unitOfWork.GenreRepository.GetAllGenre();
+
+            return genres.Select(x => new SelectListItem
+            {
+                Value = x.Id.ToString(),
+                Text = x.Name
+            });
+        }
+
         //Hàm lấy tất cả thể loại hiển thị lên datatable ở Genre/Index
-		public async Task<ResponseDataTable<GenreDTO>> GetAllGenre(RequestDataTable request)
+        public async Task<ResponseDataTable<GenreDTO>> GetAllGenre(RequestDataTable request)
 		{
 			var genres = await _unitOfWork.GenreRepository.GetAllGenre();
 

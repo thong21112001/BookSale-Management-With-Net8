@@ -1,4 +1,5 @@
 ﻿using BookSale.Management.Application.Abstracts;
+using BookSale.Management.Domain.Settings;
 using Microsoft.AspNetCore.Mvc;
 
 namespace BookSale.Management.UI.Controllers
@@ -14,9 +15,18 @@ namespace BookSale.Management.UI.Controllers
 			_bookService = bookService;
 		}
         
-		public IActionResult Index()
+		public async Task<IActionResult> Index(int g = 0, int idx = 1)
 		{
-			return View();
+			var genres = await _genreService.GetGenreForCategory();
+			ViewBag.Genres = genres;
+
+			int pageSize = CommonConstant.BookPageSize;
+			var books = await _bookService.GetAllBookByCustomer(g, idx, pageSize);
+			
+			//Tra ve Item1 = books, Item2 = totalRecords
+			ViewBag.TotalBook = books.Item2;
+
+            return View(books.Item1);
 		}
 	}
 }

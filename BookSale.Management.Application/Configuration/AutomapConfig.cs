@@ -21,6 +21,9 @@ namespace BookSale.Management.Application.Configuration
 
             CreateMap<Book, BookViewModel>()
                .ReverseMap();
+
+            CreateMap<Book, BookDTO>()
+               .ReverseMap();
         }
 
     }
