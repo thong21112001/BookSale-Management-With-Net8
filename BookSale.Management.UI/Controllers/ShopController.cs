@@ -17,7 +17,7 @@ namespace BookSale.Management.UI.Controllers
         
 		public async Task<IActionResult> Index(int g = 0, int idx = 1)
 		{
-			var genres = await _genreService.GetGenreForCategory();
+			var genres = _genreService.GetSumBookOfGenre();
 			ViewBag.Genres = genres;
 
 			int pageSize = CommonConstant.BookPageSize;

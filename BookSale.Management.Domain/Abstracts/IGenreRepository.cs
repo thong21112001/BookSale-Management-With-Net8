@@ -4,6 +4,8 @@ namespace BookSale.Management.Domain.Abstracts
 {
     public interface IGenreRepository
     {
+        IQueryable<Genre> Table { get; }
+
         Task CreateGenre(Genre genre);
         void DeleteGenre(Genre genre);
         Task<IEnumerable<Genre>> GetAllGenre();

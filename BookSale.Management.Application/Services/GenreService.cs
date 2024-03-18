@@ -1,6 +1,7 @@
 ﻿using AutoMapper;
 using BookSale.Management.Application.Abstracts;
 using BookSale.Management.Application.DTOs;
+using BookSale.Management.Application.DTOs.Genre;
 using BookSale.Management.Application.DTOs.ViewModels;
 using BookSale.Management.Domain.Abstracts;
 using BookSale.Management.Domain.Entities;
@@ -101,6 +102,19 @@ namespace BookSale.Management.Application.Services
                 return true;
             }
             return false;
+        }
+
+        //
+        public IEnumerable<GenreSiteDTO> GetSumBookOfGenre()
+        {
+            var result = _unitOfWork.GenreRepository.Table.Select(x => new GenreSiteDTO
+            {
+                Id = x.Id,
+                Name = x.Name,
+                TotalBook = x.Books.Count()
+            });
+
+            return result;
         }
     }
 }

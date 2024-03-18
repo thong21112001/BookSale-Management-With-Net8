@@ -14,5 +14,7 @@ namespace BookSale.Management.Domain.Entities
         
         [Required]        
         public bool IsActive { get; set; }
+
+        public ICollection<Book> Books { get; set;}
     }
 }

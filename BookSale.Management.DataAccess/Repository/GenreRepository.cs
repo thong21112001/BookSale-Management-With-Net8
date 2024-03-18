@@ -10,6 +10,8 @@ namespace BookSale.Management.DataAccess.Repository
         {
         }
 
+        public new IQueryable<Genre> Table => base.Table;
+
         public async Task<IEnumerable<Genre>> GetAllGenre()
         {
             return await GetALlAsync(x => x.IsActive);

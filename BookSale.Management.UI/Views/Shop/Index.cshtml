@@ -53,18 +53,18 @@
                                     <ul class="list-unstyled fruite-categorie">
                                         <li>
                                             <div class="d-flex justify-content-between fruite-name">
-                                                <a href="#"><i class="fas fa-apple-alt me-2"></i>All</a>
+                                                <a href="/shop"><i class="fas fa-apple-alt me-2"></i>All</a>
                                             </div>
                                         </li>
                                         @{
-                                            var getGenres = ViewBag.Genres as IEnumerable<SelectListItem>;
+                                            var getGenres = ViewBag.Genres as IEnumerable<BookSale.Management.Application.DTOs.Genre.GenreSiteDTO>;
 
                                             foreach (var item in getGenres)
                                             {
                                                 <li>
                                                     <div class="d-flex justify-content-between fruite-name">
-                                                        <a href="#"><i class="fas fa-apple-alt me-2"></i>@item.Text</a>
-                                                        <span>(3)</span>
+                                                        <a href="/shop?g=@item.Id"><i class="fas fa-apple-alt me-2"></i>@item.Name</a>
+                                                        <span>@item.TotalBook</span>
                                                     </div>
                                                 </li>
                                             }

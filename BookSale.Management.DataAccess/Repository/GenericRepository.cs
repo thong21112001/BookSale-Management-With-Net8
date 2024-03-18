@@ -78,6 +78,8 @@ namespace BookSale.Management.DataAccess.Repository
         {
             await _context.SaveChangesAsync();
         }
+
+        public IQueryable<T> Table => _context.Set<T>();
         #endregion
     }
 }
