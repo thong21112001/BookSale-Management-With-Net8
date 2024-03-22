@@ -99,6 +99,8 @@ namespace BookSale.Management.DataAccess.Migrations
                     Description = table.Column<string>(type: "nvarchar(1000)", maxLength: 1000, nullable: true),
                     Available = table.Column<int>(type: "int", nullable: false),
                     Price = table.Column<double>(type: "float", nullable: false),
+                    OldPrice = table.Column<double>(type: "float", nullable: false),
+                    Image = table.Column<string>(type: "nvarchar(max)", nullable: false),
                     CreatedOn = table.Column<DateTime>(type: "datetime2", nullable: false),
                     IsActive = table.Column<bool>(type: "bit", nullable: false),
                     GenreId = table.Column<int>(type: "int", nullable: false)
@@ -353,7 +355,9 @@ namespace BookSale.Management.DataAccess.Migrations
                 {
                     { 1, "Văn học", true, "Văn học" },
                     { 2, "Kinh tế", true, "Kinh tế" },
-                    { 3, "Sách thiếu nhi", true, "Sách thiếu nhi" }
+                    { 3, "Sách thiếu nhi", true, "Sách thiếu nhi" },
+                    { 4, "Sách ngoại ngữ", true, "Sách ngoại ngữ" },
+                    { 5, "Giáo khoa - Tham khảo", true, "Giáo khoa - Tham khảo" }
                 });
 
             migrationBuilder.InsertData(
@@ -363,7 +367,9 @@ namespace BookSale.Management.DataAccess.Migrations
                 {
                     { 1, "Light Novel", true, "Light Novel" },
                     { 2, "Marketing", true, "Marketing" },
-                    { 3, "Comic", true, "Comic" }
+                    { 3, "Comic", true, "Comic" },
+                    { 4, "Tiếng Anh", true, "Tiếng Anh" },
+                    { 5, "Sách giáo khoa", true, "Sách giáo khoa" }
                 });
 
             migrationBuilder.InsertData(
@@ -377,12 +383,22 @@ namespace BookSale.Management.DataAccess.Migrations
 
             migrationBuilder.InsertData(
                 table: "Book",
-                columns: new[] { "Id", "Author", "Available", "Code", "CreatedOn", "Description", "GenreId", "IsActive", "Price", "Publisher", "Title" },
+                columns: new[] { "Id", "Author", "Available", "Code", "CreatedOn", "Description", "GenreId", "Image", "IsActive", "OldPrice", "Price", "Publisher", "Title" },
                 values: new object[,]
                 {
-                    { 1, "Conan", 20, "cn", new DateTime(2024, 3, 12, 7, 22, 38, 284, DateTimeKind.Local).AddTicks(722), "Conan", 1, true, 20000.0, "Quang Thong", "Conan" },
-                    { 2, "Doraemon", 25, "drm", new DateTime(2024, 3, 12, 7, 22, 38, 284, DateTimeKind.Local).AddTicks(740), "Doraemon", 2, true, 22000.0, "Anh", "Doraemon" },
-                    { 3, "OPM", 30, "opm", new DateTime(2024, 3, 12, 7, 22, 38, 284, DateTimeKind.Local).AddTicks(742), "OPM", 3, true, 40000.0, "Minh", "OPM" }
+                    { 1, "Yuki Yaku, Fly", 20, "xIl12Uia", new DateTime(2024, 3, 19, 9, 34, 15, 485, DateTimeKind.Local).AddTicks(1903), "Nhân Vật Hạ Cấp Tomozaki", 1, "https://cdn0.fahasa.com/media/catalog/product/n/h/nhan-vat-ha-cap-tomozaki_tap-6-5_ban-gioi-han.jpg", true, 0.0, 110000.0, "Nhà Xuất Bản Kim Đồng", "Nhân Vật Hạ Cấp Tomozaki" },
+                    { 2, "Jougi Shiraishi, Azure", 25, "eLa29ikM", new DateTime(2024, 3, 19, 9, 34, 15, 485, DateTimeKind.Local).AddTicks(1920), "Hành Trình Của Elaina", 1, "https://cdn0.fahasa.com/media/catalog/product/b/_/b_n-th_ng-e14.jpg", true, 115000.0, 97000.0, "XYZ", "Hành Trình Của Elaina" },
+                    { 3, "Kinugasa Syougo, Tomoseshunsaku", 20, "ka2901aM", new DateTime(2024, 3, 19, 9, 34, 15, 485, DateTimeKind.Local).AddTicks(1924), "Chào Mừng Đến Lớp Học Đề Cao Thực Lực", 1, "https://cdn0.fahasa.com/media/catalog/product/2/3/230424.jpg", true, 0.0, 290000.0, "IPM", "Chào Mừng Đến Lớp Học Đề Cao Thực Lực" },
+                    { 4, "Og Mandino", 20, "nBHvD89t", new DateTime(2024, 3, 19, 9, 34, 15, 485, DateTimeKind.Local).AddTicks(1927), "Người Bán Hàng Vĩ Đại Nhất Thế Giới", 2, "https://cdn0.fahasa.com/media/catalog/product/i/m/image_195509_1_47973.jpg", true, 148000.0, 103000.0, "FIRST NEWS", "Người Bán Hàng Vĩ Đại Nhất Thế Giới" },
+                    { 5, "Napoleon Hill", 20, "nDjjk922", new DateTime(2024, 3, 19, 9, 34, 15, 485, DateTimeKind.Local).AddTicks(1929), "Để Thế Giới Biết Bạn Là Ai", 2, "https://cdn0.fahasa.com/media/catalog/product/8/9/8935086855324.jpg", true, 138000.0, 96000.0, "FIRST NEWS", "Để Thế Giới Biết Bạn Là Ai" },
+                    { 6, "Philip Kotler, Gary Armstrong", 20, "thU23bny", new DateTime(2024, 3, 19, 9, 34, 15, 485, DateTimeKind.Local).AddTicks(1932), "Nguyên Lý Marketing", 2, "https://cdn0.fahasa.com/media/catalog/product/z/3/z3191421803753_d34be7758308b8ee74572ebf885cbf9a.jpg", true, 999000.0, 779000.0, "Alpha Books", "Nguyên Lý Marketing" },
+                    { 7, "Dubu (Redice Studio), Chugong", 20, "SLvng292", new DateTime(2024, 3, 19, 9, 34, 15, 485, DateTimeKind.Local).AddTicks(1935), "Solo Leveling", 3, "https://cdn0.fahasa.com/media/catalog/product/s/o/solo-leveling_bia_obi_card_tap-10.jpg", true, 88000.0, 84000.0, "Nhà Xuất Bản Kim Đồng", "Solo Leveling" },
+                    { 8, "Gosho Aoyama", 20, "ttLDC72J", new DateTime(2024, 3, 19, 9, 34, 15, 485, DateTimeKind.Local).AddTicks(1938), "Thám Tử Lừng Danh Conan", 3, "https://cdn0.fahasa.com/media/wysiwyg/hieu_kd/2023-08-frame/FrameAds_03_1080X1080.png", true, 25000.0, 21000.0, "Nhà Xuất Bản Kim Đồng", "Thám Tử Lừng Danh Conan" },
+                    { 9, "Soubee Amako", 20, "JakOk29L", new DateTime(2024, 3, 19, 9, 34, 15, 485, DateTimeKind.Local).AddTicks(1940), "Ninja Rantaro", 3, "https://cdn0.fahasa.com/media/catalog/product/n/i/ninja-rantaro_bia_tap-23.jpg", true, 40000.0, 38000.0, "Nhà Xuất Bản Kim Đồng", "Ninja Rantaro" },
+                    { 10, "Trang Anh, Minh Anh", 20, "taCNBD00", new DateTime(2024, 3, 19, 9, 34, 15, 485, DateTimeKind.Local).AddTicks(1944), "Tiếng Anh Cho NgườI Bắt Đầu", 4, "https://cdn0.fahasa.com/media/catalog/product/9/7/9786043987102.jpg", true, 200000.0, 149000.0, "Công Ty Cổ Phần Công Nghệ", "Tiếng Anh Cho NgườI Bắt Đầu" },
+                    { 11, "Kenvin Kang, Hanna Byun", 20, "nuanCE50", new DateTime(2024, 3, 19, 9, 34, 15, 485, DateTimeKind.Local).AddTicks(1947), "Nuance - 50 Sắc Thái Của Từ", 4, "https://cdn0.fahasa.com/media/catalog/product/8/9/8935309503834.jpg", true, 159000.0, 116000.0, "Alpha Books", "Nuance - 50 Sắc Thái Của Từ" },
+                    { 12, "ThS Phan Hoàng Văn", 20, "btVLthcs", new DateTime(2024, 3, 19, 9, 34, 15, 485, DateTimeKind.Local).AddTicks(1949), "500 Bài Tập Vật Lí Trung Học Cơ Sở", 5, "https://cdn0.fahasa.com/media/catalog/product/8/9/8935083581509.jpg", true, 145000.0, 104000.0, "NXB Đại Học Quốc Gia TP.HCM", "500 Bài Tập Vật Lí Trung Học Cơ Sở" },
+                    { 13, "Nhiều tác giả", 20, "sgkL11mm", new DateTime(2024, 3, 19, 9, 34, 15, 485, DateTimeKind.Local).AddTicks(1952), "Sách Giáo Khoa Bộ Lớp 1", 5, "https://cdn0.fahasa.com/media/catalog/product/3/3/3300000026817.jpg", true, 186000.0, 176000.0, "Nhà xuất bản Giáo Dục", "Sách Giáo Khoa Bộ Lớp 1" }
                 });
 
             migrationBuilder.CreateIndex(

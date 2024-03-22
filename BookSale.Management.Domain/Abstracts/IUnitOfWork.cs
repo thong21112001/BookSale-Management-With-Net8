@@ -6,7 +6,7 @@
         IGenreRepository GenreRepository { get; }
 
         void Dispose();
-
+        void Detach(object entity);
         Task SaveChangeAsync();
     }
 }

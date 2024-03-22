@@ -7,11 +7,11 @@ namespace BookSale.Management.DataAccess.Repository
 {
     public class BookRepository : GenericRepository<Book>, IBookRepository
     {
-		private readonly ISQLQueryHandler _queryHandler;
+        private readonly ISQLQueryHandler _queryHandler;
 
 		public BookRepository(BookSaleDbContext context, ISQLQueryHandler queryHandler) : base(context)
         {
-			_queryHandler = queryHandler;
+            _queryHandler = queryHandler;
 		}
 
         public async Task<Book?> GetById(int id)

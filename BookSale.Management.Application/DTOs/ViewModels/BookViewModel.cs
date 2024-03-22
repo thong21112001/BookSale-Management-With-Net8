@@ -1,4 +1,6 @@
-﻿using System.ComponentModel;
+﻿using Microsoft.AspNetCore.Http;
+using Microsoft.AspNetCore.Mvc.ModelBinding.Validation;
+using System.ComponentModel;
 using System.ComponentModel.DataAnnotations;
 
 namespace BookSale.Management.Application.DTOs.ViewModels
@@ -28,6 +30,16 @@ namespace BookSale.Management.Application.DTOs.ViewModels
         [Required(ErrorMessage = "Không để trống")]
         [DisplayName("ĐƠN GIÁ")]
         public double Price { get; set; }
+        
+        [Required(ErrorMessage = "Không để trống")]
+        [DisplayName("ĐƠN GIÁ CŨ")]
+        public double OldPrice { get; set; }
+
+        [ValidateNever]
+        public IFormFile? Image { get; set; }
+
+        [ValidateNever]
+        public string ImageText { get; set; } = string.Empty;
 
         [Required(ErrorMessage = "Không để trống")]
         [DisplayName("NGƯỜI GIAO")]

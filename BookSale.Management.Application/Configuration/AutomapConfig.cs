@@ -20,7 +20,8 @@ namespace BookSale.Management.Application.Configuration
                .ReverseMap();
 
             CreateMap<Book, BookViewModel>()
-               .ReverseMap();
+                .ForMember(dest => dest.Image, opt => opt.Ignore()) //Bỏ map dữ liệu Image
+                .ReverseMap();
 
             CreateMap<Book, BookDTO>()
                .ReverseMap();

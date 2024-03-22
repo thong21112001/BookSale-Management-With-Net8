@@ -27,6 +27,10 @@ namespace BookSale.Management.Domain.Entities
         //Cost
         public double Price { get; set; }
 
+        public double OldPrice { get; set; }    //Thêm giá cũ cho book
+
+        public string Image { get; set; } = string.Empty;   //thêm hình ảnh cho book
+
         public DateTime CreatedOn { get; set; }
 
         [Required]

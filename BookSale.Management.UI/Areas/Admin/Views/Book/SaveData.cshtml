@@ -8,7 +8,7 @@
 <h1>@(Model.Id == 0 ? "Create" : "Update") Data</h1>
 
 <form class="forms-sample" asp-area="admin" asp-controller="book" asp-action="savedata"
-      method="post" asp-antiforgery="true">
+      method="post" asp-antiforgery="true" enctype="multipart/form-data">
     @Html.Raw("<div asp-validation-summary='All' class='text-danger'></div>")
     <input asp-for="Id" type="hidden" class="form-control"/>
 
@@ -61,9 +61,26 @@
         </div>
         <div class="col-4">
             <div class="form-group">
+                <label asp-for="OldPrice"></label><span class="text-danger">*</span>
+                <input type="text" class="form-control p-input" id="OldPrice" placeholder="Enter old price" asp-for="OldPrice">
+                <span class="text-danger" asp-validation-for="OldPrice"></span>
+            </div>
+        </div>
+        <div class="col-4">
+            <div class="form-group">
                 <label asp-for="Publisher"></label><span class="text-danger">*</span>
                 <input type="text" class="form-control p-input" id="Publisher" placeholder="Enter publisher" asp-for="Publisher">
                 <span class="text-danger" asp-validation-for="Publisher"></span>
+            </div>
+        </div>
+    </div>
+
+    <div class="row">
+        <div class="col-4">
+            <div class="form-group">
+                <label asp-for="Description"></label><span class="text-danger">*</span>
+                <input type="text" class="form-control p-input" id="Description" placeholder="Enter description" asp-for="Description">
+                <span class="text-danger" asp-validation-for="Description"></span>
             </div>
         </div>
         <div class="col-4">
@@ -73,23 +90,72 @@
                 <span class="text-danger" asp-validation-for="Author"></span>
             </div>
         </div>
-    </div>
-
-    <div class="row">
-        <div class="col-6">
-            <div class="form-group">
-                <label asp-for="Description"></label><span class="text-danger">*</span>
-                <input type="text" class="form-control p-input" id="Description" placeholder="Enter description" asp-for="Description">
-                <span class="text-danger" asp-validation-for="Description"></span>
-            </div>
-        </div>
-        <div class="col-6">
+        <div class="col-4">
             <div class="form-check">
                 <label class="form-check-label">
                     <input type="checkbox" class="form-check-input" asp-for="IsActive">
                     HIỂN THỊ
                 </label>
             </div>
+        </div>
+    </div>
+
+    
+    <div class="row">
+        <div class="col-4">
+            <select id="imageSource" class="form-control">
+                <option value="input">Chọn từ file</option>
+                <option value="string">Chọn từ chuỗi string</option>
+            </select>
+        </div>
+
+        <div class="col-4">
+            <div id="imageString" class="form-group" style="display:none;">
+                <input type="text" class="form-control" id="ImageText" asp-for="ImageText" placeholder="Nhập URL hình ảnh">
+            </div>
+        </div>
+    </div>
+
+    <div id="imageInput" class="row">
+        <div class="col-4">
+            <div class="card">
+                <div class="card-body">
+                    <div  class="row">
+                        @{
+                            string urlImg = ViewBag.ImageBook;
+                            string result;
+
+                            if (Model.Id != 0 && !string.IsNullOrEmpty(urlImg))
+                            {
+                                if (urlImg.StartsWith("https:"))
+                                {
+                                    // Nếu urlImg bắt đầu bằng "https:", sử dụng urlImg trực tiếp
+                                    result = urlImg;
+                                }
+                                else
+                                {
+                                    // Ngược lại, kết hợp urlImg với đường dẫn gốc của ứng dụng web
+                                    result = $"{Url.Content("~")}/images/books/{urlImg}";
+                                }
+                            }
+                            else
+                            {
+                                // Nếu không có urlImg, sử dụng hình ảnh mặc định
+                                result = $"{Url.Content("~/images/image.png")}";
+                            }
+                        }
+
+                        <div class="col-4">
+                            <img src="@result" alt="Book Image" class="img-fluid" id="img-avatar" />
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+    <div id="inputImage" class="row mt-2">
+        <div class="col-4">
+            <input type="file" class="form-control-file" id="Image" asp-for="Image">
         </div>
     </div>
 
@@ -104,5 +170,6 @@
     <script src="~/lib/jquery-validation-unobtrusive/jquery.validate.unobtrusive.min.js"></script>
 
     <script src="~/admin/components/book_savedata.js"></script>
+    <script src="~/admin/settingsjs/select_fileortext.js"></script>
 }
 

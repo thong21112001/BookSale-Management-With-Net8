@@ -1,5 +1,6 @@
 ﻿using BookSale.Management.DataAccess.DataAccess;
 using BookSale.Management.Domain.Abstracts;
+using Microsoft.EntityFrameworkCore;
 
 namespace BookSale.Management.DataAccess.Repository
 {
@@ -39,12 +40,18 @@ namespace BookSale.Management.DataAccess.Repository
                 disposedValue = true;
             }
         }
-
        
         public void Dispose()
         {
             Dispose(disposing: true);
             GC.SuppressFinalize(this);
+        }
+
+        //detach các entity ( tách các đối tượng entity ra khỏi context là
+        //một cách để ngăn chặn sự theo dõi của context đối với đối tượng đó ).
+        public void Detach(object entity)
+        {
+            _context.Entry(entity).State = EntityState.Detached;
         }
     }
 }

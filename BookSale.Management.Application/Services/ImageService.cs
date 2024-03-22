@@ -51,5 +51,13 @@ namespace BookSale.Management.Application.Services
 
             return true;
         }
+
+        //wwwroot/images/..
+        public string UrlSaveImg()
+        {
+            string pathImage = Path.Combine(_webHostEnvironment.WebRootPath);
+
+            return pathImage;
+        }
     }
 }

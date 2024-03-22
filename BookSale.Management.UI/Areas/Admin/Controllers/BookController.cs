@@ -38,9 +38,13 @@ namespace BookSale.Management.UI.Areas.Admin.Controllers
             string code = await _bookService.GenerateCodeAsync();
             bookVM.Code = code;
 
+            string imageBook = string.Empty;
+
             if (id != 0)
             {
                 bookVM = await _bookService.GetBookById(id);
+                imageBook = await _bookService.GetStringImage(id);
+                ViewBag.ImageBook = imageBook;
             }
 
             return View(bookVM);
@@ -57,7 +61,14 @@ namespace BookSale.Management.UI.Areas.Admin.Controllers
                 return View(bookVM);
             }
 
-            var result = await _bookService.SaveAsync(bookVM);
+            string oldImage = string.Empty;
+
+            if (bookVM.Id != 0)
+            {
+                oldImage = await _bookService.GetStringImage(bookVM.Id);
+            }
+
+            var result = await _bookService.SaveAsync(bookVM, oldImage);
 
             if (result.Status)
             {
