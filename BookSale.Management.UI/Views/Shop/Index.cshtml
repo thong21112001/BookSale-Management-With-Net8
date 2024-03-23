@@ -87,6 +87,7 @@
                         <div class="row g-4 justify-content-center">
                             @{
                                 var books = Model;
+                                string result;
 
                                 if (books.Count() > 0)
                                 {
@@ -94,15 +95,33 @@
                                     {
                                         <div class="col-md-6 col-lg-6 col-xl-4">
                                             <div class="rounded position-relative fruite-item">
+                                                @if (!string.IsNullOrEmpty(item.Image))
+                                                {
+                                                    if (item.Image.StartsWith("https:"))
+                                                    {
+                                                        // Nếu urlImg bắt đầu bằng "https:", sử dụng urlImg trực tiếp
+                                                        result = item.Image;
+                                                    }
+                                                    else
+                                                    {
+                                                        // Ngược lại, kết hợp urlImg với đường dẫn gốc của ứng dụng web
+                                                        result = $"{Url.Content("~")}/images/books/{item.Image}";
+                                                    }
+                                                }
+                                                else
+                                                {
+                                                    // Nếu không có urlImg, sử dụng hình ảnh mặc định
+                                                    result = $"{Url.Content("~/images/image.png")}";
+                                                }
+
                                                 <div class="fruite-img">
-                                                    <img src="https://cdn0.fahasa.com/media/wysiwyg/hieu_kd/2023-08-frame/FrameAds_03_1080X1080.png" class="img-fluid w-100 rounded-top" alt="">
+                                                    <img src="@result" class="img-fluid w-100 rounded-top" alt="">
                                                 </div>
                                                 <div class="text-white bg-secondary px-3 py-1 rounded position-absolute" style="top: 10px; left: 10px;">Fruits</div>
                                                 <div class="p-4 border border-secondary border-top-0 rounded-bottom">
-                                                    <h4>@item.Title</h4>
+                                                    <h5 style="white-space: nowrap; overflow: hidden; text-overflow: ellipsis;">@item.Title</h5>
                                                     <p>Code: @item.Code</p>
-                                                    <p>Tác giả: @item.Author</p>
-                                                    <p>Thể loại: @item.GenreName</p>
+                                                    <p style="white-space: nowrap; overflow: hidden; text-overflow: ellipsis;">Tác giả: @item.Author</p>
                                                     <p class="text-dark fs-5 fw-bold mb-0">Giá: @item.Price.ToString("C", CultureInfo.GetCultureInfo("vi-VN"))</p>
                                                     <a href="#" class="btn border border-secondary rounded-pill px-3 text-primary"><i class="fa fa-shopping-bag me-2 text-primary"></i> Add to cart</a>
                                                 </div>
@@ -122,18 +141,13 @@
                                 }
                             }
 
-
-                            <div class="col-12">
-                                <div class="pagination d-flex justify-content-center mt-5">
-                                    <a href="#" class="rounded">&laquo;</a>
-                                    <a href="#" class="active rounded">1</a>
-                                    <a href="#" class="rounded">2</a>
-                                    <a href="#" class="rounded">3</a>
-                                    <a href="#" class="rounded">4</a>
-                                    <a href="#" class="rounded">5</a>
-                                    <a href="#" class="rounded">6</a>
-                                    <a href="#" class="rounded">&raquo;</a>
+                            <!-- Load next progress -->
+                            <div class="col-12 text-center">
+                                <small>12 items of 100</small>
+                                <div class="progress" role="progressbar" aria-label="Example 1px high" aria-valuenow="25" aria-valuemin="0" aria-valuemax="100" style="height: 5px">
+                                    <div class="progress-bar" style="width: 25%"></div>
                                 </div>
+                                <button type="button" class="btn btn-primary btn-sm mt-2">LOAD MORE</button>
                             </div>
                         </div>
                     </div>
