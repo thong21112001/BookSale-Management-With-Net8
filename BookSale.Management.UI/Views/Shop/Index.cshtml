@@ -1,5 +1,6 @@
 ﻿@using System.Globalization
-@model IEnumerable<BookSale.Management.Application.DTOs.BookDTO>
+@using BookSale.Management.Application.DTOs.Book
+@model BookForSiteDTO
 
 @{
     ViewData["Title"] = "Index";
@@ -20,7 +21,7 @@
 <!-- Fruits Shop Start-->
 <div class="container-fluid fruite py-5">
     <div class="container py-5">
-        <h1 class="mb-4">Fresh fruits shop</h1>
+        <h1 class="mb-4">Books shop</h1>
         <div class="row g-4">
             <div class="col-lg-12">
                 <div class="row g-4">
@@ -84,14 +85,14 @@
 
                     @* List product *@
                     <div class="col-lg-9">
-                        <div class="row g-4 justify-content-center">
+                        <div class="row g-4 justify-content-center" id="content-book">
                             @{
-                                var books = Model;
+                                var pagination = Model;
                                 string result;
 
-                                if (books.Count() > 0)
+                                if (pagination.Books.Count() > 0)
                                 {
-                                    foreach (var item in books)
+                                    foreach (var item in pagination.Books)
                                     {
                                         <div class="col-md-6 col-lg-6 col-xl-4">
                                             <div class="rounded position-relative fruite-item">
@@ -114,10 +115,10 @@
                                                     result = $"{Url.Content("~/images/image.png")}";
                                                 }
 
+                                                <input type="hidden" id="baseImageUrl" value="@Url.Content("~")/images/books/" />
                                                 <div class="fruite-img">
                                                     <img src="@result" class="img-fluid w-100 rounded-top" alt="">
                                                 </div>
-                                                <div class="text-white bg-secondary px-3 py-1 rounded position-absolute" style="top: 10px; left: 10px;">Fruits</div>
                                                 <div class="p-4 border border-secondary border-top-0 rounded-bottom">
                                                     <h5 style="white-space: nowrap; overflow: hidden; text-overflow: ellipsis;">@item.Title</h5>
                                                     <p>Code: @item.Code</p>
@@ -140,15 +141,31 @@
                                     </div>
                                 }
                             }
+                        </div>
 
-                            <!-- Load next progress -->
-                            <div class="col-12 text-center">
-                                <small>12 items of 100</small>
-                                <div class="progress" role="progressbar" aria-label="Example 1px high" aria-valuenow="25" aria-valuemin="0" aria-valuemax="100" style="height: 5px">
-                                    <div class="progress-bar" style="width: 25%"></div>
-                                </div>
-                                <button type="button" class="btn btn-primary btn-sm mt-2">LOAD MORE</button>
+                        <!-- Load next progress -->
+                        <div class="col-12 text-center">
+                            <input type="hidden" value="@ViewBag.CurrentGenres" id="current-genre" />
+                            <input type="hidden" value="@ViewBag.CurrentPageIdx" id="current-page-index" />
+
+                            <small id="txt-pagination">@Model.currentRecords items of @Model.totalRecords </small>
+
+                            <div class="progress" role="progressbar" aria-label="Example 1px high" aria-valuenow="25" aria-valuemin="0" aria-valuemax="100" style="height: 5px">
+                                <div id="progress-bar" class="progress-bar" style="width: @(Model.progessingValue)%"></div>
                             </div>
+
+                            @{
+                                bool isDisabledBtn = Model.isDisableButton;
+
+                                if (isDisabledBtn)
+                                {
+                                    <button type="button" class="btn btn-primary btn-sm mt-2" disabled id="btn-load-more">LOAD MORE</button>
+                                }
+                                else
+                                {
+                                    <button type="button" class="btn btn-primary btn-sm mt-2" id="btn-load-more">LOAD MORE</button>
+                                }
+                            }
                         </div>
                     </div>
                 </div>
@@ -157,4 +174,8 @@
     </div>
 </div>
 <!-- Fruits Shop End-->
+
+@section Scripts {
+    <script src="~/user/config_application/shop/shop.js"></script>
+}
 

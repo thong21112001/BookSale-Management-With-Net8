@@ -1,18 +1,16 @@
 ﻿using AutoMapper;
 using BookSale.Management.Application.Abstracts;
 using BookSale.Management.Application.DTOs;
+using BookSale.Management.Application.DTOs.Book;
 using BookSale.Management.Application.DTOs.ViewModels;
 using BookSale.Management.Domain.Abstracts;
 using BookSale.Management.Domain.Entities;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc.Rendering;
-using Microsoft.EntityFrameworkCore;
-using Microsoft.Extensions.Hosting.Internal;
-using System.Reflection;
 
 namespace BookSale.Management.Application.Services
 {
-	public class BookService : IBookService
+    public class BookService : IBookService
 	{
 		private readonly IUnitOfWork _unitOfWork;
         private readonly IMapper _mapper;
@@ -230,7 +228,7 @@ namespace BookSale.Management.Application.Services
         }
 
         //Lấy toàn bộ sách hiển thị ra bên ngoài cho KH
-        public async Task<(IEnumerable<BookDTO>,int)> GetAllBookByCustomer(int genreId, int pageIndex, int pageSize = 10)
+        public async Task<BookForSiteDTO> GetAllBookByCustomer(int genreId, int pageIndex, int pageSize = 12)
         {
             try
             {
@@ -241,7 +239,20 @@ namespace BookSale.Management.Application.Services
 
                 var bookDTOs = _mapper.Map<IEnumerable<BookDTO>>(books);
 
-                return (bookDTOs,totalRecords);
+                int CurrentItemsDisplay = totalRecords - (pageIndex * pageSize) <= 0 ? totalRecords : pageSize * pageIndex;
+
+                bool IsDisableButton = totalRecords - (pageIndex * pageSize) <= 0 ? true : false;
+
+                double ProgessingValue = (pageIndex * pageSize * 100) / totalRecords;
+
+                return new BookForSiteDTO
+                {
+                    totalRecords = totalRecords,
+                    currentRecords = CurrentItemsDisplay,
+                    isDisableButton = IsDisableButton,
+                    Books = bookDTOs,
+                    progessingValue = ProgessingValue
+                };
             }
             catch (Exception ex)
             {

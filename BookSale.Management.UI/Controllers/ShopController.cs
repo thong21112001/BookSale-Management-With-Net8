@@ -4,7 +4,7 @@ using Microsoft.AspNetCore.Mvc;
 
 namespace BookSale.Management.UI.Controllers
 {
-	public class ShopController : Controller
+    public class ShopController : Controller
 	{
 		private readonly IGenreService _genreService;
 		private readonly IBookService _bookService;
@@ -17,16 +17,23 @@ namespace BookSale.Management.UI.Controllers
         
 		public async Task<IActionResult> Index(int g = 0, int idx = 1)
 		{
-			var genres = _genreService.GetSumBookOfGenre();
-			ViewBag.Genres = genres;
+            var genres = _genreService.GetSumBookOfGenre();
 
-			int pageSize = CommonConstant.BookPageSize;
-			var books = await _bookService.GetAllBookByCustomer(g, idx, pageSize);
-			
-			//Tra ve Item1 = books, Item2 = totalRecords
-			ViewBag.TotalBook = books.Item2;
+            ViewBag.Genres = genres;
+			ViewBag.CurrentGenres = g;
+			ViewBag.CurrentPageIdx = idx;
 
-            return View(books.Item1);
+            var result = await _bookService.GetAllBookByCustomer(g, idx, CommonConstant.BookPageSize);
+
+            return View(result);
 		}
-	}
+
+		[HttpGet]
+        public async Task<IActionResult> GetBookByPagination(int genre, int pageIndex)
+        {
+            var result = await _bookService.GetAllBookByCustomer(genre, pageIndex, CommonConstant.BookPageSize);
+
+            return Json(result);
+        }
+    }
 }
