@@ -25,8 +25,11 @@ namespace BookSale.Management.Application.Services
             _imageService = imageService;
         }
 
-		//Hàm lấy tất cả các thể loại hiển thị lên dropdown list ở Book/SaveData
-		public async Task<IEnumerable<SelectListItem>> GetGenreForDropDownList()
+
+
+        #region Implement function into Admin
+        //Hàm lấy tất cả các thể loại hiển thị lên dropdown list ở Book/SaveData
+        public async Task<IEnumerable<SelectListItem>> GetGenreForDropDownList()
         {
             var genres = await _unitOfWork.GenreRepository.GetAllGenre();
 
@@ -37,6 +40,7 @@ namespace BookSale.Management.Application.Services
             });
         }
 
+        //Lấy chuỗi hình ảnh
         public async Task<string> GetStringImage(int id)
         {
             var book = await _unitOfWork.BookRepository.GetById(id);
@@ -56,47 +60,47 @@ namespace BookSale.Management.Application.Services
         {
             var book = await _unitOfWork.BookRepository.GetById(id);
 
-			var bookVM = _mapper.Map<BookViewModel>(book);
+            var bookVM = _mapper.Map<BookViewModel>(book);
 
-			return bookVM;
-		}
+            return bookVM;
+        }
 
-		//Hàm phân trang, hiển thị danh sách book lên Book/Index
-		public async Task<ResponseDataTable<BookDTO>> GetAllBookPaginationAsync(RequestDataTable request)
-		{
-			try
-			{
-				int totalRecords = 0;
-				IEnumerable<BookDTO> books;
+        //Hàm phân trang, hiển thị danh sách book lên Book/Index
+        public async Task<ResponseDataTable<BookDTO>> GetAllBookPaginationAsync(RequestDataTable request)
+        {
+            try
+            {
+                int totalRecords = 0;
+                IEnumerable<BookDTO> books;
 
-				(books, totalRecords) = await _unitOfWork.BookRepository.GetAllBookByPagination<BookDTO>((request.SkipItems/request.PageSize) + 1, request.PageSize, request.keyword);
+                (books, totalRecords) = await _unitOfWork.BookRepository.GetAllBookByPagination<BookDTO>((request.SkipItems / request.PageSize) + 1, request.PageSize, request.keyword);
 
-				return new ResponseDataTable<BookDTO>
-				{
-					Draw = request.Draw,
-					RecordsTotal = totalRecords,
-					RecordsFiltered = totalRecords,
-					Data = books
-				};
-			}
-			catch (Exception ex)
-			{
-				// Log or handle the exception here
-				Console.WriteLine($"Error in GetAllBookPaginationAsync: {ex.Message}");
-				throw; // Rethrow the exception
-			}
-		}
+                return new ResponseDataTable<BookDTO>
+                {
+                    Draw = request.Draw,
+                    RecordsTotal = totalRecords,
+                    RecordsFiltered = totalRecords,
+                    Data = books
+                };
+            }
+            catch (Exception ex)
+            {
+                // Log or handle the exception here
+                Console.WriteLine($"Error in GetAllBookPaginationAsync: {ex.Message}");
+                throw; // Rethrow the exception
+            }
+        }
 
         //Hàm tạo mới và cập nhập sách
-        public async Task<ResponseModel> SaveAsync(BookViewModel bookVM , string oldImage)
-		{
+        public async Task<ResponseModel> SaveAsync(BookViewModel bookVM, string oldImage)
+        {
             //Map dữ liệu từ bookVM sang Class Book
             var book = _mapper.Map<Book>(bookVM);
-            
+
             if (bookVM.Id == 0) //Tạo mới dữ liệu
-			{
-				book.CreatedOn = DateTime.Now;
-				book.IsActive = true;
+            {
+                book.CreatedOn = DateTime.Now;
+                book.IsActive = true;
                 book.Code = bookVM.Code;
 
                 // Thêm mới dữ liệu
@@ -112,7 +116,7 @@ namespace BookSale.Management.Application.Services
                     string guidFileName = $"{Guid.NewGuid()}.png";
 
                     bool check = await _imageService.SaveImage(new List<IFormFile> { bookVM.Image }, "images/books", guidFileName);
-                    
+
                     if (check == true)
                     {
                         book.Image = guidFileName;
@@ -123,8 +127,8 @@ namespace BookSale.Management.Application.Services
                     book.Image = "";
                 }
             }
-			else
-			{
+            else
+            {
                 // Cập nhập dữ liệu
                 _unitOfWork.BookRepository.UpdateBook(book);
 
@@ -175,7 +179,7 @@ namespace BookSale.Management.Application.Services
                         }
 
                         //Tạo Guid để không bị trùng, lấy thành tên ảnh đuôi png
-                        string guidFileName = $"{Guid.NewGuid()}.png";  
+                        string guidFileName = $"{Guid.NewGuid()}.png";
 
                         //Tiến hành lưu ảnh mới
                         bool check = await _imageService.SaveImage(new List<IFormFile> { bookVM.Image }, "images/books", guidFileName);
@@ -199,16 +203,16 @@ namespace BookSale.Management.Application.Services
 
             await _unitOfWork.BookRepository.SaveBook();
 
-			return new ResponseModel
-			{
-				Action = Domain.Enums.ActionType.Update,
-				Message = $"{(bookVM.Id == 0 ? "Thêm mới" : "Cập nhập")} thành công !!!",
-				Status = true
-			};
-		}
+            return new ResponseModel
+            {
+                Action = Domain.Enums.ActionType.Update,
+                Message = $"{(bookVM.Id == 0 ? "Thêm mới" : "Cập nhập")} thành công !!!",
+                Status = true
+            };
+        }
 
-		//Hàm tạo code random khi bấm button tạo mới cho book
-		public async Task<string> GenerateCodeAsync(int number = 8)
+        //Hàm tạo code random khi bấm button tạo mới cho book
+        public async Task<string> GenerateCodeAsync(int number = 8)
         {
             //Tránh trùng code book
             string newCode = string.Empty;
@@ -226,7 +230,11 @@ namespace BookSale.Management.Application.Services
 
             return newCode;
         }
+        #endregion
 
+
+
+        #region Implement function into Customer
         //Lấy toàn bộ sách hiển thị ra bên ngoài cho KH
         public async Task<BookForSiteDTO> GetAllBookByCustomer(int genreId, int pageIndex, int pageSize = 12)
         {
@@ -261,5 +269,6 @@ namespace BookSale.Management.Application.Services
                 throw; // Rethrow the exception
             }
         }
+        #endregion
     }
 }

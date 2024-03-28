@@ -1,3 +1,5 @@
+using BookSale.Management.Application.Abstracts;
+using BookSale.Management.Domain.Settings;
 using BookSale.Management.UI.Models;
 using Microsoft.AspNetCore.Mvc;
 using System.Diagnostics;
@@ -6,21 +8,24 @@ namespace BookSale.Management.UI.Controllers
 {
     public class HomeController : Controller
     {
-        private readonly ILogger<HomeController> _logger;
+        private readonly IBookService _bookService;
+        private readonly IGenreService _genreService;
 
-        public HomeController(ILogger<HomeController> logger)
+        public HomeController(IBookService bookService, IGenreService genreService)
         {
-            _logger = logger;
+            _bookService = bookService;
+            _genreService = genreService;
         }
 
-        public IActionResult Index()
+        public async Task<IActionResult> Index()
         {
-            return View();
-        }
+            var result = await _bookService.GetAllBookByCustomer(0, 1, 12);
 
-        public IActionResult Privacy()
-        {
-            return View();
+            var books = result.Books.OrderBy(x => Guid.NewGuid()).Take(5);
+
+            ViewData["GenreList"] = await _genreService.GetAllGenreForCustomer();
+
+            return View(books);
         }
 
         [ResponseCache(Duration = 0, Location = ResponseCacheLocation.None, NoStore = true)]

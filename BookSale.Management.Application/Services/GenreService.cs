@@ -5,11 +5,10 @@ using BookSale.Management.Application.DTOs.Genre;
 using BookSale.Management.Application.DTOs.ViewModels;
 using BookSale.Management.Domain.Abstracts;
 using BookSale.Management.Domain.Entities;
-using Microsoft.AspNetCore.Mvc.Rendering;
 
 namespace BookSale.Management.Application.Services
 {
-	public class GenreService : IGenreService
+    public class GenreService : IGenreService
     {
         private readonly IUnitOfWork _unitOfWork;
         private readonly IMapper _mapper;
@@ -20,49 +19,40 @@ namespace BookSale.Management.Application.Services
             _mapper = mapper;
         }
 
-		public async Task<GenreViewModel> GetById(int id)
-		{
-			 var genre = await _unitOfWork.GenreRepository.GetById(id);
 
-			//Map dữ liệu get đc thông qua Id sau đó map từ genre -> GenreDTO
-			return _mapper.Map<GenreViewModel>(genre);
-		}
-
-        //
-        public async Task<IEnumerable<SelectListItem>> GetGenreForCategory()
+        #region Implement function into Admin
+        //Lấy genre theo id truyền vào
+        public async Task<GenreViewModel> GetById(int id)
         {
-            var genres = await _unitOfWork.GenreRepository.GetAllGenre();
+            var genre = await _unitOfWork.GenreRepository.GetById(id);
 
-            return genres.Select(x => new SelectListItem
-            {
-                Value = x.Id.ToString(),
-                Text = x.Name
-            });
+            //Map dữ liệu get đc thông qua Id sau đó map từ genre -> GenreDTO
+            return _mapper.Map<GenreViewModel>(genre);
         }
 
         //Hàm lấy tất cả thể loại hiển thị lên datatable ở Genre/Index
         public async Task<ResponseDataTable<GenreDTO>> GetAllGenre(RequestDataTable request)
-		{
-			var genres = await _unitOfWork.GenreRepository.GetAllGenre();
+        {
+            var genres = await _unitOfWork.GenreRepository.GetAllGenre();
 
-			var genresDTO = _mapper.Map<IEnumerable<GenreDTO>>(genres);
+            var genresDTO = _mapper.Map<IEnumerable<GenreDTO>>(genres);
 
-			//Pagination
-			int totalRecords = genres.Count();
+            //Pagination
+            int totalRecords = genres.Count();
 
-			var result = genresDTO.Skip(request.SkipItems).Take(request.PageSize).ToList();
+            var result = genresDTO.Skip(request.SkipItems).Take(request.PageSize).ToList();
 
-			return new ResponseDataTable<GenreDTO>
-			{
-				Draw = request.Draw,
-				RecordsTotal = totalRecords,
-				RecordsFiltered = totalRecords,
-				Data = result
-			};
-		}
+            return new ResponseDataTable<GenreDTO>
+            {
+                Draw = request.Draw,
+                RecordsTotal = totalRecords,
+                RecordsFiltered = totalRecords,
+                Data = result
+            };
+        }
 
-		//Hàm tạo mới và cập nhập
-		public async Task<ResponseModel> Save(GenreViewModel request)
+        //Hàm tạo mới và cập nhập
+        public async Task<ResponseModel> Save(GenreViewModel request)
         {
             if (request.Id == 0)
             {
@@ -76,21 +66,21 @@ namespace BookSale.Management.Application.Services
             }
             else
             {
-				_unitOfWork.GenreRepository.UpdateGenre(_mapper.Map<Genre>(request));
+                _unitOfWork.GenreRepository.UpdateGenre(_mapper.Map<Genre>(request));
             }
 
-			await _unitOfWork.GenreRepository.SaveGenre();
+            await _unitOfWork.GenreRepository.SaveGenre();
 
-			return new ResponseModel
-			{
-				Action = Domain.Enums.ActionType.Update,
-				Message = $"{(request.Id == 0 ? "Thêm mới" : "Cập nhập")} thành công !!!",
-				Status = true
-			};
-		}
+            return new ResponseModel
+            {
+                Action = Domain.Enums.ActionType.Update,
+                Message = $"{(request.Id == 0 ? "Thêm mới" : "Cập nhập")} thành công !!!",
+                Status = true
+            };
+        }
 
-		//Hàm xoá genre
-		public async Task<bool> Delete(int id)
+        //Hàm xoá genre
+        public async Task<bool> Delete(int id)
         {
             var genre = await _unitOfWork.GenreRepository.GetById(id);
 
@@ -103,8 +93,13 @@ namespace BookSale.Management.Application.Services
             }
             return false;
         }
+        #endregion
 
-        //
+
+
+
+        #region Implement function into Customer
+        //Lấy toàn bộ sách trong genre ví dụ ( Comic - Tổng sách = 5)
         public IEnumerable<GenreSiteDTO> GetSumBookOfGenre()
         {
             var result = _unitOfWork.GenreRepository.Table.Select(x => new GenreSiteDTO
@@ -116,5 +111,14 @@ namespace BookSale.Management.Application.Services
 
             return result;
         }
+
+        //Lấy toàn bộ genre ra ngoài customer
+        public async Task<IEnumerable<GenreDTO>> GetAllGenreForCustomer()
+        {
+            var genreList = await _unitOfWork.GenreRepository.GetAllGenre();
+
+            return _mapper.Map<IEnumerable<GenreDTO>>(genreList);
+        }
+        #endregion
     }
 }

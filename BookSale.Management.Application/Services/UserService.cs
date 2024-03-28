@@ -5,7 +5,6 @@ using BookSale.Management.Domain.Entities;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.EntityFrameworkCore;
-using System.Net;
 
 namespace BookSale.Management.Application.Services
 {

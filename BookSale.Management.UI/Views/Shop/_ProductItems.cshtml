@@ -1,0 +1,40 @@
+﻿@using System.Globalization
+@model BookSale.Management.Application.DTOs.BookDTO;
+
+<div class="col-md-6 col-lg-6 col-xl-4">
+    <div class="rounded position-relative fruite-item">
+        @{
+            string result;
+            if (!string.IsNullOrEmpty(Model.Image))
+            {
+                if (Model.Image.StartsWith("https:"))
+                {
+                    // Nếu urlImg bắt đầu bằng "https:", sử dụng urlImg trực tiếp
+                    result = Model.Image;
+                }
+                else
+                {
+                    // Ngược lại, kết hợp urlImg với đường dẫn gốc của ứng dụng web
+                    result = $"{Url.Content("~")}/images/books/{Model.Image}";
+                }
+            }
+            else
+            {
+                // Nếu không có urlImg, sử dụng hình ảnh mặc định
+                result = $"{Url.Content("~/images/image.png")}";
+            }
+        }
+
+        <input type="hidden" id="baseImageUrl" value="@Url.Content("~")/images/books/" />
+        <div class="fruite-img">
+            <img src="@result" class="img-fluid w-100 rounded-top" alt="">
+        </div>
+        <div class="p-4 border border-secondary border-top-0 rounded-bottom">
+            <h5 style="white-space: nowrap; overflow: hidden; text-overflow: ellipsis;">@Model.Title</h5>
+            <p>Code: @Model.Code</p>
+            <p style="white-space: nowrap; overflow: hidden; text-overflow: ellipsis;">Tác giả: @Model.Author</p>
+            <p class="text-dark fs-5 fw-bold mb-0">Giá: @Model.Price.ToString("C", CultureInfo.GetCultureInfo("vi-VN"))</p>
+            <a href="#" class="btn border border-secondary rounded-pill px-3 text-primary"><i class="fa fa-shopping-bag me-2 text-primary"></i> Add to cart</a>
+        </div>
+    </div>
+</div>

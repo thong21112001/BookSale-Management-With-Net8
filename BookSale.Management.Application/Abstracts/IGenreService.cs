@@ -1,7 +1,6 @@
 ﻿using BookSale.Management.Application.DTOs;
 using BookSale.Management.Application.DTOs.Genre;
 using BookSale.Management.Application.DTOs.ViewModels;
-using Microsoft.AspNetCore.Mvc.Rendering;
 
 namespace BookSale.Management.Application.Abstracts
 {
@@ -9,8 +8,8 @@ namespace BookSale.Management.Application.Abstracts
     {
         Task<bool> Delete(int id);
         Task<ResponseDataTable<GenreDTO>> GetAllGenre(RequestDataTable request);
+        Task<IEnumerable<GenreDTO>> GetAllGenreForCustomer();
         Task<GenreViewModel> GetById(int id);
-        Task<IEnumerable<SelectListItem>> GetGenreForCategory();
         IEnumerable<GenreSiteDTO> GetSumBookOfGenre();
         Task<ResponseModel> Save(GenreViewModel request);
     }
