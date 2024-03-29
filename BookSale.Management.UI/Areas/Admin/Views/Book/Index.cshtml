@@ -1,5 +1,4 @@
-﻿
-@{
+﻿@{
     ViewData["Title"] = "Index";
     Layout = "~/Areas/Admin/Views/Shared/_Layout.cshtml";
 }
@@ -65,14 +64,9 @@
 @await Html.PartialAsync("_Toast")
 
 @section Scripts {
-	<script src="~/Admin/assets/plugins/custom/datatables/datatables.bundle.js"></script>
-	<script src="~/Admin/assets/js/pages/crud/datatables/basic/paginations.js"></script>
-
-	@* Add toast *@
-	<script src="//cdnjs.cloudflare.com/ajax/libs/toastr.js/latest/js/toastr.min.js"></script>
-
-	<script src="~/admin/settingsjs/registerdatatable.js"></script>
-	<script src="~/admin/settingsjs/registerbuttondelete.js"></script>
+	@{
+		<partial name="_ScriptPartial" />
+	}
 
     <script src="~/admin/components/book_showdata.js"></script>
 }

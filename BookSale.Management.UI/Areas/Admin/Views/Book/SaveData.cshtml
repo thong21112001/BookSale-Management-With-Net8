@@ -123,26 +123,7 @@
                     <div  class="row">
                         @{
                             string urlImg = ViewBag.ImageBook;
-                            string result;
-
-                            if (Model.Id != 0 && !string.IsNullOrEmpty(urlImg))
-                            {
-                                if (urlImg.StartsWith("https:"))
-                                {
-                                    // Nếu urlImg bắt đầu bằng "https:", sử dụng urlImg trực tiếp
-                                    result = urlImg;
-                                }
-                                else
-                                {
-                                    // Ngược lại, kết hợp urlImg với đường dẫn gốc của ứng dụng web
-                                    result = $"{Url.Content("~")}/images/books/{urlImg}";
-                                }
-                            }
-                            else
-                            {
-                                // Nếu không có urlImg, sử dụng hình ảnh mặc định
-                                result = $"{Url.Content("~/images/image.png")}";
-                            }
+                            string result = ImageHelper.GetImageUrl(urlImg, Context); ;
                         }
 
                         <div class="col-4">

@@ -1,28 +1,9 @@
-﻿@using System.Globalization
-@model BookSale.Management.Application.DTOs.BookDTO;
+﻿@model BookSale.Management.Application.DTOs.BookDTO;
 
 <div class="col-md-6 col-lg-6 col-xl-4">
     <div class="rounded position-relative fruite-item">
         @{
-            string result;
-            if (!string.IsNullOrEmpty(Model.Image))
-            {
-                if (Model.Image.StartsWith("https:"))
-                {
-                    // Nếu urlImg bắt đầu bằng "https:", sử dụng urlImg trực tiếp
-                    result = Model.Image;
-                }
-                else
-                {
-                    // Ngược lại, kết hợp urlImg với đường dẫn gốc của ứng dụng web
-                    result = $"{Url.Content("~")}/images/books/{Model.Image}";
-                }
-            }
-            else
-            {
-                // Nếu không có urlImg, sử dụng hình ảnh mặc định
-                result = $"{Url.Content("~/images/image.png")}";
-            }
+            string result = ImageHelper.GetImageUrl(Model.Image, Context);
         }
 
         <input type="hidden" id="baseImageUrl" value="@Url.Content("~")/images/books/" />

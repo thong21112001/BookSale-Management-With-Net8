@@ -1,5 +1,4 @@
-﻿@using System.Globalization
-@using BookSale.Management.Application.DTOs;
+﻿@using BookSale.Management.Application.DTOs;
 @model IEnumerable<BookSale.Management.Application.DTOs.BookDTO>;
 
 @{
@@ -56,26 +55,8 @@
 
                 foreach (var item in Model)
                 {
-                    if (!string.IsNullOrEmpty(item.Image))
-                    {
-                        if (item.Image.StartsWith("https:"))
-                        {
-                            // Nếu urlImg bắt đầu bằng "https:", sử dụng urlImg trực tiếp
-                            result = item.Image;
-                        }
-                        else
-                        {
-                            // Ngược lại, kết hợp urlImg với đường dẫn gốc của ứng dụng web
-                            result = $"{Url.Content("~")}/images/books/{item.Image}";
-                        }
-                    }
-                    else
-                    {
-                        // Nếu không có urlImg, sử dụng hình ảnh mặc định
-                        result = $"{Url.Content("~/images/image.png")}";
-                    }
+                    result = ImageHelper.GetImageUrl(item.Image, Context);
                     
-
                     <div class="border border-primary rounded position-relative vesitable-item">
                         <div class="vesitable-img">
                             <img src="@result" class="img-fluid w-100 rounded-top" alt="">

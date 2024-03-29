@@ -30,13 +30,13 @@
                                                 </div>
                                                 <div class="p-4 border border-secondary border-top-0 rounded-bottom">
                                                     <h5 style="white-space: nowrap; overflow: hidden; text-overflow: ellipsis;">${book.title}</h5>
-                                                    <p>Code: nBHvD89t</p>
+                                                    <p>Code: ${book.code}</p>
                                                     <p style="white-space: nowrap; overflow: hidden; text-overflow: ellipsis;">Tác giả: ${book.author}</p>
                                                     <p class="text-dark fs-5 fw-bold mb-0">Giá: ${book.price.toLocaleString('vi-VN', {
                                 style: 'currency',
                                 currency: 'VND'
                             })}</p>
-                                                    <a href="#" class="btn border border-secondary rounded-pill px-3 text-primary"><i class="fa fa-shopping-bag me-2 text-primary"></i> Add to cart</a>
+                                                    <a class="btn btn-add-cart border border-secondary rounded-pill px-3 text-primary" data-code="${book.code}"><i class="fa fa-shopping-bag me-2 text-primary"></i> Add to cart</a>
                                                 </div>
                                             </div>
                                         </div>`;
