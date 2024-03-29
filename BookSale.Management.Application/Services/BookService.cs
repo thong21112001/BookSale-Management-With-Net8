@@ -269,6 +269,15 @@ namespace BookSale.Management.Application.Services
                 throw; // Rethrow the exception
             }
         }
+
+        public async Task<IEnumerable<BookForCart>> GetListBookByCode(string[] codes)
+        {
+            var books = await _unitOfWork.BookRepository.GetBookByListCodeAsync(codes);
+
+            var result = _mapper.Map<IEnumerable<BookForCart>>(books);
+
+            return result;
+        }
         #endregion
     }
 }

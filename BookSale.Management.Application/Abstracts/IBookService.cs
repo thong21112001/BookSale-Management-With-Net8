@@ -12,6 +12,7 @@ namespace BookSale.Management.Application.Abstracts
         Task<ResponseDataTable<BookDTO>> GetAllBookPaginationAsync(RequestDataTable request);
         Task<BookViewModel> GetBookById(int id);
         Task<IEnumerable<SelectListItem>> GetGenreForDropDownList();
+        Task<IEnumerable<BookForCart>> GetListBookByCode(string[] codes);
         Task<string> GetStringImage(int id);
         Task<ResponseModel> SaveAsync(BookViewModel bookVM, string oldImage);
     }

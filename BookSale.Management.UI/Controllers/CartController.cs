@@ -1,14 +1,45 @@
-﻿using BookSale.Management.UI.Models;
+﻿using BookSale.Management.Application.Abstracts;
+using BookSale.Management.UI.Models;
 using Microsoft.AspNetCore.Mvc;
+using System.Collections.Generic;
 
 namespace BookSale.Management.UI.Controllers
 {
     public class CartController : Controller
     {
         private static string CartSessionName = "CartSession";
+        private readonly IBookService _bookService;
 
-        public IActionResult Index()
+        public CartController(IBookService bookService)
         {
+            _bookService = bookService;
+        }
+
+        public async Task<IActionResult> Index()
+        {
+            var carts = HttpContext.Session.Get<List<CartModel>>(CartSessionName);
+
+            if (carts is not null)
+            {
+                var getCodes = carts.Select(x => x.CodeBook).ToArray();
+
+                var books = await _bookService.GetListBookByCode(getCodes);
+
+                books = books.Select(book =>
+                {
+                    var item = carts.FirstOrDefault(x => x.CodeBook == book.Code);
+
+                    if (item is not null)
+                    {
+                        book.Quantity = item.Quantity;
+                    }
+
+                    return book;
+                });
+
+                return View(books);
+            }
+
             return View();
         }
 

@@ -1,5 +1,6 @@
 ﻿using AutoMapper;
 using BookSale.Management.Application.DTOs;
+using BookSale.Management.Application.DTOs.Book;
 using BookSale.Management.Application.DTOs.ViewModels;
 using BookSale.Management.Domain.Entities;
 
@@ -24,6 +25,9 @@ namespace BookSale.Management.Application.Configuration
                 .ReverseMap();
 
             CreateMap<Book, BookDTO>()
+               .ReverseMap();
+
+            CreateMap<Book, BookForCart>()
                .ReverseMap();
         }
 
