@@ -16,6 +16,12 @@ builder.Services.AddControllersWithViews();
 
 builder.Services.AddAuthorizationGlobal();
 
+//Đăng ký session
+builder.Services.AddSession(options =>
+{
+    options.IdleTimeout = TimeSpan.FromHours(1);//Hết hạn trong 1h  //Không gọi thì mặc định là 20p
+});
+
 var app = builder.Build();
 
 //Chạy qua đây check xem database có hay chưa, sẽ tạo mới
@@ -42,6 +48,8 @@ app.UseStaticFiles();   //Khi gọi phương thức này thì mặc định tr�
 app.UseRouting();
 
 app.UseAuthorization();
+
+app.UseSession();   //Add vào để dùng
 
 //C1: Config route url cho Area Admin or ....
 //app.MapControllerRoute(

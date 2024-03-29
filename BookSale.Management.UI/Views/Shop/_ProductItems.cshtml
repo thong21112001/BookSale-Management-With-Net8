@@ -34,7 +34,7 @@
             <p>Code: @Model.Code</p>
             <p style="white-space: nowrap; overflow: hidden; text-overflow: ellipsis;">Tác giả: @Model.Author</p>
             <p class="text-dark fs-5 fw-bold mb-0">Giá: @Model.Price.ToString("C", CultureInfo.GetCultureInfo("vi-VN"))</p>
-            <a href="#" class="btn border border-secondary rounded-pill px-3 text-primary"><i class="fa fa-shopping-bag me-2 text-primary"></i> Add to cart</a>
+            <a class="btn btn-add-cart border border-secondary rounded-pill px-3 text-primary" data-code="@Model.Code"><i class="fa fa-shopping-bag me-2 text-primary"></i> Add to cart</a>
         </div>
     </div>
 </div>
