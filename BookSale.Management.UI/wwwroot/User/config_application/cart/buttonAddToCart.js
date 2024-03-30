@@ -8,12 +8,22 @@
         data: { codeBook : code, quantity : 1 },    //Từ CartModel
         success: function (count) {
             if (count === -1) {
-                //Hieern thi thong bao loi
+                showToastAllPage("error", "Thêm vào giỏ thất bại...");
             } else {
-                $('.cart-number').text(count);
+                updateCartCount();
                 showToastAllPage("success","Thêm vào giỏ thành công !!!");
             }
         }
     });
 
 });
+
+function updateCartCount() {
+    $.ajax({
+        url: '/cart/getcartcount',
+        method: 'GET',
+        success: function (count) {
+            $('.cart-number').text(count);
+        }
+    });
+}

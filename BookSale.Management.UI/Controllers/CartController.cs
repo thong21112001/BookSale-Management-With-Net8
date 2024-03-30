@@ -1,7 +1,6 @@
 ﻿using BookSale.Management.Application.Abstracts;
 using BookSale.Management.UI.Models;
 using Microsoft.AspNetCore.Mvc;
-using System.Collections.Generic;
 
 namespace BookSale.Management.UI.Controllers
 {
@@ -80,6 +79,13 @@ namespace BookSale.Management.UI.Controllers
             {
                 return Json(-1);
             }
+        }
+
+        [HttpGet]
+        public IActionResult GetCartCount()
+        {
+            var carts = HttpContext.Session.Get<List<CartModel>>(CartSessionName);
+            return Json(carts?.Count ?? 0);
         }
     }
 }

@@ -19,7 +19,10 @@ builder.Services.AddAuthorizationGlobal();
 //Đăng ký session
 builder.Services.AddSession(options =>
 {
-    options.IdleTimeout = TimeSpan.FromHours(1);//Hết hạn trong 1h  //Không gọi thì mặc định là 20p
+    options.IdleTimeout = TimeSpan.FromMinutes(30);//Hết hạn trong 30p  //Không gọi thì mặc định là 20p
+    // Lựa chọn loại lưu trữ session, ví dụ Memory hoặc Redis                                        
+    options.Cookie.HttpOnly = true;
+    options.Cookie.IsEssential = true;
 });
 
 var app = builder.Build();
@@ -50,6 +53,7 @@ app.UseRouting();
 app.UseAuthorization();
 
 app.UseSession();   //Add vào để dùng
+app.UseRouting();
 
 //C1: Config route url cho Area Admin or ....
 //app.MapControllerRoute(

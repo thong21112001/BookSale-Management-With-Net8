@@ -222,6 +222,11 @@
     <script src="~/User/js/main.js"></script>
     <!-- Add cart -->
     <script src="~/user/config_application/cart/buttonaddtocart.js"></script>
+    <script>
+        $(document).ready(function () {
+            updateCartCount();
+        });
+    </script>
     <!-- Add Js -->
     @await RenderSectionAsync("Scripts", required: false)
 </body>
