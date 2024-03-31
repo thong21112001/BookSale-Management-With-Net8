@@ -19,7 +19,7 @@
 <div class="container-fluid py-5">
     <div class="container py-5">
         <div class="table-responsive">
-            <table class="table">
+            <table class="table" id="cart-table-body">
                 <thead>
                     <tr>
                         <th scope="col">Products</th>
@@ -36,7 +36,7 @@
                         string result;
                         int itemTotal = 0;
 
-                        if (Model is not null)
+                        if (Model is not null && Model.Count() > 0)
                         {
                             foreach (var item in Model)
                             {
