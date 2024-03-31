@@ -177,5 +177,50 @@ namespace BookSale.Management.UI.Controllers
 
             return Json(new { success = false });
         }
+
+        [HttpPost]
+        public async Task<IActionResult> Delete(string codeBook)
+        {
+            try
+            {
+                var carts = HttpContext.Session.Get<List<CartModel>>(CartSessionName);
+
+                if (carts != null)
+                {
+                    var cartItem = carts.FirstOrDefault(x => x.CodeBook == codeBook);
+                    decimal cartTotal = 0;
+                    if (cartItem != null)
+                    {
+                        carts.Remove(cartItem);
+                        // Cập nhật Session
+                        HttpContext.Session.Set(CartSessionName, carts);
+
+                        //Tính tổng giá tiền trong giỏ hàng
+                        foreach (var item in carts)
+                        {
+                            var bookPrice = await GetBookPriceAsync(item.CodeBook);
+                            cartTotal += item.Quantity * bookPrice;
+                        }
+
+                        // Trả về kết quả để cập nhật giao diện
+                        return Json(new
+                        {
+                            success = true,
+                            removeItem = true,
+                            codeBook = codeBook,
+                            itemCartTotal = carts.Count(),
+                            cartTotal = cartTotal.ToString("C", CultureInfo.GetCultureInfo("vi-VN"))
+                        });
+                    }
+                }
+
+                return Json(new { success = false });
+            }
+            catch (Exception)
+            {
+                return Json(new { success = false });
+            }
+        }
+
     }
 }

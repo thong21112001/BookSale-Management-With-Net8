@@ -73,7 +73,7 @@
                                         <p class="mb-0 mt-4" data-code="@item.Code">@((item.Quantity * item.Price).ToString("C", CultureInfo.GetCultureInfo("vi-VN")))</p>
                                     </td>
                                     <td>
-                                        <button class="btn btn-md rounded-circle bg-light border mt-4">
+                                        <button class="btn btnDeleteItem btn-md rounded-circle bg-light border mt-4" data-product-code="@item.Code">
                                             <i class="fa fa-times text-danger"></i>
                                         </button>
                                     </td>
@@ -118,5 +118,6 @@
 
 @section Scripts {
     <script src="~/user/config_application/cart/updatequantityitemincart.js"></script>
+    <script src="~/user/config_application/cart/buttondeleteitemincart.js"></script>
 }
 
