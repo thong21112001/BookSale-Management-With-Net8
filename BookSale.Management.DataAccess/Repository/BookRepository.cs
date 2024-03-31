@@ -29,6 +29,11 @@ namespace BookSale.Management.DataAccess.Repository
             return await base.GetALlAsync(x => codes.Contains(x.Code));
         }
 
+        public async Task<Book?> GetBookByCodeAsync(string code)
+        {
+            return await base.GetSingleAsync(x => x.Code == code);
+        }
+
         public async Task<(IEnumerable<T>, int)> GetAllBookByPagination<T>(int pageIndex, int pageSize, string keyword)
 		{
 			DynamicParameters parameters = new DynamicParameters();

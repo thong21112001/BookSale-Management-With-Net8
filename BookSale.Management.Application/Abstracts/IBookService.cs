@@ -10,6 +10,7 @@ namespace BookSale.Management.Application.Abstracts
         Task<string> GenerateCodeAsync(int number = 8);
         Task<BookForSiteDTO> GetAllBookByCustomer(int genreId, int pageIndex, int pageSize = 12);
         Task<ResponseDataTable<BookDTO>> GetAllBookPaginationAsync(RequestDataTable request);
+        Task<BookForCart> GetBookByCode(string code);
         Task<BookViewModel> GetBookById(int id);
         Task<IEnumerable<SelectListItem>> GetGenreForDropDownList();
         Task<IEnumerable<BookForCart>> GetListBookByCode(string[] codes);

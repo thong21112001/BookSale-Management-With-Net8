@@ -1,6 +1,7 @@
 ﻿using BookSale.Management.Application.Abstracts;
 using BookSale.Management.UI.Models;
 using Microsoft.AspNetCore.Mvc;
+using System.Globalization;
 
 namespace BookSale.Management.UI.Controllers
 {
@@ -81,11 +82,100 @@ namespace BookSale.Management.UI.Controllers
             }
         }
 
+        //Lấy số lượng item trong giỏ hàng
         [HttpGet]
         public IActionResult GetCartCount()
         {
             var carts = HttpContext.Session.Get<List<CartModel>>(CartSessionName);
             return Json(carts?.Count ?? 0);
+        }
+
+        //Lấy giá tiền của book
+        private async Task<decimal> GetBookPriceAsync(string codeBook)
+        {
+            var book = await _bookService.GetBookByCode(codeBook);
+            return Convert.ToDecimal(book.Price);
+        }
+
+        //Cập nhập số lượng sản phẩm trong giỏ hàng
+        [HttpPost]
+        public async Task<IActionResult> UpdateQuantity(string codeBook, string operation)
+        {
+            try
+            {
+                // Lấy danh sách giỏ hàng từ Session
+                var carts = HttpContext.Session.Get<List<CartModel>>(CartSessionName) ?? new List<CartModel>();
+
+                // Tìm sản phẩm cần cập nhật
+                var cartItem = carts.FirstOrDefault(x => x.CodeBook == codeBook);
+
+                if (cartItem != null)
+                {
+                    decimal cartTotal = 0;
+
+                    if (operation == "plus")
+                    {
+                        cartItem.Quantity++;
+                    }
+                    else if (operation == "minus")
+                    {
+                        cartItem.Quantity--;
+                        if (cartItem.Quantity <= 0)
+                        {
+                            carts.Remove(cartItem);
+                            // Cập nhật Session
+                            HttpContext.Session.Set(CartSessionName, carts);
+
+                            //Tính tổng giá tiền trong giỏ hàng
+                            foreach (var item in carts)
+                            {
+                                var bookPrice = await GetBookPriceAsync(item.CodeBook);
+                                cartTotal += item.Quantity * bookPrice;
+                            }
+                            
+                            // Trả về kết quả để cập nhật giao diện
+                            return Json(new
+                            {
+                                success = true,
+                                removeItem = true,
+                                codeBook = codeBook,
+                                itemCartTotal = carts.Count(),
+                                cartTotal = cartTotal.ToString("C", CultureInfo.GetCultureInfo("vi-VN"))
+                            });
+                        }
+                    }
+
+                    // Cập nhật Session
+                    HttpContext.Session.Set(CartSessionName, carts);
+
+                    // Tính toán giá tiền mới
+                    var book = await _bookService.GetBookByCode(codeBook);
+                    var itemTotal = cartItem.Quantity * book.Price;
+
+                    //Tính tổng giá tiền trong giỏ hàng
+                    foreach (var item in carts)
+                    {
+                        var bookPrice = await GetBookPriceAsync(item.CodeBook);
+                        cartTotal += item.Quantity * bookPrice;
+                    }
+
+                    // Trả về kết quả
+                    return Json(new
+                    {
+                        success = true,
+                        quantity = cartItem.Quantity,
+                        itemCartTotal = carts.Count(),
+                        itemTotal = itemTotal.ToString("C", CultureInfo.GetCultureInfo("vi-VN")),
+                        cartTotal = cartTotal.ToString("C", CultureInfo.GetCultureInfo("vi-VN"))
+                    });
+                }
+            }
+            catch (Exception)
+            {
+                // Xử lý lỗi nếu có
+            }
+
+            return Json(new { success = false });
         }
     }
 }

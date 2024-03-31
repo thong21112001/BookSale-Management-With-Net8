@@ -278,6 +278,15 @@ namespace BookSale.Management.Application.Services
 
             return result;
         }
+
+        public async Task<BookForCart> GetBookByCode(string code)
+        {
+            var book = await _unitOfWork.BookRepository.GetBookByCodeAsync(code);
+
+            var result = _mapper.Map<BookForCart>(book);
+
+            return result;
+        }
         #endregion
     }
 }

@@ -34,7 +34,7 @@
                     @{
                         double totalCart = 0;
                         string result;
-                        int totalItem = 0;
+                        int itemTotal = 0;
 
                         if (Model is not null)
                         {
@@ -42,7 +42,7 @@
                             {
                                 result = ImageHelper.GetImageUrl(item.Image, Context);
 
-                                <tr>
+                                <tr data-code="@item.Code">
                                     <th scope="row">
                                         <div class="d-flex align-items-center">
                                             <img src="@result" class="img-fluid me-5 rounded-circle" style="width: 80px; height: 80px;" alt="">
@@ -57,20 +57,20 @@
                                     <td>
                                         <div class="input-group quantity mt-4" style="width: 100px;">
                                             <div class="input-group-btn">
-                                                <button class="btn btn-sm btn-minus rounded-circle bg-light border">
+                                                <button onclick="updateQuantity('@item.Code','minus')" class="btn btn-sm btn-minus rounded-circle bg-light border">
                                                     <i class="fa fa-minus"></i>
                                                 </button>
                                             </div>
-                                            <input type="text" class="form-control form-control-sm text-center border-0" value="@item.Quantity">
+                                            <input type="text" class="form-control form-control-sm text-center border-0" value="@item.Quantity" data-code="@item.Code">
                                             <div class="input-group-btn">
-                                                <button class="btn btn-sm btn-plus rounded-circle bg-light border">
+                                                <button onclick="updateQuantity('@item.Code','plus')" class="btn btn-sm btn-plus rounded-circle bg-light border">
                                                     <i class="fa fa-plus"></i>
                                                 </button>
                                             </div>
                                         </div>
                                     </td>
                                     <td>
-                                        <p class="mb-0 mt-4">@((item.Quantity * item.Price).ToString("C", CultureInfo.GetCultureInfo("vi-VN")))</p>
+                                        <p class="mb-0 mt-4" data-code="@item.Code">@((item.Quantity * item.Price).ToString("C", CultureInfo.GetCultureInfo("vi-VN")))</p>
                                     </td>
                                     <td>
                                         <button class="btn btn-md rounded-circle bg-light border mt-4">
@@ -81,8 +81,7 @@
 
                                 totalCart += (item.Quantity * item.Price);
                             }
-
-                            totalItem = Model.Count();
+                            itemTotal = Model.Count();
                         }
                         else
                         {
@@ -102,12 +101,12 @@
                         <h1 class="display-6 mb-4">Cart <span class="fw-normal">Total</span></h1>
                         <div class="d-flex justify-content-between mb-4">
                             <h5 class="mb-0 me-4">Total item:</h5>
-                            <p class="mb-0">@totalItem</p>
+                            <p id="itemCartTotal" class="mb-0">@itemTotal</p>
                         </div>
                     </div>
                     <div class="py-4 mb-4 border-top border-bottom d-flex justify-content-between">
                         <h5 class="mb-0 ps-4 me-4">Total</h5>
-                        <p class="mb-0 pe-4">@totalCart.ToString("C", CultureInfo.GetCultureInfo("vi-VN"))</p>
+                        <p class="mb-0 pe-4"><span id="cartTotal">@totalCart.ToString("C", CultureInfo.GetCultureInfo("vi-VN"))</span></p>
                     </div>
                     <button class="btn border-secondary rounded-pill px-4 py-3 text-primary text-uppercase mb-4 ms-4" type="button">Proceed Checkout</button>
                 </div>
@@ -116,4 +115,8 @@
     </div>
 </div>
 <!-- Cart Page End -->
+
+@section Scripts {
+    <script src="~/user/config_application/cart/updatequantityitemincart.js"></script>
+}
 
