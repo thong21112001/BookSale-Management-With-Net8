@@ -1,4 +1,5 @@
 ﻿using BookSale.Management.Application.Abstracts;
+using BookSale.Management.UI.Helpers;
 using BookSale.Management.UI.Models;
 using Microsoft.AspNetCore.Mvc;
 using System.Globalization;
@@ -7,7 +8,6 @@ namespace BookSale.Management.UI.Controllers
 {
     public class CartController : Controller
     {
-        private static string CartSessionName = "CartSession";
         private readonly IBookService _bookService;
 
         public CartController(IBookService bookService)
@@ -17,7 +17,7 @@ namespace BookSale.Management.UI.Controllers
 
         public async Task<IActionResult> Index()
         {
-            var carts = HttpContext.Session.Get<List<CartModel>>(CartSessionName);
+            var carts = CartHelper.GetCartItems(HttpContext.Session);
 
             if (carts is not null)
             {
@@ -48,33 +48,8 @@ namespace BookSale.Management.UI.Controllers
         {
             try
             {
-                //Nếu mà nó null sẽ khởi tạo một list cart mới
-                var carts = HttpContext.Session.Get<List<CartModel>>(CartSessionName) ?? new List<CartModel>();
-
-                if (!carts.Any())
-                {
-                    carts.Add(cartModel);
-                }
-                else
-                {
-                    //Kiểm tra xem codebook có tồn tại trong giỏ không
-                    var cartExist = carts.FirstOrDefault(x => x.CodeBook == cartModel.CodeBook);
-
-                    if (cartExist is null)  //Không thì tiến hành add book vào
-                    {
-                        carts.Add(cartModel);
-                    }
-                    else//Có thì tiến hành tăng số lượng book
-                    {
-                        cartExist.Quantity += cartModel.Quantity;
-                    }
-                }
-
-                //Cập nhập session
-                HttpContext.Session.Set(CartSessionName, carts);
-
-                //Trả về số lượng sách trong giỏ
-                return Json(carts.Count);
+                CartHelper.AddToCart(HttpContext.Session, cartModel);
+                return Json(CartHelper.GetCartItems(HttpContext.Session).Count);
             }
             catch (Exception)
             {
@@ -86,8 +61,7 @@ namespace BookSale.Management.UI.Controllers
         [HttpGet]
         public IActionResult GetCartCount()
         {
-            var carts = HttpContext.Session.Get<List<CartModel>>(CartSessionName);
-            return Json(carts?.Count ?? 0);
+            return Json(CartHelper.GetCartItems(HttpContext.Session).Count);
         }
 
         //Lấy giá tiền của book
@@ -103,55 +77,19 @@ namespace BookSale.Management.UI.Controllers
         {
             try
             {
-                // Lấy danh sách giỏ hàng từ Session
-                var carts = HttpContext.Session.Get<List<CartModel>>(CartSessionName) ?? new List<CartModel>();
+                decimal cartTotal = 0;
+                int newQuantity;
+                double itemTotal;
+                var book = await _bookService.GetBookByCode(codeBook);
 
-                // Tìm sản phẩm cần cập nhật
-                var cartItem = carts.FirstOrDefault(x => x.CodeBook == codeBook);
-
-                if (cartItem != null)
+                if (operation == "plus")
                 {
-                    decimal cartTotal = 0;
+                    newQuantity = CartHelper.IncrementQuantity(HttpContext.Session, codeBook);
 
-                    if (operation == "plus")
-                    {
-                        cartItem.Quantity++;
-                    }
-                    else if (operation == "minus")
-                    {
-                        cartItem.Quantity--;
-                        if (cartItem.Quantity <= 0)
-                        {
-                            carts.Remove(cartItem);
-                            // Cập nhật Session
-                            HttpContext.Session.Set(CartSessionName, carts);
+                    // Tính toán giá tiền mới của mặt hàng
+                    itemTotal = newQuantity * book.Price;
 
-                            //Tính tổng giá tiền trong giỏ hàng
-                            foreach (var item in carts)
-                            {
-                                var bookPrice = await GetBookPriceAsync(item.CodeBook);
-                                cartTotal += item.Quantity * bookPrice;
-                            }
-                            
-                            // Trả về kết quả để cập nhật giao diện
-                            return Json(new
-                            {
-                                success = true,
-                                removeItem = true,
-                                codeBook = codeBook,
-                                itemCartTotal = carts.Count(),
-                                cartTotal = cartTotal.ToString("C", CultureInfo.GetCultureInfo("vi-VN"))
-                            });
-                        }
-                    }
-
-                    // Cập nhật Session
-                    HttpContext.Session.Set(CartSessionName, carts);
-
-                    // Tính toán giá tiền mới
-                    var book = await _bookService.GetBookByCode(codeBook);
-                    var itemTotal = cartItem.Quantity * book.Price;
-
+                    var carts = CartHelper.GetCartItems(HttpContext.Session);
                     //Tính tổng giá tiền trong giỏ hàng
                     foreach (var item in carts)
                     {
@@ -159,11 +97,36 @@ namespace BookSale.Management.UI.Controllers
                         cartTotal += item.Quantity * bookPrice;
                     }
 
-                    // Trả về kết quả
                     return Json(new
                     {
                         success = true,
-                        quantity = cartItem.Quantity,
+                        quantity = newQuantity,
+                        itemCartTotal = carts.Count(),
+                        itemTotal = itemTotal.ToString("C", CultureInfo.GetCultureInfo("vi-VN")),
+                        cartTotal = cartTotal.ToString("C", CultureInfo.GetCultureInfo("vi-VN"))
+                    });
+                }
+                else if (operation == "minus")
+                {
+                    newQuantity = CartHelper.DecrementQuantity(HttpContext.Session, codeBook);
+                    bool itemDelete = newQuantity == 0;
+
+                    itemTotal = newQuantity * book.Price;
+
+                    var carts = CartHelper.GetCartItems(HttpContext.Session);
+                    //Tính tổng giá tiền trong giỏ hàng
+                    foreach (var item in carts)
+                    {
+                        var bookPrice = await GetBookPriceAsync(item.CodeBook);
+                        cartTotal += item.Quantity * bookPrice;
+                    }
+
+                    return Json(new
+                    {
+                        success = true,
+                        removeItem = itemDelete,
+                        quantity = newQuantity,
+                        codeBook = codeBook,
                         itemCartTotal = carts.Count(),
                         itemTotal = itemTotal.ToString("C", CultureInfo.GetCultureInfo("vi-VN")),
                         cartTotal = cartTotal.ToString("C", CultureInfo.GetCultureInfo("vi-VN"))
@@ -172,55 +135,43 @@ namespace BookSale.Management.UI.Controllers
             }
             catch (Exception)
             {
-                // Xử lý lỗi nếu có
+                return Json(new { success = false });
             }
-
             return Json(new { success = false });
         }
 
+        //Nút xoá sản phẩm khỏi giỏ hàng
         [HttpPost]
         public async Task<IActionResult> Delete(string codeBook)
         {
             try
             {
-                var carts = HttpContext.Session.Get<List<CartModel>>(CartSessionName);
+                CartHelper.RemoveFromCart(HttpContext.Session, codeBook);
 
-                if (carts != null)
+                var carts = CartHelper.GetCartItems(HttpContext.Session);
+                decimal cartTotal = 0;
+
+                //Tính tổng giá tiền trong giỏ hàng
+                foreach (var item in carts)
                 {
-                    var cartItem = carts.FirstOrDefault(x => x.CodeBook == codeBook);
-                    decimal cartTotal = 0;
-                    if (cartItem != null)
-                    {
-                        carts.Remove(cartItem);
-                        // Cập nhật Session
-                        HttpContext.Session.Set(CartSessionName, carts);
-
-                        //Tính tổng giá tiền trong giỏ hàng
-                        foreach (var item in carts)
-                        {
-                            var bookPrice = await GetBookPriceAsync(item.CodeBook);
-                            cartTotal += item.Quantity * bookPrice;
-                        }
-
-                        // Trả về kết quả để cập nhật giao diện
-                        return Json(new
-                        {
-                            success = true,
-                            removeItem = true,
-                            codeBook = codeBook,
-                            itemCartTotal = carts.Count(),
-                            cartTotal = cartTotal.ToString("C", CultureInfo.GetCultureInfo("vi-VN"))
-                        });
-                    }
+                    var bookPrice = await GetBookPriceAsync(item.CodeBook);
+                    cartTotal += item.Quantity * bookPrice;
                 }
 
-                return Json(new { success = false });
+                // Trả về kết quả để cập nhật giao diện
+                return Json(new
+                {
+                    success = true,
+                    removeItem = true,
+                    codeBook = codeBook,
+                    itemCartTotal = carts.Count(),
+                    cartTotal = cartTotal.ToString("C", CultureInfo.GetCultureInfo("vi-VN"))
+                });
             }
             catch (Exception)
             {
                 return Json(new { success = false });
             }
         }
-
     }
 }

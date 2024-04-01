@@ -1,6 +1,6 @@
 ﻿using Newtonsoft.Json;
 
-namespace BookSale.Management.UI.Models
+namespace BookSale.Management.UI.Helpers
 {
     public static class SessionHelper
     {

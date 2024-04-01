@@ -1,4 +1,4 @@
-﻿namespace BookSale.Management.UI.Ultility
+﻿namespace BookSale.Management.UI.Helpers
 {
     public static class ImageHelper
     {
