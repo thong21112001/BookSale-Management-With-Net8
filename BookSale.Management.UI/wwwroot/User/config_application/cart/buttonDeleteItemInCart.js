@@ -16,12 +16,12 @@
 
                     // Kiểm tra nếu không còn sản phẩm nào trong giỏ hàng
                     if (result.itemCartTotal === 0) {
-                        showToastAllPage("info", "Giỏ hàng đang trống. Trang sẽ tự động reload sau 6 giây.");
+                        showToastAllPage("warning", "Giỏ hàng đang trống. Trang sẽ tự động reload sau 8 giây.");
 
-                        // Đặt timeout để reload trang sau 3 giây
+                        // Đặt timeout để reload trang sau 8 giây
                         setTimeout(function () {
                             window.location.reload();
-                        }, 6000);
+                        }, 8000);
                     }
 
                     // Cập nhật tổng item của giỏ hàng
