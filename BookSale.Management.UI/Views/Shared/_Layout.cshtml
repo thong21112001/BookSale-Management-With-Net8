@@ -33,6 +33,8 @@
     <!--Begin::Toaster-->
     <link href="https://cdnjs.cloudflare.com/ajax/libs/toastr.js/latest/css/toastr.min.css" rel="stylesheet" />
     <!--End::Toaster-->
+
+    @await RenderSectionAsync("Stylesheet", required: false)
 </head>
 
 <body>
@@ -101,7 +103,7 @@
                             else
                             {
                                 <div class="dropdown-menu m-0 bg-secondary rounded-0">
-                                    <a href="#" class="dropdown-item fw-bold">Login</a>
+                                    <a asp-controller="authentication" asp-action="login" class="dropdown-item fw-bold">Login</a>
                                     <a href="#" class="dropdown-item fw-bold">Sign up</a>
                                 </div>
                             }

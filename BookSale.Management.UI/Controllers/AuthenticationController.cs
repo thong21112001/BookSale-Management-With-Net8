@@ -4,7 +4,8 @@ namespace BookSale.Management.UI.Controllers
 {
     public class AuthenticationController : Controller
     {
-        public IActionResult Index()
+        [HttpGet]//Default
+        public IActionResult Login()
         {
             return View();
         }
