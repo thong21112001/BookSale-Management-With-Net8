@@ -1,4 +1,5 @@
-﻿using System.ComponentModel.DataAnnotations;
+﻿using Microsoft.AspNetCore.Mvc.ModelBinding.Validation;
+using System.ComponentModel.DataAnnotations;
 
 namespace BookSale.Management.UI.Models
 {
@@ -10,6 +11,9 @@ namespace BookSale.Management.UI.Models
 		[Required(ErrorMessage = "Password không bỏ trống")]
 		[MinLength(6, ErrorMessage = "Password từ 6 ký tự")]
 		public string Password { get; set; } = string.Empty;
+
+        [ValidateNever]
+        public string ReturnUrl { get; set; } = string.Empty;
 
 		public bool HasRememberMe { get; set; }
 	}

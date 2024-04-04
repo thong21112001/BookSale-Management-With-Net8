@@ -94,10 +94,9 @@
                                     <p class="text-dark fs-5 fw-bold text-center">Information</p>
                                     <div class="dropdown-divider"></div>
                                     <p class="text-center">@User.Identity?.Name</p>
-                                    <p class="text-center">@User.FindFirst(ClaimTypes.Email)?.Value</p>
                                     <div class="dropdown-divider"></div>
                                     <a href="#" class="dropdown-item fw-bold">Profile</a>
-                                    <a href="#" class="dropdown-item fw-bold">Logout</a>
+                                    <a asp-controller="Authentication" asp-action="Logout" class="dropdown-item fw-bold">Logout</a>
                                 </div>
                             }
                             else

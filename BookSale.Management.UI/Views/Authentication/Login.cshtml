@@ -19,6 +19,9 @@
         <span class="text-danger">@Html.Raw(TempData["Errors"])</span>
 
         <form class="form" method="post" asp-controller="Authentication" asp-action="Login" asp-antiforgery="true">
+            <input type="hidden" value="@ViewBag.ReturnUrl" asp-for="ReturnUrl">
+
+
             <div class="form-item w-100 my-3">
                 <input type="text" class="form-control text-dark bg-white-o-5 fw-bold" placeholder="Username" asp-for="Username">
             </div>
@@ -35,7 +38,7 @@
             </div>
 
             <div class="text-center align-items-center justify-content-center pt-4">
-                <button type="button" class="btn border-secondary px-4 text-uppercase text-primary">Login</button>
+                <button type="submit" class="btn border-secondary px-4 text-uppercase text-primary">Login</button>
             </div>
         </form>
     </div>
