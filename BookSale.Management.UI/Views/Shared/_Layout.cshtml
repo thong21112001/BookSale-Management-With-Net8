@@ -95,7 +95,7 @@
                                     <div class="dropdown-divider"></div>
                                     <p class="text-center">@User.Identity?.Name</p>
                                     <div class="dropdown-divider"></div>
-                                    <a href="#" class="dropdown-item fw-bold">Profile</a>
+                                    <a asp-controller="Profile" asp-action="Index" class="dropdown-item fw-bold">Profile</a>
                                     <a asp-controller="Authentication" asp-action="Logout" class="dropdown-item fw-bold">Logout</a>
                                 </div>
                             }

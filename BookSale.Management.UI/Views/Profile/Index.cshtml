@@ -1,0 +1,60 @@
+﻿
+@{
+    ViewData["Title"] = "Index";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+
+<!-- Single Page Header start -->
+<div class="container-fluid page-header py-5">
+    <h1 class="text-center text-white display-6">Profile</h1>
+    <ol class="breadcrumb justify-content-center mb-0">
+        <li class="breadcrumb-item"><a href="#">Home</a></li>
+        <li class="breadcrumb-item"><a href="#">Pages</a></li>
+        <li class="breadcrumb-item active text-white">Profile</li>
+    </ol>
+</div>
+<!-- Single Page Header End -->
+
+
+<!-- Checkout Page Start -->
+<div class="container-fluid py-5">
+    <h1 class="text-center text-uppercase">Information Profile</h1>
+    <div class="container py-5 d-flex justify-content-center">
+        <form action="#">
+            <div class="row">
+                <div class="col-md-12 col-lg-6">
+                    <div class="form-item w-100 mb-1">
+                        <input type="text" class="form-control" placeholder="Username">
+                    </div>
+                </div>
+                <div class="col-md-12 col-lg-6">
+                    <div class="form-item w-100">
+                        <input type="text" class="form-control" placeholder="Phone">
+                    </div>
+                </div>
+            </div>
+
+            <div class="row mt-1">
+                <div class="col-md-12 col-lg-6">
+                    <div class="form-item w-100 mb-1">
+                        <input type="text" class="form-control" placeholder="Email">
+                    </div>
+                </div>
+                <div class="col-md-12 col-lg-6">
+                    <div class="form-item w-100 mb-1">
+                        <input type="text" class="form-control" placeholder="Address">
+                    </div>
+                </div>
+            </div>
+
+            <div class="text-center align-items-center justify-content-center row">
+                <div class="col-md-12 col-lg-6 m-2 d-flex">
+                    <button type="submit" style="margin-right: 10px; width: 150px;" class="btn border-secondary text-uppercase text-primary flex-grow-1 mr-5">Update</button>
+                    <a asp-controller="Home" asp-action="Index" style="margin-left: 10px; width: 150px;" class="btn border-secondary text-uppercase text-primary flex-grow-1">Home</a>
+                </div>
+            </div>
+        </form>
+    </div>
+</div>
+<!-- Checkout Page End -->
+
