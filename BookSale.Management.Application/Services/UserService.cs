@@ -21,6 +21,8 @@ namespace BookSale.Management.Application.Services
             _imageService = imageService;
         }
 
+
+        #region Admin Manager Implement
         //Lấy toàn bộ user và phân trang
         public async Task<ResponseDataTable<UserModel>> GetAllUser(RequestDataTable request)
         {
@@ -170,5 +172,19 @@ namespace BookSale.Management.Application.Services
             }
             return false;
         }
+        #endregion
+
+
+        #region User
+        //Lấy user thông qua id
+        public async Task<UserProfileDTO> GetUserProfile(string id)
+        {
+            var user = await _userManager.FindByIdAsync(id);
+
+            var userDTOs = _mapper.Map<UserProfileDTO>(user);
+
+            return userDTOs;
+        }
+        #endregion
     }
 }

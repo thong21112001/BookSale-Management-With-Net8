@@ -29,6 +29,9 @@ namespace BookSale.Management.Application.Configuration
 
             CreateMap<Book, BookForCart>()
                .ReverseMap();
+
+            CreateMap<ApplicationUser, UserProfileDTO>()
+               .ReverseMap();
         }
 
     }

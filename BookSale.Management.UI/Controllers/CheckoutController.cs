@@ -7,7 +7,9 @@ namespace BookSale.Management.UI.Controllers
     {
         public IActionResult Index(string returnUrl)
         {
-            if (HttpContext.User.Identity.IsAuthenticated)
+            var isAuthenticated = User.Identity?.IsAuthenticated ?? false;
+
+            if (isAuthenticated)
             {
                 var userId = User.FindFirst(ClaimTypes.NameIdentifier)?.Value;
 

@@ -1,4 +1,5 @@
-﻿
+﻿@model BookSale.Management.Application.DTOs.UserProfileDTO
+
 @{
     ViewData["Title"] = "Index";
     Layout = "~/Views/Shared/_Layout.cshtml";
@@ -20,31 +21,32 @@
 <div class="container-fluid py-5">
     <h1 class="text-center text-uppercase">Information Profile</h1>
     <div class="container py-5 d-flex justify-content-center">
-        <form action="#">
+        <form asp-controller="profile" asp-action="index" method="post" asp-antiforgery="true">
+            <input asp-for="Id" hidden />
+
+            <div class="form-item w-100 mb-1">
+                <input type="text" class="form-control" placeholder="Email" asp-for="Fullname">
+            </div>
+
             <div class="row">
                 <div class="col-md-12 col-lg-6">
                     <div class="form-item w-100 mb-1">
-                        <input type="text" class="form-control" placeholder="Username">
+                        <input type="text" readonly class="form-control" placeholder="Username" asp-for="Username">
                     </div>
                 </div>
                 <div class="col-md-12 col-lg-6">
-                    <div class="form-item w-100">
-                        <input type="text" class="form-control" placeholder="Phone">
+                    <div class="form-item w-100 mb-1">
+                        <input type="text" class="form-control" placeholder="Phone" asp-for="PhoneNumber">
                     </div>
                 </div>
             </div>
 
-            <div class="row mt-1">
-                <div class="col-md-12 col-lg-6">
-                    <div class="form-item w-100 mb-1">
-                        <input type="text" class="form-control" placeholder="Email">
-                    </div>
-                </div>
-                <div class="col-md-12 col-lg-6">
-                    <div class="form-item w-100 mb-1">
-                        <input type="text" class="form-control" placeholder="Address">
-                    </div>
-                </div>
+            <div class="form-item w-100 mb-1">
+                <input type="text" class="form-control" placeholder="Email" asp-for="Email">
+            </div>
+
+            <div class="form-item w-100 mb-1">
+                <input type="text" class="form-control" placeholder="Address" asp-for="Address">
             </div>
 
             <div class="text-center align-items-center justify-content-center row">
