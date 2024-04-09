@@ -32,6 +32,9 @@ namespace BookSale.Management.Application.Configuration
 
             CreateMap<ApplicationUser, UserProfileDTO>()
                .ReverseMap();
+            
+            CreateMap<UserAddress, UserProfileDTO>()
+               .ReverseMap();
         }
 
     }

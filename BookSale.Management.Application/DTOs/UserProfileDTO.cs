@@ -1,7 +1,10 @@
-﻿namespace BookSale.Management.Application.DTOs
+﻿using Microsoft.AspNetCore.Mvc.ModelBinding.Validation;
+
+namespace BookSale.Management.Application.DTOs
 {
     public class UserProfileDTO
     {
+        [ValidateNever]
         public string Id { get; set; } = string.Empty;
         public string Username { get; set; } = string.Empty;
         public string Fullname { get; set; } = string.Empty;

@@ -1,0 +1,48 @@
+﻿@model BookSale.Management.Application.DTOs.UserProfileDTO
+
+<!-- Modal -->
+<div class="modal fade" id="address-modal" data-bs-backdrop="static" data-bs-keyboard="false" tabindex="-1" aria-labelledby="staticBackdropLabel" aria-hidden="true">
+    <form id="formAddress" class="forms-sample" method="post" asp-controller="profile" asp-action="SaveAddress" asp-antiforgery="true">
+        <div class="modal-dialog">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h1 class="modal-title fs-5" id="staticBackdropLabel">Add address user</h1>
+                    <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close">
+                        &times;
+                    </button>
+                </div>
+                <div class="modal-body">
+                    <input type="hidden" asp-for="Username" />
+                    <div class="form-group">
+                        <label for="Name">Name<span class="text-danger">*</span></label>
+                        <input type="text" class="form-control p-input" asp-for="Fullname" placeholder="Enter name">
+                        <span class="text-danger" asp-validation-for="Fullname"></span>
+                    </div>
+
+                    <div class="form-group">
+                        <label for="Email">Email<span class="text-danger">*</span></label>
+                        <input type="text" class="form-control p-input" asp-for="Email" placeholder="Enter Email">
+                        <span class="text-danger" asp-validation-for="Email"></span>
+                    </div>
+
+                    <div class="form-group">
+                        <label for="Email">PhoneNumber<span class="text-danger">*</span></label>
+                        <input type="text" class="form-control p-input" asp-for="PhoneNumber" placeholder="Enter PhoneNumber">
+                        <span class="text-danger" asp-validation-for="PhoneNumber"></span>
+                    </div>
+                    
+                    <div class="form-group">
+                        <label for="Email">Address<span class="text-danger">*</span></label>
+                        <input type="text" class="form-control p-input" asp-for="Address" placeholder="Enter Address">
+                        <span class="text-danger" asp-validation-for="Address"></span>
+                    </div>
+                </div>
+
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
+                    <button type="submit" class="btn btn-primary">Save</button>
+                </div>
+            </div>
+        </div>
+    </form>
+</div>
