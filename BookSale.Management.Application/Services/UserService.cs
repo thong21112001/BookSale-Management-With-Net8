@@ -1,6 +1,7 @@
 ﻿using AutoMapper;
 using BookSale.Management.Application.Abstracts;
 using BookSale.Management.Application.DTOs;
+using BookSale.Management.Application.DTOs.ViewModels;
 using BookSale.Management.Domain.Entities;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Identity;
@@ -176,14 +177,44 @@ namespace BookSale.Management.Application.Services
 
 
         #region User
-        //Lấy user thông qua id
-        public async Task<UserProfileDTO> GetUserProfile(string id)
+        //Lấy UserProfileDTO thông qua id
+        public async Task<UserProfileDTO> GetUserProfileDTO(string id)
         {
             var user = await _userManager.FindByIdAsync(id);
 
             var userDTOs = _mapper.Map<UserProfileDTO>(user);
 
             return userDTOs;
+        }
+
+        //Lấy UserProfileDTO thông qua id
+        public async Task<UserProfileViewModel> GetUserProfileViewModel(string id)
+        {
+            var user = await _userManager.FindByIdAsync(id);
+
+            var userDTOs = _mapper.Map<UserProfileViewModel>(user);
+
+            return userDTOs;
+        }
+
+        //Cập nhập thông tin user
+        public async Task<bool> UpdateProfileUser(UserProfileViewModel userProfileVM, string id)
+        {
+            var user = await _userManager.FindByIdAsync(id);
+
+            if (user != null)
+            {
+                user.Fullname = userProfileVM.Fullname;
+                user.Email = userProfileVM.Email;
+                user.PhoneNumber = userProfileVM.PhoneNumber;
+                user.MobilePhone = userProfileVM.PhoneNumber;
+                user.Address = userProfileVM.Address;
+
+                await _userManager.UpdateAsync(user);
+
+                return true;
+            }
+            return false;
         }
         #endregion
     }

@@ -1,4 +1,4 @@
-﻿@model BookSale.Management.Application.DTOs.UserProfileDTO
+﻿@model BookSale.Management.Application.DTOs.ViewModels.UserProfileViewModel
 
 @{
     ViewData["Title"] = "Index";
@@ -24,8 +24,6 @@
             <h2 class="text-center text-uppercase">Information Profile</h2>
             <div class="container py-5 d-flex justify-content-center">
                 <form asp-controller="profile" asp-action="index" method="post" asp-antiforgery="true">
-                    <input asp-for="Id" hidden />
-
                     <div class="form-item w-100 mb-1">
                         <input type="text" class="form-control" placeholder="Email" asp-for="Fullname">
                     </div>
@@ -54,6 +52,7 @@
                     <div class="text-center align-items-center justify-content-center row">
                         <div class="col-md-12 col-lg-6 m-2 d-flex">
                             <button type="submit" style="margin-right: 10px; width: 150px;" class="btn border-secondary text-uppercase text-primary flex-grow-1 mr-5">Update</button>
+                            <a asp-controller="Profile" asp-action="Index" style="margin-left: 10px; width: 150px;" class="btn border-secondary text-uppercase text-primary flex-grow-1">Reload</a>
                             <a asp-controller="Home" asp-action="Index" style="margin-left: 10px; width: 150px;" class="btn border-secondary text-uppercase text-primary flex-grow-1">Home</a>
                         </div>
                     </div>
@@ -71,15 +70,16 @@
                     {
                         foreach (var address in getListAddress)
                         {
-                            <a href="#" class="address-link" data-name="@address.Fullname" data-address="@address.Address" data-phone="@address.PhoneNumber" data-email="@address.Email">Address @address.Id</a>
+                            <a href="#" class="address-link" data-name="@address.Fullname" data-address="@address.Address" data-phone="@address.PhoneNumber" data-email="@address.Email">Address @address.Fullname</a>
+                            <br />
                         }
 
-                        <a id="btn-add" style="margin-left: 10px; width: 150px;" class="btn border-secondary text-uppercase text-primary flex-grow-1">Add</a>
+                        <a id="btn-add" style="margin-left: 10px; width: 150px;" class="btn border-secondary mt-2 text-uppercase text-primary flex-grow-1">Add new</a>
                     }
                     else
                     {
                         <p class="text-uppercase text-dark fw-bold">Click button add address !!!</p>
-                        <a id="btn-add" style="margin-left: 10px; width: 150px;" class="btn border-secondary text-uppercase text-primary flex-grow-1">Home</a>
+                        <a id="btn-add" style="margin-left: 10px; width: 150px;" class="btn border-secondary text-uppercase text-primary flex-grow-1">Add</a>
                     }
                 }
             </div>
@@ -91,32 +91,14 @@
 
 
 <!--begin::Form Edit-->
-@await Html.PartialAsync("_CreateAddress.cshtml", Model)
+@await Html.PartialAsync("_CreateAddress.cshtml", ViewData["UserProfileDTO"])
 <!--end::Form Edit-->
 
 @section Scripts{
     @{
         <partial name="_ValidationScriptsPartial" />
     }
-
-    <script>
-        $(document).ready(function () {
-            $('.address-link').hover(
-                function () {
-                    var name = $(this).data('name');
-                    var address = $(this).data('address');
-                    var phone = $(this).data('phone');
-                    var email = $(this).data('email');
-                    var info = "Name: " + name + "<br>Address: " + address + "<br>Phone: " + phone + "<br>Email: " + email;
-                    $('#address-info').html(info);
-                },
-                function () {
-                    $('#address-info').empty();
-                }
-            );
-        });
-    </script>
-
+    <script src="~/user/config_application/user/user_clickaddress.js"></script>
     <script src="~/user/config_application/user/user_address.js"></script>
 }
 

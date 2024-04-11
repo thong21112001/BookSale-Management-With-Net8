@@ -1,5 +1,6 @@
 ﻿using BookSale.Management.Application.Abstracts;
 using BookSale.Management.Application.DTOs;
+using BookSale.Management.Application.DTOs.ViewModels;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.Filters;
 using System.Security.Claims;
@@ -34,11 +35,12 @@ namespace BookSale.Management.UI.Controllers
                 {
                     var userId = userIdClaim.Value;
                     // Use userId as needed
-                    UserProfileDTO userDTO = await _userService.GetUserProfile(userId);
+                    UserProfileViewModel userVM = await _userService.GetUserProfileViewModel(userId);//Trả về model chính của view
+                    ViewData["UserProfileDTO"] = await _userService.GetUserProfileDTO(userId);//Trả về model phụ cho view
+
                     ViewBag.ListAddress = await _userAddressService.GetAllListAddressUser(userId);
 
-
-                    return View(userDTO);
+                    return View(userVM);
                 }
                 else
                 {
@@ -51,13 +53,36 @@ namespace BookSale.Management.UI.Controllers
             }
         }
 
+        //Cập nhập địa chỉ mới vào tài khoản
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public async Task<IActionResult> Index(UserProfileDTO userProfileDTO)
+        public async Task<IActionResult> Index(UserProfileViewModel userProfileVM)
         {
-            return View();
+            if (_isAuthenticated)//Đã đăng nhập
+            {
+                var userIdClaim = User.FindFirst(ClaimTypes.NameIdentifier);
+                if (userIdClaim != null)
+                {
+                    var userId = userIdClaim.Value;
+                    var result = await _userService.UpdateProfileUser(userProfileVM, userId);
+
+                    if (result == true)
+                    {
+                        UserProfileViewModel userVM = await _userService.GetUserProfileViewModel(userId);//Trả về model chính của view
+                        ViewData["UserProfileDTO"] = await _userService.GetUserProfileDTO(userId);//Trả về model phụ cho view
+
+                        ViewBag.ListAddress = await _userAddressService.GetAllListAddressUser(userId);
+
+                        return View(userVM);
+                    }
+                    return RedirectToAction("Index", "Home");
+                }
+                return RedirectToAction("Index", "Home");
+            }
+            return RedirectToAction("Login", "Authentication");
         }
 
+        //Thêm địa chỉ mới
         [HttpPost]
         [ValidateAntiForgeryToken]
         public async Task<IActionResult> SaveAddress(UserProfileDTO userProfileDTO)
