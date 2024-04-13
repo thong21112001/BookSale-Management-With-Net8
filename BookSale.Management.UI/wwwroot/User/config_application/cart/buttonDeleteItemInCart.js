@@ -16,6 +16,10 @@
 
                     // Kiểm tra nếu không còn sản phẩm nào trong giỏ hàng
                     if (result.itemCartTotal === 0) {
+
+                        // Thêm class "disabled-link" vào thẻ <a> với id là "btn-Checkout"
+                        $('#btn-Checkout').addClass('disable-link');
+
                         showToastAllPage("warning", "Giỏ hàng đang trống. Trang sẽ tự động reload sau 8 giây.");
 
                         // Đặt timeout để reload trang sau 8 giây

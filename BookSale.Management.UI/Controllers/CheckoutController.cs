@@ -8,14 +8,12 @@ namespace BookSale.Management.UI.Controllers
 {
     public class CheckoutController : Controller
     {
-        private readonly IUserService _userService;
         private readonly IUserAddressService _userAddressService;
         private readonly IBookService _bookService;
         private bool _isAuthenticated;
 
-        public CheckoutController(IUserService userService, IUserAddressService userAddressService, IBookService bookService)
+        public CheckoutController(IUserAddressService userAddressService, IBookService bookService)
         {
-            _userService = userService;
             _userAddressService = userAddressService;
             _bookService = bookService;
         }
@@ -40,7 +38,7 @@ namespace BookSale.Management.UI.Controllers
                 //Lấy giỏ hàng
                 var carts = CartHelper.GetCartItems(HttpContext.Session);
 
-                if (carts is not null)
+                if (carts is not null && carts.Count() > 0)
                 {
                     var getCodes = carts.Select(x => x.CodeBook).ToArray();
 

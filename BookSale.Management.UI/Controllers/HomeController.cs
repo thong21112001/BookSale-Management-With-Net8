@@ -1,5 +1,4 @@
 using BookSale.Management.Application.Abstracts;
-using BookSale.Management.Domain.Settings;
 using BookSale.Management.UI.Models;
 using Microsoft.AspNetCore.Mvc;
 using System.Diagnostics;

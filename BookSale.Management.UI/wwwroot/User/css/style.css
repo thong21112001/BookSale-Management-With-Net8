@@ -501,3 +501,12 @@
 }
 /*** Footer End ***/
 
+
+/*** Add disable-link Page Cart ***/
+
+.disable-link{
+    pointer-events : none;
+    text-decoration : none;
+    cursor : not-allowed;
+    opacity : 0.7;
+}
