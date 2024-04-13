@@ -94,11 +94,12 @@
 @await Html.PartialAsync("_CreateAddress.cshtml", ViewData["UserProfileDTO"])
 <!--end::Form Edit-->
 
-@section Scripts{
+@section Scripts {
     @{
         <partial name="_ValidationScriptsPartial" />
     }
     <script src="~/user/config_application/user/user_clickaddress.js"></script>
     <script src="~/user/config_application/user/user_address.js"></script>
 }
+
 

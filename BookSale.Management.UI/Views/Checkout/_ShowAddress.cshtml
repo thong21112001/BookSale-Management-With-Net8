@@ -1,0 +1,35 @@
+﻿@model IEnumerable<BookSale.Management.Application.DTOs.UserProfileDTO>
+
+<div class="modal fade" id="address-modal" data-bs-backdrop="static" data-bs-keyboard="false" tabindex="-1" aria-labelledby="staticBackdropLabel" aria-hidden="true">
+    <div class="modal-dialog">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h1 class="modal-title fs-5" id="staticBackdropLabel">List address</h1>
+                <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close">
+                    &times;
+                </button>
+            </div>
+            <div class="modal-body">
+                @{
+                    var getListAddress = Model;
+
+                    if (getListAddress is not null)
+                    {
+                        foreach (var address in getListAddress)
+                        {
+                            <a href="#" class="address-link" data-name="@address.Fullname" data-address="@address.Address" data-phone="@address.PhoneNumber" data-email="@address.Email">Address @address.Fullname</a>
+                            <br />
+                        }
+                        <a id="btn-add" style="margin-left: 10px; width: 150px;" class="btn border-secondary mt-2 text-uppercase text-primary flex-grow-1">Add new</a>
+                        <div id="address-info" class="mt-3"></div>
+                    }
+                    else
+                    {
+                        <p class="text-uppercase text-dark fw-bold">Click button add address !!!</p>
+                        <a id="btn-add" style="margin-left: 10px; width: 150px;" class="btn border-secondary text-uppercase text-primary flex-grow-1">Add</a>
+                    }
+                }
+            </div>
+        </div>
+    </div>
+</div>

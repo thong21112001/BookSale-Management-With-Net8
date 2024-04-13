@@ -1,4 +1,5 @@
-﻿
+﻿@model IEnumerable<BookSale.Management.Application.DTOs.Book.BookForCart>
+
 @{
     ViewData["Title"] = "Index";
     Layout = "~/Views/Shared/_Layout.cshtml";
@@ -11,33 +12,43 @@
 </div>
 <!-- Single Page Header End -->
 
+<!--begin::Form Address-->
+@await Html.PartialAsync("_ShowAddress.cshtml", ViewData["ListAddess"])
+<!--end::Form Address-->
+
 <!-- Checkout Page Start -->
 <div class="container-fluid py-5">
     <div class="container py-5">
         <h1 class="mb-4">Billing details</h1>
+        <a id="btn-add" class="btn border-secondary text-uppercase text-primary">Show list address</a>
+
         <form action="#">
             <div class="row g-5">
-                <div class="col-md-12 col-lg-6 col-xl-7">
+                <div class="col-md-12 col-lg-6 col-xl-5">
                     <div class="row">
                         <div class="col-md-12 col-lg-6">
                             <div class="form-item w-100">
-                                <label class="form-label my-3">Name<sup>*</sup></label>
-                                <input type="text" class="form-control">
+                                <label class="form-label my-3">Name<sup style="color:red">*</sup></label>
+                                <input type="text" class="form-control" placeholder="Full name" name="Fullname">
                             </div>
                         </div>
                         <div class="col-md-12 col-lg-6">
                             <div class="form-item w-100">
-                                <label class="form-label my-3">Phone<sup>*</sup></label>
-                                <input type="text" class="form-control">
+                                <label class="form-label my-3">Phone<sup style="color:red">*</sup></label>
+                                <input type="text" class="form-control" placeholder="Phone Number" name="PhoneNumber">
                             </div>
                         </div>
                     </div>
                     <div class="form-item">
-                        <label class="form-label my-3">Address <sup>*</sup></label>
-                        <input type="text" class="form-control" placeholder="House Number Street Name">
+                        <label class="form-label my-3">Email <sup style="color:red">*</sup></label>
+                        <input type="text" class="form-control" placeholder="Email" name="Email">
+                    </div>
+                    <div class="form-item">
+                        <label class="form-label my-3">Address <sup style="color:red">*</sup></label>
+                        <input type="text" class="form-control" placeholder="House Number Street Name" name="Address">
                     </div>
                 </div>
-                <div class="col-md-12 col-lg-6 col-xl-5">
+                <div class="col-md-12 col-lg-6 col-xl-7">
                     <div class="table-responsive">
                         <table class="table">
                             <thead>
@@ -49,21 +60,45 @@
                                 </tr>
                             </thead>
                             <tbody>
-                                <tr>
-                                    <td class="py-5">Awesome Brocoli</td>
-                                    <td class="py-5">$69.00</td>
-                                    <td class="py-5">2</td>
-                                    <td class="py-5">$138.00</td>
-                                </tr>
+                                @{
+                                    double totalCart = 0;
+
+                                    if (Model is not null && Model.Count() > 0)
+                                    {
+                                        foreach (var item in Model)
+                                        {
+                                            string truncatedTitle = item.Title.Length > 25 ? item.Title.Substring(0, 24) + "..." : item.Title;
+
+                                            <tr data-code="@item.Code">
+                                                <td class="py-5">
+                                                    <p class="mb-0">@truncatedTitle</p>
+                                                </td>
+
+                                                <td class="py-5">
+                                                    <p class="mb-0">@item.Price.ToString("C", CultureInfo.GetCultureInfo("vi-VN"))</p>
+                                                </td>
+
+                                                <td class="py-5">
+                                                    <p class="mb-0 text-center">@item.Quantity</p>
+                                                </td>
+
+                                                <td class="py-5">
+                                                    <p class="mb-0" data-code="@item.Code">@((item.Quantity * item.Price).ToString("C", CultureInfo.GetCultureInfo("vi-VN")))</p>
+                                                </td>
+                                            </tr>
+
+                                            totalCart += (item.Quantity * item.Price);
+                                        }
+                                    }
+                                }
                                 <tr>
                                     <td class="py-5">
                                         <p class="mb-0 text-dark fw-bold text-uppercase py-3">TOTAL</p>
                                     </td>
                                     <td class="py-5"></td>
-                                    <td class="py-5"></td>
-                                    <td class="py-5">
+                                    <td class="py-5 fw-bold text-center" colspan="2">
                                         <div class="py-3 border-bottom border-top">
-                                            <p class="mb-0 text-dark">$135.00</p>
+                                            <p class="mb-0" style="color:red">@totalCart.ToString("C", CultureInfo.GetCultureInfo("vi-VN"))</p>
                                         </div>
                                     </td>
                                 </tr>
@@ -102,3 +137,9 @@
 </div>
 <!-- Checkout Page End -->
 
+@section Scripts {
+    @{
+        <partial name="_ValidationScriptsPartial" />
+    }
+    <script src="~/user/config_application/checkout/showaddress.js"></script>
+}
