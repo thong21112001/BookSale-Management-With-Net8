@@ -1,7 +1,7 @@
 ﻿@{
 	var breadscrumModel = ViewData["Breadscrumb"] as BreadscrumModel;
 
-	if (!string.IsNullOrEmpty(breadscrumModel.Path))
+	if (!string.IsNullOrEmpty(breadscrumModel?.Path))
 	{
 		var segments = breadscrumModel.Path.Split("/");
 

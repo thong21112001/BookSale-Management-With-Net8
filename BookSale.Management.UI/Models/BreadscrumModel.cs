@@ -2,7 +2,7 @@
 {
 	public class BreadscrumModel
 	{
-        public string Title { get; set; }
-        public string Path { get; set; }
+        public string Title { get; set; } = string.Empty;
+        public string Path { get; set; } = string.Empty;
     }
 }

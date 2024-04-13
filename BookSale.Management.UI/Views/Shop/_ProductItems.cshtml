@@ -3,7 +3,7 @@
 <div class="col-md-6 col-lg-6 col-xl-4">
     <div class="rounded position-relative fruite-item">
         @{
-            string result = ImageHelper.GetImageUrl(Model.Image, Context);
+            string result = ImageHelper.GetImageUrl(Model.Image ?? string.Empty, Context);
         }
 
         <input type="hidden" id="baseImageUrl" value="@Url.Content("~")/images/books/" />
