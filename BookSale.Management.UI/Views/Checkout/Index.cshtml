@@ -26,6 +26,7 @@
             <div class="row g-5">
                 <div class="col-md-12 col-lg-6 col-xl-5">
                     <div class="row">
+                        <input type="hidden" id="paypal-order-id">
                         <div class="col-md-12 col-lg-6">
                             <div class="form-item w-100">
                                 <label class="form-label my-3">Name<sup style="color:red">*</sup></label>
@@ -127,6 +128,10 @@
                         </div>
                     </div>
 
+                    <div class="row g-4 text-center align-items-center justify-content-center border-bottom py-3">
+                        <div id="paypal-button-container"></div>
+                    </div>
+
                     <div class="row g-4 text-center align-items-center justify-content-center pt-4">
                         <button type="button" class="btn border-secondary py-3 px-4 text-uppercase w-100 text-primary">Place Order</button>
                     </div>
@@ -138,6 +143,7 @@
 <!-- Checkout Page End -->
 
 @section Scripts {
+    <script src="https://www.paypal.com/sdk/js?client-id=AdFFwsDakVGuvaqlMBzIqVkWe1iD8qOKz0sso_TkzPJTVf-SqomVobHt7cixAQDj_x9H1wAeWnEheYzt"></script>
     @{
         <partial name="_ValidationScriptsPartial" />
     }

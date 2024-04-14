@@ -3,6 +3,41 @@
     $(document).on('click', '#btn-add', function () {
         $('#address-modal').modal('show');
     });
+
+    //Paypal
+    paypal.Buttons({
+        createOrder: function (data,action) {
+            return action.order.create({
+                "purchase_units": [
+                    {
+                        "amount": {
+                            "currency_code": "USD",
+                            "value": "1"
+                        },
+                        "items": []
+                    }
+                ]
+            })
+        },
+
+        onApprove: function (data, action) {
+            return action.order.capture().then(function (response) {
+                console.log(response);
+
+                if (response.status === "COMPLETED") {
+                    $("#paypal-order-id").val(response.id);
+                }
+
+            })   
+        },
+
+        style: {
+            layout: 'vertical',
+            color: 'blue',
+            shape: 'rect',
+            label: 'paypal'
+        }
+    }).render('#paypal-button-container');
 })();
 
 
