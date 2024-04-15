@@ -23,6 +23,8 @@ namespace BookSale.Management.DataAccess.DataAccess
         public DbSet<UserAddress> UserAddresse { get; set; }
         public DbSet<Cart> Cart { get; set; }
         public DbSet<CartDetail> CartDetails  { get; set; }
+        public DbSet<Order> Orders { get; set; }
+        public DbSet<OrderDetail> OrderDetails { get; set; }
 
         //Phương thức gọi sau khi đăng ký DbContext
         protected override void OnModelCreating(ModelBuilder builder)

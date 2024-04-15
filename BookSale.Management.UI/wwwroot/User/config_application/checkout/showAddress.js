@@ -25,7 +25,7 @@
                 console.log(response);
 
                 if (response.status === "COMPLETED") {
-                    $("#paypal-order-id").val(response.id);
+                    $("#OrderId").val(response.id);
                 }
 
             })   
