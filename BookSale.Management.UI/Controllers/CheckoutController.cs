@@ -10,12 +10,17 @@ namespace BookSale.Management.UI.Controllers
     {
         private readonly IUserAddressService _userAddressService;
         private readonly IBookService _bookService;
+        private readonly ICartService _cartService;
+        private readonly IOrderService _orderService;
         private bool _isAuthenticated;
 
-        public CheckoutController(IUserAddressService userAddressService, IBookService bookService)
+        public CheckoutController(IUserAddressService userAddressService, IBookService bookService,
+                                    ICartService cartService, IOrderService orderService)
         {
             _userAddressService = userAddressService;
             _bookService = bookService;
+            _cartService = cartService;
+            _orderService = orderService;
         }
 
         public override void OnActionExecuting(ActionExecutingContext context)

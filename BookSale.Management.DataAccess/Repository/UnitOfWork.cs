@@ -11,6 +11,8 @@ namespace BookSale.Management.DataAccess.Repository
 		IGenreRepository? _genreRepository;
         IBookRepository? _bookRepository;
         IUserAddressRepository? _addressRepository;
+        ICartRepository? _cartRepository;
+        IOrderRepository? _orderRepository;
         private bool disposedValue;
 
         public UnitOfWork(BookSaleDbContext context, ISQLQueryHandler queryHandler)
@@ -22,6 +24,8 @@ namespace BookSale.Management.DataAccess.Repository
         public IGenreRepository GenreRepository => _genreRepository ??= new GenreRepository(_context);
         public IBookRepository BookRepository => _bookRepository ??= new BookRepository(_context,_queryHandler);
         public IUserAddressRepository UserAddressRepository => _addressRepository ??= new UserAddressRepository(_context);
+        public ICartRepository CartRepository => _cartRepository ??= new CartRepository(_context);
+        public IOrderRepository OrderRepository => _orderRepository ??= new OrderRepository(_context);
 
 
         public async Task SaveChangeAsync()

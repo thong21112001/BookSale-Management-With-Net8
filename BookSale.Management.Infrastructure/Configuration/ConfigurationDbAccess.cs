@@ -67,6 +67,8 @@ namespace BookSale.Management.Infrastructure.Configuration
             services.AddTransient<IGenreService, GenreService>();
             services.AddTransient<IBookService, BookService>();
             services.AddTransient<IUserAddressService, UserAddressService>();
+            services.AddTransient<ICartService, CartService>();
+            services.AddTransient<IOrderService, OrderService>();
         }
 
         public static void AddAutoMapper(this IServiceCollection services)
