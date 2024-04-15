@@ -1,6 +1,4 @@
-﻿@model IEnumerable<BookSale.Management.Application.DTOs.Book.BookForCart>
-
-@{
+﻿@{
     ViewData["Title"] = "Index";
     Layout = "~/Views/Shared/_Layout.cshtml";
 }
@@ -63,10 +61,12 @@
                             <tbody>
                                 @{
                                     double totalCart = 0;
+                                    var listBook = ViewBag.ListBook as IEnumerable<BookSale.Management.Application.DTOs.Book.BookForCart>;
 
-                                    if (Model is not null && Model.Count() > 0)
+
+                                    if (listBook is not null && listBook.Count() > 0)
                                     {
-                                        foreach (var item in Model)
+                                        foreach (var item in listBook)
                                         {
                                             string truncatedTitle = item.Title.Length > 25 ? item.Title.Substring(0, 24) + "..." : item.Title;
 

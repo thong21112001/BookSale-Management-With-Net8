@@ -56,7 +56,9 @@ namespace BookSale.Management.UI.Controllers
                         return book;
                     });
 
-                    return View(books);
+                    ViewBag.ListBook = books;
+
+                    return View();
                 }
                 else
                 {
