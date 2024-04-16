@@ -4,6 +4,6 @@ namespace BookSale.Management.Domain.Abstracts
 {
     public interface ICartRepository
     {
-        void Save(Cart cart);
+        Task Save(Cart cart);
     }
 }

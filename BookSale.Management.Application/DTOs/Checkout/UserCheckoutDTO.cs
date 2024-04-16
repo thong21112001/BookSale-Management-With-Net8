@@ -4,8 +4,6 @@ namespace BookSale.Management.Application.DTOs.Checkout
 {
     public class UserCheckoutDTO
     {
-        public int Id { get; set; } = 0;
-
         public string Fullname { get; set; } = string.Empty;
 
         public string PhoneNumber { get; set; } = string.Empty;

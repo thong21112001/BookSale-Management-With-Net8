@@ -11,16 +11,9 @@ namespace BookSale.Management.DataAccess.Repository
             
         }
 
-        public async void Save(Order order)
+        public async Task Save(Order order)
         {
-            if (string.IsNullOrEmpty(order.Id))
-            {
-                await base.Create(order);
-            }
-            else
-            {
-                base.Update(order);
-            }
+            await base.Create(order);
         }
     }
 }

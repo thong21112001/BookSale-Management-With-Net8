@@ -1,6 +1,7 @@
 ﻿using BookSale.Management.DataAccess.DataAccess;
 using BookSale.Management.Domain.Abstracts;
 using Microsoft.EntityFrameworkCore;
+using Microsoft.EntityFrameworkCore.Storage;
 
 namespace BookSale.Management.DataAccess.Repository
 {
@@ -13,6 +14,7 @@ namespace BookSale.Management.DataAccess.Repository
         IUserAddressRepository? _addressRepository;
         ICartRepository? _cartRepository;
         IOrderRepository? _orderRepository;
+        IDbContextTransaction _contextTransaction;
         private bool disposedValue;
 
         public UnitOfWork(BookSaleDbContext context, ISQLQueryHandler queryHandler)
@@ -20,13 +22,28 @@ namespace BookSale.Management.DataAccess.Repository
             _context = context;
 			_queryHandler = queryHandler;
 		}
-
+        public DbSet<T> Table<T>() where T : class => _context.Set<T>();
         public IGenreRepository GenreRepository => _genreRepository ??= new GenreRepository(_context);
         public IBookRepository BookRepository => _bookRepository ??= new BookRepository(_context,_queryHandler);
         public IUserAddressRepository UserAddressRepository => _addressRepository ??= new UserAddressRepository(_context);
         public ICartRepository CartRepository => _cartRepository ??= new CartRepository(_context);
         public IOrderRepository OrderRepository => _orderRepository ??= new OrderRepository(_context);
 
+
+        public async Task BeginTransactionAsync()
+        {
+            _contextTransaction = await _context.Database.BeginTransactionAsync();
+        }
+
+        public async Task SaveTransactionAsync()
+        {
+            await _contextTransaction?.CommitAsync();
+        }
+
+        public async Task RollbackTransactionAsync()
+        {
+            await _contextTransaction?.RollbackAsync();
+        }
 
         public async Task SaveChangeAsync()
         {

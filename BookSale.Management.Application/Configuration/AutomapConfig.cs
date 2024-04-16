@@ -1,6 +1,7 @@
 ﻿using AutoMapper;
 using BookSale.Management.Application.DTOs;
 using BookSale.Management.Application.DTOs.Book;
+using BookSale.Management.Application.DTOs.Checkout;
 using BookSale.Management.Application.DTOs.ViewModels;
 using BookSale.Management.Domain.Entities;
 
@@ -38,6 +39,13 @@ namespace BookSale.Management.Application.Configuration
 
             CreateMap<ApplicationUser, UserProfileViewModel>()
                .ReverseMap();
+
+            CreateMap<CartRequestDTO, Cart>()
+                .ForMember(dest => dest.Status, source => source.MapFrom(src => Convert.ToUInt16(src.Status)))
+                .ReverseMap();
+
+            CreateMap<Order, OrderRequestDTO>()
+              .ReverseMap();
         }
 
     }

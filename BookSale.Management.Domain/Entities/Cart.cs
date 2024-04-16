@@ -16,7 +16,7 @@ namespace BookSale.Management.Domain.Entities
         public string Note { get; set; } = string.Empty;
 
         [Required]
-        public bool Status { get; set; }
+        public int Status { get; set; }
 
         [Required]
         public bool IsActive { get; set; }

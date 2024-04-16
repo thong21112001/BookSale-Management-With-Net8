@@ -22,8 +22,7 @@
         <h1 class="mb-4">Billing details</h1>
         <a id="btn-add" class="btn border-secondary text-uppercase text-primary">Show list address</a>
 
-        <form action="#">
-            <input type="hidden" asp-for="Id"/>
+        <form asp-controller="Checkout" asp-action="CompleteCart" method="post" asp-antiforgery="true">
             <input type="hidden" asp-for="OrderId"/>
 
             <div class="row g-5">
@@ -113,22 +112,19 @@
                     </div>
         
                     <div class="row g-4 text-center align-items-center justify-content-center border-bottom py-3">
-                        <div class="col-4">
+
+                        <div class="col-6">
                             <div class="form-check text-start my-3">
-                                <input type="checkbox" class="form-check-input bg-primary border-0" id="Payments-1" name="Payments" value="Payments">
-                                <label class="form-check-label" for="Payments-1">Check Payments</label>
+                                @* <input type="checkbox" class="form-check-input bg-primary border-0" id="Delivery-1" name="Delivery" value="Delivery"> *@
+                                <input type="radio" asp-for="PaymentMethod" value="1" checked />
+                                <label class="form-check-label" for="Payments-1">Cash</label>
                             </div>
                         </div>
-                        <div class="col-4">
+
+                        <div class="col-6">
                             <div class="form-check text-start my-3">
-                                <input type="checkbox" class="form-check-input bg-primary border-0" id="Delivery-1" name="Delivery" value="Delivery">
-                                <label class="form-check-label" for="Delivery-1">Cash On Delivery</label>
-                            </div>
-                        </div>
-                        <div class="col-4">
-                            <div class="form-check text-start my-3">
-                                <input type="checkbox" class="form-check-input bg-primary border-0" id="Paypal-1" name="Paypal" value="Paypal">
-                                <label class="form-check-label" for="Paypal-1">Paypal</label>
+                                <input type="radio" asp-for="PaymentMethod" value="2" />
+                                <label class="form-check-label" for="Delivery-1">Paypal</label>
                             </div>
                         </div>
                     </div>
@@ -138,7 +134,7 @@
                     </div>
 
                     <div class="row g-4 text-center align-items-center justify-content-center pt-4">
-                        <button type="button" class="btn border-secondary py-3 px-4 text-uppercase w-100 text-primary">Place Order</button>
+                        <button type="submit" class="btn border-secondary py-3 px-4 text-uppercase w-100 text-primary">Place Order</button>
                     </div>
                 </div>
             </div>

@@ -4,6 +4,6 @@ namespace BookSale.Management.Domain.Abstracts
 {
     public interface IOrderRepository
     {
-        void Save(Order order);
+        Task Save(Order order);
     }
 }

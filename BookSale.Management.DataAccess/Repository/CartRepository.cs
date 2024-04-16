@@ -11,7 +11,7 @@ namespace BookSale.Management.DataAccess.Repository
             
         }
 
-        public async void Save(Cart cart)
+        public async Task Save(Cart cart)
         {
             if (cart.Id == 0)
             {

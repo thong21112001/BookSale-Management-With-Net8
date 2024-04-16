@@ -1,4 +1,6 @@
-﻿namespace BookSale.Management.Domain.Abstracts
+﻿using Microsoft.EntityFrameworkCore;
+
+namespace BookSale.Management.Domain.Abstracts
 {
     public interface IUnitOfWork
     {
@@ -10,5 +12,9 @@
         void Dispose();
         void Detach(object entity);
         Task SaveChangeAsync();
+        DbSet<T> Table<T>() where T : class;
+        Task BeginTransactionAsync();
+        Task SaveTransactionAsync();
+        Task RollbackTransactionAsync();
     }
 }
