@@ -104,6 +104,7 @@
                                     <td class="py-5 fw-bold text-center" colspan="2">
                                         <div class="py-3 border-bottom border-top">
                                             <p class="mb-0" style="color:red">@totalCart.ToString("C", CultureInfo.GetCultureInfo("vi-VN"))</p>
+                                            <input type="hidden" asp-for="TotalAmount" value="@totalCart">
                                         </div>
                                     </td>
                                 </tr>

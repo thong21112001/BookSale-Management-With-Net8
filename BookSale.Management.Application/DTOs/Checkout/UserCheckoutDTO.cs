@@ -12,6 +12,8 @@ namespace BookSale.Management.Application.DTOs.Checkout
 
         public string Address { get; set; } = string.Empty;
 
+        public double TotalAmount { get; set; }
+
         public string OrderId { get; set; } = string.Empty;
 
         public PaymentMethod PaymentMethod { get; set; }

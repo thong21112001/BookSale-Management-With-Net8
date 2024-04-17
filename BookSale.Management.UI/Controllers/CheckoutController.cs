@@ -113,7 +113,7 @@ namespace BookSale.Management.UI.Controllers
                         PaymentMethod = userCheckoutDTO.PaymentMethod,
                         UserId = userId,
                         BookForCarts = booksInCart.ToList(),
-                        TotalAmount = 0
+                        TotalAmount = userCheckoutDTO.TotalAmount
                     };
 
                     await _orderService.Save(order);
