@@ -6,29 +6,39 @@
 
     //Paypal
     paypal.Buttons({
-        createOrder: function (data,action) {
-            return action.order.create({
-                "purchase_units": [
-                    {
-                        "amount": {
-                            "currency_code": "USD",
-                            "value": "1"
-                        },
-                        "items": []
-                    }
-                ]
-            })
+        createOrder: (data, actions) => {
+            return fetch("/Checkout/create-paypal-order", {
+                method: "post",
+                headers: {
+                    "Content-Type": "application/json"
+                }
+            }).then((response) => {
+                if (!response.ok) {
+                    return response.json().then((err) => {
+                        throw error;
+                    });
+                }
+                return response.json();
+            }).then((order) => order.id)
+            .catch(err => {
+                showToastAllPage("warning", "Lỗi khi tiến hành thanh toán !!!");
+            });
         },
 
-        onApprove: function (data, action) {
-            return action.order.capture().then(function (response) {
-                console.log(response);
-
-                if (response.status === "COMPLETED") {
-                    $("#OrderId").val(response.id);
+        onApprove: (data,actions) => {
+            return fetch(`/Checkout/capture-paypal-order?orderId=${data.orderID}`, {
+                method: "post",
+            }).then((response) => {
+                if (!response.ok) {
+                    return response.json().then((err) => {
+                        throw error;
+                    });
                 }
+                window.location.href = "/Checkout/PaymentSuccess";
 
-            })   
+            }).catch(err => {
+                showToastAllPage("warning", "Lỗi khi tiến hành thanh toán !!!");
+            });
         },
 
         style: {

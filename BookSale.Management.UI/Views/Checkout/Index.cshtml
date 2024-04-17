@@ -145,7 +145,7 @@
 <!-- Checkout Page End -->
 
 @section Scripts {
-    <script src="https://www.paypal.com/sdk/js?client-id=AdFFwsDakVGuvaqlMBzIqVkWe1iD8qOKz0sso_TkzPJTVf-SqomVobHt7cixAQDj_x9H1wAeWnEheYzt"></script>
+    <script src="https://www.paypal.com/sdk/js?client-id=@ViewBag.PaypalAppId"></script>
     @{
         <partial name="_ValidationScriptsPartial" />
     }

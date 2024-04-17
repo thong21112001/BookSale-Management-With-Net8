@@ -15,15 +15,18 @@ namespace BookSale.Management.UI.Controllers
         private readonly IBookService _bookService;
         private readonly ICartService _cartService;
         private readonly IOrderService _orderService;
+        private readonly PaypalClientHelper _paypalClient;
         private bool _isAuthenticated;
 
         public CheckoutController(IUserAddressService userAddressService, IBookService bookService,
-                                    ICartService cartService, IOrderService orderService)
+                                    ICartService cartService, IOrderService orderService,
+                                    PaypalClientHelper paypalClient)
         {
             _userAddressService = userAddressService;
             _bookService = bookService;
             _cartService = cartService;
             _orderService = orderService;
+            _paypalClient = paypalClient;
         }
 
         public override void OnActionExecuting(ActionExecutingContext context)
@@ -65,6 +68,7 @@ namespace BookSale.Management.UI.Controllers
                     });
 
                     ViewBag.ListBook = books;
+                    ViewBag.PaypalAppId = _paypalClient.AppId;
 
                     return View();
                 }
@@ -155,5 +159,84 @@ namespace BookSale.Management.UI.Controllers
             return bookForCarts;
         }
 
+        //Lấy giá tiền của book
+        private async Task<decimal> GetBookPriceAsync(string codeBook)
+        {
+            var book = await _bookService.GetBookByCode(codeBook);
+            return Convert.ToDecimal(book.Price);
+        }
+
+        #region Paypal Method
+        [HttpPost("/Checkout/create-paypal-order")]
+        public async Task<IActionResult> CreatePaypalOrder(CancellationToken cancellationToken)
+        {
+            decimal cartTotal = 0;
+            var carts = CartHelper.GetCartItems(HttpContext.Session);
+            //Tính tổng giá tiền trong giỏ hàng
+            foreach (var item in carts)
+            {
+                var bookPrice = await GetBookPriceAsync(item.CodeBook);
+                cartTotal += item.Quantity * bookPrice;
+            }
+
+            var sumMoneyCartVND = cartTotal;
+            var sumMoneyCartUSD = ConvertVNDToUSD(sumMoneyCartVND).ToString("0");
+
+            var currencyUSD = "USD";
+            var billOrder = "ORDER" + DateTime.Now.ToString("ddMMyyyyhhmmss");
+
+            try
+            {
+                var response = await _paypalClient.CreateOrder(sumMoneyCartUSD, currencyUSD, billOrder);
+
+                return Ok(response);
+            }
+            catch (Exception ex)
+            {
+                var error = new
+                {
+                    ex.GetBaseException().Message
+                };
+
+                return BadRequest(error);
+            }
+        }
+
+
+        [HttpPost("/Checkout/capture-paypal-order")]
+        public async Task<IActionResult> CapturePaypalOrder(string orderID, CancellationToken cancellationToken)
+        {
+            try
+            {
+                var response = await _paypalClient.CaptureOrder(orderID);
+
+                //Lưu data đơn hàng
+
+                return Ok(response);
+            }
+            catch (Exception ex)
+            {
+                var error = new
+                {
+                    ex.GetBaseException().Message
+                };
+
+                return BadRequest(error);
+            }
+        }
+
+        public IActionResult PaymentSuccess()
+        {
+            return View();
+        }
+
+        // Hàm chuyển đổi từ VND sang USD
+        private decimal ConvertVNDToUSD(decimal vndAmount)
+        {
+            decimal exchangeRate = 0.000043m; // Ví dụ: tỷ giá hối đoái cố định
+            decimal usdAmount = vndAmount * exchangeRate;
+            return Math.Floor(usdAmount) + 1;
+        }
+        #endregion
     }
 }

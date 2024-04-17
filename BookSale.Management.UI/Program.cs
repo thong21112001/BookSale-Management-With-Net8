@@ -1,5 +1,6 @@
 ﻿using BookSale.Management.DataAccess;
 using BookSale.Management.Infrastructure.Configuration;
+using BookSale.Management.UI.Helpers;
 
 var builder = WebApplication.CreateBuilder(args);
 var builderRazor = builder.Services.AddRazorPages();
@@ -24,6 +25,15 @@ builder.Services.AddSession(options =>
     options.Cookie.HttpOnly = true;
     options.Cookie.IsEssential = true;
 });
+
+//Đăng ký thanh toán paypal
+builder.Services.AddSingleton(x =>
+    new PaypalClientHelper(
+        builder.Configuration["PaypalCheckout:AppId"],
+        builder.Configuration["PaypalCheckout:AppSecret"],
+        builder.Configuration["PaypalCheckout:Mode"]
+    )
+);
 
 var app = builder.Build();
 
