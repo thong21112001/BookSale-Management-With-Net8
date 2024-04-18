@@ -13,6 +13,18 @@ Dưới đây là danh sách các yêu cầu cần thiết để cài đặt ph�
 - Yêu cầu 1: Có cài visual studio 2022, sql server 2019 (Có thể dùng bản cao hơn).
 - Yêu cầu 2: Có hiểu biết về Clean Architechture để chỉnh sửa code.
 
+### Thư viện, phương thức thanh toán sử dụng
+
+Dưới đây là thông tin:
+- Phương thức thanh toán: Paypal, Momo, VNPay.
+- Thư viện: Entity Framework Core, ASP.NET Core MVC, ASP.NET Core Identity, Newtonsoft.Json, AutoMapper...
+- Công Nghệ: 
+
+Dưới đây là danh sách các yêu cầu cần thiết để cài đặt phần mềm và làm việc với dự án:
+
+- Yêu cầu 1: Có cài visual studio 2022, sql server 2019 (Có thể dùng bản cao hơn).
+- Yêu cầu 2: Có hiểu biết về Clean Architechture để chỉnh sửa code.
+
 ### Cài Đặt
 
 Hướng dẫn cài đặt các yêu cầu trước khi chạy dự án.
