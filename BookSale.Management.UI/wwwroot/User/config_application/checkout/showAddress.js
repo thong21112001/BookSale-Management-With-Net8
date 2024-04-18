@@ -25,9 +25,13 @@
             });
         },
 
-        onApprove: (data,actions) => {
+        onApprove: (data, actions) => {
+            const formElement = document.querySelector('form');
+            const formData = new FormData(formElement);
+
             return fetch(`/Checkout/capture-paypal-order?orderId=${data.orderID}`, {
                 method: "post",
+                body: formData
             }).then((response) => {
                 if (!response.ok) {
                     return response.json().then((err) => {
@@ -35,7 +39,6 @@
                     });
                 }
                 window.location.href = "/Checkout/PaymentSuccess";
-
             }).catch(err => {
                 showToastAllPage("warning", "Lỗi khi tiến hành thanh toán !!!");
             });

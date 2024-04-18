@@ -5,6 +5,7 @@ using BookSale.Management.Domain.Enums;
 using BookSale.Management.UI.Helpers;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.Filters;
+using Newtonsoft.Json;
 using System.Security.Claims;
 
 namespace BookSale.Management.UI.Controllers
@@ -79,98 +80,13 @@ namespace BookSale.Management.UI.Controllers
             }
             return RedirectToAction("Login", "Authentication", new {ReturnUrl = returnUrl});
         }
-
-        [HttpPost]
-        [ValidateAntiForgeryToken]
-        public async Task<IActionResult> CompleteCart(UserCheckoutDTO userCheckoutDTO)
-        {
-            string codeOrder = $"ORDER_${DateTime.Now.ToString("ddMMyyyyhhmmss")}";
-
-            if (ModelState.IsValid)
-            {
-                var booksInCart = await GetCartFromSessionAsync();
-                var userIdClaim = User.FindFirst(ClaimTypes.NameIdentifier);
-
-                if (userIdClaim != null)
-                {
-                    var userId = userIdClaim.Value;
-
-                    var cart = new CartRequestDTO
-                    {
-                        Code = $"CART_${DateTime.Now.ToString("ddMMyyyyhhmmss")}",
-                        CreatedOn = DateTime.Now,
-                        Note = "Giao nhanh",
-                        Status = StatusProcessing.New,
-                        IsActive = true,
-                        UserId = userId,
-                        BookForCarts = booksInCart.ToList()
-                    };
-
-                    await _cartService.Save(cart);
-
-                    var order = new OrderRequestDTO
-                    {
-                        Id = userCheckoutDTO.PaymentMethod == PaymentMethod.Paypal ? userCheckoutDTO.OrderId : Guid.NewGuid().ToString(),
-                        Code = codeOrder,
-                        CreatedOn = DateTime.Now,
-                        Status = StatusProcessing.New,
-                        PaymentMethod = userCheckoutDTO.PaymentMethod,
-                        UserId = userId,
-                        BookForCarts = booksInCart.ToList(),
-                        TotalAmount = userCheckoutDTO.TotalAmount
-                    };
-
-                    await _orderService.Save(order);
-
-                    ViewBag.OrderCode = codeOrder;
-                }
-            }
-
-            return View();
-        }
-
-        public async Task<IEnumerable<BookForCart>> GetCartFromSessionAsync()
-        {
-            List<BookForCart> bookForCarts = new List<BookForCart>();
-
-            var carts = CartHelper.GetCartItems(HttpContext.Session);
-
-            if (carts is not null && carts.Count() > 0)
-            {
-                var getCodes = carts.Select(x => x.CodeBook).ToArray();
-
-                var books = await _bookService.GetListBookByCode(getCodes);
-
-                books = books.Select(book =>
-                {
-                    var item = carts.FirstOrDefault(x => x.CodeBook == book.Code);
-
-                    if (item is not null)
-                    {
-                        book.Quantity = item.Quantity;
-                    }
-
-                    return book;
-                });
-
-                bookForCarts = books.ToList();
-            }
-
-            return bookForCarts;
-        }
-
-        //Lấy giá tiền của book
-        private async Task<decimal> GetBookPriceAsync(string codeBook)
-        {
-            var book = await _bookService.GetBookByCode(codeBook);
-            return Convert.ToDecimal(book.Price);
-        }
+       
 
         #region Paypal Method
         [HttpPost("/Checkout/create-paypal-order")]
         public async Task<IActionResult> CreatePaypalOrder(CancellationToken cancellationToken)
         {
-            decimal cartTotal = 0;
+            double cartTotal = 0;
             var carts = CartHelper.GetCartItems(HttpContext.Session);
             //Tính tổng giá tiền trong giỏ hàng
             foreach (var item in carts)
@@ -202,15 +118,49 @@ namespace BookSale.Management.UI.Controllers
             }
         }
 
-
         [HttpPost("/Checkout/capture-paypal-order")]
-        public async Task<IActionResult> CapturePaypalOrder(string orderID, CancellationToken cancellationToken)
+        public async Task<IActionResult> CapturePaypalOrder(string orderID, UserCheckoutDTO userCheckout, CancellationToken cancellationToken)
         {
             try
             {
                 var response = await _paypalClient.CaptureOrder(orderID);
 
                 //Lưu data đơn hàng
+                string codeOrder = $"ORDER_${DateTime.Now.ToString("ddMMyyyyhhmmss")}";
+                var booksInCart = await GetCartFromSessionAsync();
+                var userIdClaim = User.FindFirst(ClaimTypes.NameIdentifier);
+
+                if (userIdClaim != null)
+                {
+                    var userId = userIdClaim.Value;
+
+                    var cart = new CartRequestDTO
+                    {
+                        Code = $"CART_${DateTime.Now.ToString("ddMMyyyyhhmmss")}",
+                        CreatedOn = DateTime.Now,
+                        Note = "Giao nhanh",
+                        Status = StatusProcessing.New,
+                        IsActive = true,
+                        UserId = userId,
+                        BookForCarts = booksInCart.ToList()
+                    };
+
+                    await _cartService.Save(cart);
+
+                    var order = new OrderRequestDTO
+                    {
+                        Id = userCheckout.PaymentMethod == PaymentMethod.Paypal ? orderID : Guid.NewGuid().ToString(),
+                        Code = codeOrder,
+                        CreatedOn = DateTime.Now,
+                        Status = StatusProcessing.New,
+                        PaymentMethod = userCheckout.PaymentMethod,
+                        UserId = userId,
+                        BookForCarts = booksInCart.ToList(),
+                        TotalAmount = userCheckout.TotalAmount
+                    };
+
+                    await _orderService.Save(order);
+                }
 
                 return Ok(response);
             }
@@ -231,11 +181,52 @@ namespace BookSale.Management.UI.Controllers
         }
 
         // Hàm chuyển đổi từ VND sang USD
-        private decimal ConvertVNDToUSD(decimal vndAmount)
+        private double ConvertVNDToUSD(double vndAmount)
         {
             decimal exchangeRate = 0.000043m; // Ví dụ: tỷ giá hối đoái cố định
-            decimal usdAmount = vndAmount * exchangeRate;
-            return Math.Floor(usdAmount) + 1;
+            decimal usdAmount = (decimal)vndAmount * exchangeRate;
+            double doubleResult = (double)Math.Floor(usdAmount) + 1;
+            return doubleResult;
+        }
+        #endregion
+
+
+        #region Các hàm xử lý
+        //Lấy giá tiền của book
+        private async Task<double> GetBookPriceAsync(string codeBook)
+        {
+            var book = await _bookService.GetBookByCode(codeBook);
+            return Convert.ToDouble(book.Price);
+        }
+
+        public async Task<IEnumerable<BookForCart>> GetCartFromSessionAsync()
+        {
+            List<BookForCart> bookForCarts = new List<BookForCart>();
+
+            var carts = CartHelper.GetCartItems(HttpContext.Session);
+
+            if (carts is not null && carts.Count() > 0)
+            {
+                var getCodes = carts.Select(x => x.CodeBook).ToArray();
+
+                var books = await _bookService.GetListBookByCode(getCodes);
+
+                books = books.Select(book =>
+                {
+                    var item = carts.FirstOrDefault(x => x.CodeBook == book.Code);
+
+                    if (item is not null)
+                    {
+                        book.Quantity = item.Quantity;
+                    }
+
+                    return book;
+                });
+
+                bookForCarts = books.ToList();
+            }
+
+            return bookForCarts;
         }
         #endregion
     }

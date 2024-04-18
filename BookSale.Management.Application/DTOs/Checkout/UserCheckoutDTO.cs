@@ -1,23 +1,26 @@
 ﻿using BookSale.Management.Domain.Enums;
+using System.Text.Json.Serialization;
 
 namespace BookSale.Management.Application.DTOs.Checkout
 {
     public class UserCheckoutDTO
     {
-        public string Fullname { get; set; } = string.Empty;
-
-        public string PhoneNumber { get; set; } = string.Empty;
-
-        public string Email { get; set; } = string.Empty;
-
+        [JsonPropertyName("Address")]
         public string Address { get; set; } = string.Empty;
 
-        public double TotalAmount { get; set; }
+        [JsonPropertyName("Email")]
+        public string Email { get; set; } = string.Empty;
 
-        public string OrderId { get; set; } = string.Empty;
+        [JsonPropertyName("Fullname")]
+        public string Fullname { get; set; } = string.Empty;
 
+        [JsonPropertyName("PaymentMethod")]
         public PaymentMethod PaymentMethod { get; set; }
 
-        public string UserId { get; set; } = string.Empty;
+        [JsonPropertyName("PhoneNumber")]
+        public string PhoneNumber { get; set; } = string.Empty;
+
+        [JsonPropertyName("TotalAmount")]
+        public double TotalAmount { get; set; }
     }
 }

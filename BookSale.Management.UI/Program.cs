@@ -26,6 +26,12 @@ builder.Services.AddSession(options =>
     options.Cookie.IsEssential = true;
 });
 
+builder.Services.AddControllersWithViews()
+.AddJsonOptions(options =>
+{
+    options.JsonSerializerOptions.PropertyNamingPolicy = null;
+});
+
 //Đăng ký thanh toán paypal
 builder.Services.AddSingleton(x =>
     new PaypalClientHelper(
