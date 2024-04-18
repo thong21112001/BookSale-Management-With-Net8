@@ -16,27 +16,27 @@
                 url: `/shop/getbookbypagination?genre=${genreId}&pageIndex=${pageIndex}`,
                 method: 'GET',
                 success: function (response) {
-
-                    if (response) {
+                    if (response && Array.isArray(response.Books) && response.Books.length > 0) {
+                        console.log('Books found:', response.Books);
 
                         let html = '';
 
-                        response.books.forEach((book, index) => {
+                        response.Books.forEach((book, index) => {
                             html += `<div class="col-md-6 col-lg-6 col-xl-4">
                                             <div class="rounded position-relative fruite-item">
 
                                                 <div class="fruite-img">
-                                                    <img src="${buildImageUrl(book.image, rootImagePath)}" class="img-fluid w-100 rounded-top" alt="">
+                                                    <img src="${buildImageUrl(book.Image, rootImagePath)}" class="img-fluid w-100 rounded-top" alt="">
                                                 </div>
                                                 <div class="p-4 border border-secondary border-top-0 rounded-bottom">
-                                                    <h5 style="white-space: nowrap; overflow: hidden; text-overflow: ellipsis;">${book.title}</h5>
-                                                    <p>Code: ${book.code}</p>
-                                                    <p style="white-space: nowrap; overflow: hidden; text-overflow: ellipsis;">Tác giả: ${book.author}</p>
-                                                    <p class="text-dark fs-5 fw-bold mb-0">Giá: ${book.price.toLocaleString('vi-VN', {
+                                                    <h5 style="white-space: nowrap; overflow: hidden; text-overflow: ellipsis;">${book.Title}</h5>
+                                                    <p>Code: ${book.Code}</p>
+                                                    <p style="white-space: nowrap; overflow: hidden; text-overflow: ellipsis;">Tác giả: ${book.Author}</p>
+                                                    <p class="text-dark fs-5 fw-bold mb-0">Giá: ${book.Price.toLocaleString('vi-VN', {
                                 style: 'currency',
                                 currency: 'VND'
                             })}</p>
-                                                    <a class="btn btn-add-cart border border-secondary rounded-pill px-3 text-primary" data-code="${book.code}"><i class="fa fa-shopping-bag me-2 text-primary"></i> Add to cart</a>
+                                                    <a class="btn btn-add-cart border border-secondary rounded-pill px-3 text-primary" data-code="${book.Code}"><i class="fa fa-shopping-bag me-2 text-primary"></i> Add to cart</a>
                                                 </div>
                                             </div>
                                         </div>`;
@@ -53,6 +53,10 @@
                         $('#progress-bar').attr('style', `width: ${response.progessingValue}%`)
 
                         $('#current-page-index').val(pageIndex);
+                    }
+                    else {
+                        // Handle case where no books are returned or books array is empty
+                        console.error('No books found in the response');
                     }
 
                 }
