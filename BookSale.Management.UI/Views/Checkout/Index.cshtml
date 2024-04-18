@@ -24,29 +24,33 @@
 
         <form asp-controller="Checkout" asp-action="CompleteCart" method="post" asp-antiforgery="true">
             <div class="row g-5">
-                <div class="col-md-12 col-lg-6 col-xl-5">
+                <div id="input-fields" class="col-md-12 col-lg-6 col-xl-5">
                     <div class="row">
                         <input type="hidden" id="paypal-order-id">
                         <div class="col-md-12 col-lg-6">
                             <div class="form-item w-100">
                                 <label class="form-label my-3">Name<sup style="color:red">*</sup></label>
-                                <input type="text" class="form-control" placeholder="Full name" name="Fullname" asp-for="Fullname">
+                                <input type="text" class="form-control required-field" placeholder="Full name" name="Fullname" asp-for="Fullname">
                             </div>
                         </div>
                         <div class="col-md-12 col-lg-6">
                             <div class="form-item w-100">
                                 <label class="form-label my-3">Phone<sup style="color:red">*</sup></label>
-                                <input type="text" class="form-control" placeholder="Phone Number" name="PhoneNumber" asp-for="PhoneNumber">
+                                <input type="text" class="form-control required-field" placeholder="Phone Number" name="PhoneNumber" asp-for="PhoneNumber">
                             </div>
                         </div>
                     </div>
                     <div class="form-item">
                         <label class="form-label my-3">Email <sup style="color:red">*</sup></label>
-                        <input type="text" class="form-control" placeholder="Email" name="Email" asp-for="Email">
+                        <input type="text" class="form-control required-field" placeholder="Email" name="Email" asp-for="Email">
                     </div>
                     <div class="form-item">
                         <label class="form-label my-3">Address <sup style="color:red">*</sup></label>
-                        <input type="text" class="form-control" placeholder="House Number Street Name" name="Address" asp-for="Address">
+                        <input type="text" class="form-control required-field" placeholder="House Number Street Name" name="Address" asp-for="Address">
+                    </div>
+
+                    <div class="text-center align-items-center justify-content-center pt-4">
+                        <button id="showPayment" type="button" class="btn btn-outline-info py-3 px-4 text-uppercase w-100">Tiến hành thanh toán</button>
                     </div>
                 </div>
                 <div class="col-md-12 col-lg-6 col-xl-7">
@@ -110,7 +114,7 @@
                         </table>
                     </div>
         
-                    <div class="row g-4 text-center align-items-center justify-content-center border-bottom py-3">
+                    <div class="row g-4 text-center align-items-center justify-content-center border-bottom py-3 hidden">
 
                         <div class="col-6">
                             <div class="form-check text-start my-3">
@@ -127,11 +131,11 @@
                         </div>
                     </div>
 
-                    <div class="row g-4 text-center align-items-center justify-content-center border-bottom py-3">
+                    <div id="paypalDiv" class="row g-4 text-center align-items-center justify-content-center border-bottom py-3 hidden">
                         <div id="paypal-button-container"></div>
                     </div>
 
-                    <div class="row g-4 text-center align-items-center justify-content-center pt-4">
+                    <div id="cashDiv" class="row g-4 text-center align-items-center justify-content-center pt-4 hidden">
                         <button type="submit" class="btn border-secondary py-3 px-4 text-uppercase w-100 text-primary">Place Order</button>
                     </div>
                 </div>
@@ -147,4 +151,6 @@
         <partial name="_ValidationScriptsPartial" />
     }
     <script src="~/user/config_application/checkout/showaddress.js"></script>
+    <script src="~/user/config_application/checkout/buttoncheckform.js"></script>
+    <script src="~/user/config_application/checkout/radiochangepayment.js"></script>
 }

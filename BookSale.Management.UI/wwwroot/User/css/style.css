@@ -510,3 +510,12 @@
     cursor : not-allowed;
     opacity : 0.7;
 }
+
+/*** Add hidden Page Checkout ***/
+.required-field:invalid {
+    border-color: red;
+}
+
+.hidden {
+    display: none;
+}
