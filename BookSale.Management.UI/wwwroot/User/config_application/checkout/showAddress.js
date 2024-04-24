@@ -38,7 +38,7 @@
                         throw error;
                     });
                 }
-                window.location.href = "/Checkout/PaymentSuccess";
+                //window.location.href = "/Checkout/PaymentSuccess";
             }).catch(err => {
                 showToastAllPage("warning", "Lỗi khi tiến hành thanh toán !!!");
             });

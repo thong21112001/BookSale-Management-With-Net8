@@ -58,6 +58,7 @@ namespace BookSale.Management.Infrastructure.Configuration
 			services.AddTransient<IUnitOfWork, UnitOfWork>();
             services.AddTransient<IImageService, ImageService>();
             services.AddTransient<ICommonService, CommonService>();
+            services.AddTransient<IVnPayService, VnPayService>();
 
 
 

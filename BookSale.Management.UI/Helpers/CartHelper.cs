@@ -1,4 +1,5 @@
-﻿using BookSale.Management.UI.Models;
+﻿using BookSale.Management.Domain.Entities;
+using BookSale.Management.UI.Models;
 
 namespace BookSale.Management.UI.Helpers
 {
@@ -79,6 +80,12 @@ namespace BookSale.Management.UI.Helpers
                 carts.Remove(cartItem);
                 session.Set(CartSessionName, carts);
             }
+        }
+
+        // Hàm để xóa session giỏ hàng sau khi đặt hàng hoàn thành
+        public static void ClearCartSession(ISession session)
+        {
+            session.Remove(CartSessionName);
         }
     }
 }

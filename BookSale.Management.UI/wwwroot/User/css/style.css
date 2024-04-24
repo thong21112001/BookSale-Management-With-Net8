@@ -519,3 +519,111 @@
 .hidden {
     display: none;
 }
+
+/*** Add animation page paymentsuccess and paymentfail ***/
+.demo1 {
+    height: 300px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
+.ui-success,
+.ui-error {
+    width: 100px;
+    height: 100px;
+    margin: 40px;
+    /* border: 1px solid #eee; */
+}
+
+/* Phần cấu trúc của .ui-success */
+.ui-success-circle {
+    stroke-dasharray: 260.752px, 260.752px;
+    stroke-dashoffset: 260.752px;
+    transform: rotate(220deg);
+    transform-origin: center center;
+    stroke-linecap: round;
+    animation: ani-success-circle 1s ease-in both;
+}
+
+.ui-success-path {
+    stroke-dasharray: 60px 64px;
+    stroke-dashoffset: 62px;
+    stroke-linecap: round;
+    animation: ani-success-path 0.4s 1s ease-in both;
+}
+
+/* Keyframes cho .ui-success */
+@keyframes ani-success-circle {
+    to {
+        stroke-dashoffset: 782.256px;
+    }
+}
+
+@keyframes ani-success-path {
+    0% {
+        stroke-dashoffset: 62px;
+    }
+
+    65% {
+        stroke-dashoffset: -5px;
+    }
+
+    84% {
+        stroke-dashoffset: 4px;
+    }
+
+    100% {
+        stroke-dashoffset: -2px;
+    }
+}
+
+/* Phần cấu trúc của .ui-error */
+.ui-error-circle {
+    stroke-dasharray: 260.752px, 260.752px;
+    stroke-dashoffset: 260.752px;
+    animation: ani-error-circle 1.2s linear;
+}
+
+.ui-error-line1 {
+    stroke-dasharray: 54px 55px;
+    stroke-dashoffset: 55px;
+    stroke-linecap: round;
+    animation: ani-error-line 0.15s 1.2s linear both;
+}
+
+.ui-error-line2 {
+    stroke-dasharray: 54px 55px;
+    stroke-dashoffset: 55px;
+    stroke-linecap: round;
+    animation: ani-error-line 0.2s 0.9s linear both;
+}
+
+/* Keyframes cho .ui-error */
+@keyframes ani-error-line {
+    to {
+        stroke-dashoffset: 0;
+    }
+}
+
+@keyframes ani-error-circle {
+    0% {
+        stroke-dasharray: 0, 260.752px;
+        stroke-dashoffset: 0;
+    }
+
+    35% {
+        stroke-dasharray: 120px, 120px;
+        stroke-dashoffset: -120px;
+    }
+
+    70% {
+        stroke-dasharray: 0, 260.752px;
+        stroke-dashoffset: -260.752px;
+    }
+
+    100% {
+        stroke-dasharray: 260.752px, 0;
+        stroke-dashoffset: -260.752px;
+    }
+}

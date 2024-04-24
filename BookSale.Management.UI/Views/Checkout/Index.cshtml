@@ -22,7 +22,7 @@
         <h1 class="mb-4">Billing details</h1>
         <a id="btn-add" class="btn border-secondary text-uppercase text-primary">Show list address</a>
 
-        <form asp-controller="Checkout" asp-action="CompleteCart" method="post" asp-antiforgery="true">
+        <form asp-controller="Checkout" asp-action="PaymentOrder" method="post" asp-antiforgery="true">
             <div class="row g-5">
                 <div id="input-fields" class="col-md-12 col-lg-6 col-xl-5">
                     <div class="row">
@@ -115,18 +115,24 @@
                     </div>
         
                     <div class="row g-4 text-center align-items-center justify-content-center border-bottom py-3 hidden">
-
-                        <div class="col-6">
+                        <div class="col-4">
                             <div class="form-check text-start my-3">
                                 <input type="radio" asp-for="PaymentMethod" value="1" checked />
                                 <label class="form-check-label" for="Payments-1">Cash</label>
                             </div>
                         </div>
 
-                        <div class="col-6">
+                        <div class="col-4">
                             <div class="form-check text-start my-3">
                                 <input type="radio" asp-for="PaymentMethod" value="2" />
                                 <label class="form-check-label" for="Delivery-1">Paypal</label>
+                            </div>
+                        </div>
+
+                        <div class="col-4">
+                            <div class="form-check text-start my-3">
+                                <input type="radio" asp-for="PaymentMethod" value="3" />
+                                <label class="form-check-label" for="Delivery-1">VnPay</label>
                             </div>
                         </div>
                     </div>
@@ -137,6 +143,10 @@
 
                     <div id="cashDiv" class="row g-4 text-center align-items-center justify-content-center pt-4 hidden">
                         <button type="submit" class="btn border-secondary py-3 px-4 text-uppercase w-100 text-primary">Place Order</button>
+                    </div>
+
+                    <div id="vnpayDiv" class="row g-4 text-center align-items-center justify-content-center pt-4 hidden">
+                        <button type="submit" class="btn border-secondary py-3 px-4 text-uppercase w-100 text-primary">VnPay</button>
                     </div>
                 </div>
             </div>

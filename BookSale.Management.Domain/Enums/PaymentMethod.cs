@@ -3,6 +3,7 @@
     public enum PaymentMethod
     {
         Cash = 1,
-        Paypal = 2
+        Paypal = 2,
+        VnPay = 3
     }
 }
