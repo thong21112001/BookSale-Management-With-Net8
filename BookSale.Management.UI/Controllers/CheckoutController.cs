@@ -130,7 +130,7 @@ namespace BookSale.Management.UI.Controllers
 
                 await SaveData(userCheckout, orderID);
 
-                return RedirectToAction(nameof(PaymentSuccess), new { orderId = orderID });
+                return Ok(new { success = true, orderId = orderID });
 			}
             catch (Exception ex)
             {

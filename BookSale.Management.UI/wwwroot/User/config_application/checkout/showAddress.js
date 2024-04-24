@@ -38,7 +38,11 @@
                         throw error;
                     });
                 }
-                //window.location.href = "/Checkout/PaymentSuccess";
+                return response.json();
+            }).then((result) => {
+                if (result.success) {
+                    window.location.href = `/Checkout/PaymentSuccess?orderId=${result.orderId}`;
+                }
             }).catch(err => {
                 showToastAllPage("warning", "Lỗi khi tiến hành thanh toán !!!");
             });
