@@ -1,7 +1,9 @@
-﻿using BookSale.Management.Application.Abstracts;
+﻿using Azure;
+using BookSale.Management.Application.Abstracts;
 using BookSale.Management.Application.DTOs.Book;
 using BookSale.Management.Application.DTOs.Checkout;
 using BookSale.Management.Application.DTOs.VnPay;
+using BookSale.Management.Domain.Entities;
 using BookSale.Management.Domain.Enums;
 using BookSale.Management.UI.Helpers;
 using Microsoft.AspNetCore.Mvc;
@@ -49,31 +51,12 @@ namespace BookSale.Management.UI.Controllers
                     var userId = userIdClaim.Value;
                     ViewData["ListAddess"] = await _userAddressService.GetAllListAddressUser(userId);
                 }
+				var booksInCart = await GetCartFromSessionAsync();
 
-                //Lấy giỏ hàng
-                var carts = CartHelper.GetCartItems(HttpContext.Session);
-
-                if (carts is not null && carts.Count() > 0)
+                if (booksInCart is not null && booksInCart.Count() > 0)
                 {
-                    var getCodes = carts.Select(x => x.CodeBook).ToArray();
-
-                    var books = await _bookService.GetListBookByCode(getCodes);
-
-                    books = books.Select(book =>
-                    {
-                        var item = carts.FirstOrDefault(x => x.CodeBook == book.Code);
-
-                        if (item is not null)
-                        {
-                            book.Quantity = item.Quantity;
-                        }
-
-                        return book;
-                    });
-
-                    ViewBag.ListBook = books;
+                    ViewBag.ListBook = booksInCart;
                     ViewBag.PaypalAppId = _paypalClient.AppId;
-
                     return View();
                 }
                 else
@@ -150,21 +133,33 @@ namespace BookSale.Management.UI.Controllers
         [HttpPost]
         public IActionResult PaymentOrder(UserCheckoutDTO userCheckout)
         {
-            if (userCheckout.PaymentMethod == PaymentMethod.VnPay)
+            try
             {
-                var vnPayModel = new VnPaymentRequestModel
-                {
-                    OrderId = new Random().Next(1000,100000),
-                    CreatedDate = DateTime.Now,
-                    Amount = userCheckout.TotalAmount
-                };
+				// Lưu UserCheckoutDTO vào TempData
+				TempData["UserCheckout"] = JsonConvert.SerializeObject(userCheckout);
 
-                // Lưu UserCheckoutDTO vào TempData
-                TempData["UserCheckout"] = JsonConvert.SerializeObject(userCheckout);
-                return Redirect(_vnPayService.CreatePaymentUrl(HttpContext, vnPayModel));
-            }
-            TempData["Fail"] = "Lỗi khi tiến hành thanh toán !!!";
-            return RedirectToAction(nameof(PaymentFail));
+				if (userCheckout.PaymentMethod == PaymentMethod.VnPay)
+				{
+					var vnPayModel = new VnPaymentRequestModel
+					{
+						OrderId = new Random().Next(1000, 100000),
+						CreatedDate = DateTime.Now,
+						Amount = userCheckout.TotalAmount
+					};
+
+					return Redirect(_vnPayService.CreatePaymentUrl(HttpContext, vnPayModel));
+				}
+				else
+				{
+                    string getOrderId = Guid.NewGuid().ToString();
+					return RedirectToAction(nameof(PaymentSuccess),new { orderId = getOrderId });
+				}
+			}
+            catch (Exception)
+            {
+				TempData["Fail"] = "Lỗi khi tiến hành thanh toán !!!";
+				return RedirectToAction(nameof(PaymentFail));
+			}
         }
         #endregion
 
@@ -172,6 +167,10 @@ namespace BookSale.Management.UI.Controllers
         #region Gọi về view sau khi thanh toán xong
         public async Task<IActionResult> PaymentSuccess(string orderId)
         {
+			// Lấy UserCheckoutDTO từ TempData
+			var userCheckoutJson = TempData["UserCheckout"]?.ToString();
+			var userCheckout = userCheckoutJson != null ? JsonConvert.DeserializeObject<UserCheckoutDTO>(userCheckoutJson) : null;
+
 			if (string.IsNullOrEmpty(orderId))
             {
                 var response = _vnPayService.PaymentExcute(Request.Query);
@@ -180,11 +179,7 @@ namespace BookSale.Management.UI.Controllers
                     TempData["Fail"] = "Lỗi thanh toán !!!";
                     return RedirectToAction(nameof(PaymentFail));
                 }
-
-                // Lấy UserCheckoutDTO từ TempData
-                var userCheckoutJson = TempData["UserCheckout"]?.ToString();
-                var userCheckout = userCheckoutJson != null ? JsonConvert.DeserializeObject<UserCheckoutDTO>(userCheckoutJson) : null;
-
+                
                 // Xử lý dữ liệu và lưu đơn hàng
                 if (userCheckout != null)
                 {
@@ -197,6 +192,11 @@ namespace BookSale.Management.UI.Controllers
             }
             else //Dành cho paypal và cod
             {
+                // Lưu đơn hàng vào data:
+                if (userCheckout != null)//Thanh toán COD
+                {
+					await SaveData(userCheckout, orderId);
+				}
 				TempData["OrderId"] = orderId;
 				return View();
             }
@@ -217,16 +217,6 @@ namespace BookSale.Management.UI.Controllers
             string codeOrder = $"ORDER_${DateTime.Now.ToString("ddMMyyyyhhmmss")}";
             var booksInCart = await GetCartFromSessionAsync();
             var userIdClaim = User.FindFirst(ClaimTypes.NameIdentifier);
-            string getOrderId = string.Empty;
-
-            if (userCheckout.PaymentMethod == PaymentMethod.Paypal || userCheckout.PaymentMethod == PaymentMethod.VnPay)
-            {
-                getOrderId = orderID;
-            }
-            else
-            {
-                getOrderId = Guid.NewGuid().ToString();
-            }
 
             if (userIdClaim != null)
             {
@@ -247,7 +237,7 @@ namespace BookSale.Management.UI.Controllers
 
                 var order = new OrderRequestDTO
                 {
-                    Id = getOrderId,
+                    Id = orderID,
                     Code = codeOrder,
                     CreatedOn = DateTime.Now,
                     Status = StatusProcessing.New,
