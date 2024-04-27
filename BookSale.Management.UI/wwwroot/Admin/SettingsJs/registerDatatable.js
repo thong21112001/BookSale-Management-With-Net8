@@ -8,7 +8,8 @@
         ajax: {
             url: urlApi,
             type: 'POST',
-            dataType: 'json'
+            dataType: 'json',
+            dataSrc: 'Data' // Thêm tùy chọn dataSrc ở đây để chỉ định rằng class ResponseDataTable có thuộc tính trả về là Data
         }
     });
 }

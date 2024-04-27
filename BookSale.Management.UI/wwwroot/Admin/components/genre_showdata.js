@@ -3,7 +3,7 @@
 (function () {
     const columns = [
         {
-            data: 'id', name: 'id', width: '100', render: function (key) {
+            data: 'Id', name: 'Id', width: '100', render: function (key) {
                 return `
                     <span data-key="${key}">
                             <a class="btn-edit btn btn-icon btn-warning btn-sm mr-2"><i class="fas fa-pencil-alt"></i></a>
@@ -13,10 +13,10 @@
                 `
             }
         },
-        { data: 'name', name: 'name', autoWidth: true },
-        { data: 'description', name: 'description', autoWidth: true },
+        { data: 'Name', name: 'Name', autoWidth: true },
+        { data: 'Description', name: 'Description', autoWidth: true },
         {
-            data: 'isActive', name: 'isActive', autoWidth: true, render: function (data) {
+            data: 'IsActive', name: 'IsActive', autoWidth: true, render: function (data) {
                 return data ? 'Hiển thị' : 'Không';
             }
         }

@@ -2,27 +2,27 @@
 
 (function () {
     const columns = [
-        { data: 'genreName', name: 'genreName', autoWidth: true },
-        { data: 'code', name: 'code', autoWidth: true },
-        { data: 'title', name: 'title', autoWidth: true },
-        { data: 'available', name: 'available', autoWidth: true },
+        { data: 'GenreName', name: 'GenreName', autoWidth: true },
+        { data: 'Code', name: 'Code', autoWidth: true },
+        { data: 'Title', name: 'Title', autoWidth: true },
+        { data: 'Available', name: 'Available', autoWidth: true },
         {
-            data: 'price', name: 'price', autoWidth: true, render: function (data) {
+            data: 'Price', name: 'Price', autoWidth: true, render: function (data) {
                 return `<div class="text-left">${data.toLocaleString('vi-VN', {
                     style: 'currency',
                     currency: 'VND'
                 })}</div>`
             }
         },
-        { data: 'publisher', name: 'publisher', autoWidth: true },
-        { data: 'author', name: 'author', autoWidth: true },
+        { data: 'Publisher', name: 'Publisher', autoWidth: true },
+        { data: 'Author', name: 'Author', autoWidth: true },
         {
-            data: 'createdOn', name: 'createdOn', autoWidth: true, render: function (data){
+            data: 'CreatedOn', name: 'CreatedOn', autoWidth: true, render: function (data){
                 return `<div class="text-left">${moment(data).format("DD/MM/YYYY")}</div>`
             }
         },
         {
-            data: 'id', name: 'id', width: '100', render: function (key) {
+            data: 'Id', name: 'Id', width: '100', render: function (key) {
                 return `
                     <span data-key="${key}">
                             <a href="/admin/book/savedata?id=${key}" class="btn-edit btn btn-icon btn-warning btn-sm mr-2"><i class="fas fa-pencil-alt"></i></a>

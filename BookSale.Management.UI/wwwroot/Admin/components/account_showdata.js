@@ -3,7 +3,7 @@
 (function () {
     const columns = [
         {
-            data: 'id', name: 'id', width: '100', render: function (key) {
+            data: 'Id', name: 'Id', width: '100', render: function (key) {
                 return `
                     <span data-key="${key}">
                             <a href="/admin/account/savedata?id=${key}" class="btn btn-icon btn-warning btn-sm mr-2"><i class="fas fa-pencil-alt"></i></a>
@@ -13,12 +13,12 @@
                 `
             }
         },
-        { data: 'username', name: 'username', autoWidth: true },
-        { data: 'fullname', name: 'fullname', autoWidth: true },
-        { data: 'email', name: 'email', autoWidth: true },
-        { data: 'phone', name: 'phone', autoWidth: true },
+        { data: 'Username', name: 'Username', autoWidth: true },
+        { data: 'Fullname', name: 'Fullname', autoWidth: true },
+        { data: 'Email', name: 'Email', autoWidth: true },
+        { data: 'Phone', name: 'Phone', autoWidth: true },
         {
-            data: 'isActive', name: 'isActive', autoWidth: true, render: function (data) {
+            data: 'IsActive', name: 'IsActive', autoWidth: true, render: function (data) {
                 return data ? 'Hoạt động' : 'Khoá';
             }
         }
