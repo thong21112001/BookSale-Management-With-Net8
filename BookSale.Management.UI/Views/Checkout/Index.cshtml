@@ -7,8 +7,8 @@
 
 <!-- Single Page Header start -->
 <div class="container-fluid page-header py-5">
-    <h1 class="text-center display-6 text-uppercase text-dark">Checkout</h1>
-    <p class="text-center mb-0 fw-bold">Check cart and information</p>
+    <h1 class="text-center display-6 text-uppercase">Checkout</h1>
+    <p class="text-center mb-0 fw-bold text-white">Check cart and information</p>
 </div>
 <!-- Single Page Header End -->
 
@@ -20,7 +20,7 @@
 <div class="container-fluid py-5">
     <div class="container py-5">
         <h1 class="mb-4">Billing details</h1>
-        <a id="btn-add" class="btn border-secondary text-uppercase text-primary">Show list address</a>
+        <a id="btn-add" class="btn text-uppercase">Show list address</a>
 
         <form asp-controller="Checkout" asp-action="PaymentOrder" method="post" asp-antiforgery="true">
             <div class="row g-5">
@@ -142,11 +142,11 @@
                     </div>
 
                     <div id="cashDiv" class="row g-4 text-center align-items-center justify-content-center pt-4 hidden">
-                        <button type="submit" class="btn border-secondary py-3 px-4 text-uppercase w-100 text-primary">Place Order</button>
+                        <button type="submit" class="btn btn-order py-3 px-4 text-uppercase w-100">Place Order</button>
                     </div>
 
                     <div id="vnpayDiv" class="row g-4 text-center align-items-center justify-content-center pt-4 hidden">
-                        <button type="submit" class="btn border-secondary py-3 px-4 text-uppercase w-100 text-primary">Tiến hành thanh toán VnPay</button>
+                        <button type="submit" class="btn btn-order py-3 px-4 text-uppercase w-100">Tiến hành thanh toán VnPay</button>
                     </div>
                 </div>
             </div>

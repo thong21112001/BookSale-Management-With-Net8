@@ -1,6 +1,6 @@
-﻿$(document).on('click', '.btn-add-cart', function () {
+﻿$(document).on('click', '.set-btn-add-cart', function () {
 
-    const code = $(this).data('code'); //Trong thẻ a có class btn-add-cart và phần data-code để lấy code sách
+    const code = $(this).data('code'); //Trong thẻ a có class set-btn-add-cart và phần data-code để lấy code sách
 
     $.ajax({
         url: '/cart/add',

@@ -1,4 +1,69 @@
-﻿
+﻿/*** Setting person ***/
+.set-color-h1, .set-color-h2 {
+    color: #00b8c2 !important;
+}
+
+.set-btn-primary {
+    color: #000;
+    background-color: #00b8c2 !important;
+    border-color: #00b8c2 !important;
+}
+
+.set-btn-outline-primary {
+    color: #00b8c2;
+    border-color: #00b8c2 !important;
+}
+
+.set-border-primary {
+    border-color: #00b8c2 !important;
+}
+
+.set-bg-primary, .progress-bar, .set-bg-checkbox {
+    background-color: #00b8c2 !important;
+}
+
+.set-btn-add-cart, .set-btn-format {
+    background-color: #00b8c2 !important;
+    border-color: #00b8c2 !important;
+}
+
+.set-btn-format:hover,
+.set-btn-add-cart:hover {
+    background: #5f5a5a !important;
+    color: #00b8c2 !important;
+    transition: 0.5s;
+}
+
+/*Cart*/
+#btn-Checkout, #btn-add, .btn-order {
+    color: white;
+    background-color: #00b8c2 !important;
+    border-color: #00b8c2 !important;
+}
+
+#btn-Checkout:hover,
+#btn-add:hover,
+.btn-order:hover{
+    background: #5f5a5a !important;
+    color: #00b8c2 !important;
+    transition: 0.5s;
+}
+
+.set-cart-bg-text {
+    background-color: #5f5a5a !important;
+}
+
+.a-footer {
+    color: #00b8c2 !important;
+}
+
+.a-footer:hover {
+    color: darkseagreen !important;
+    transition: 0.5s;
+}
+/*** Setting person ***/
+
+
 /*** Spinner Start ***/
 #spinner {
     opacity: 0;
@@ -13,7 +78,14 @@
      opacity: 1;
  }
 
- .back-to-top {
+/*** Button top ***/
+.btn-top {
+    color: #000;
+    background-color: #00b8c2;
+    border-color: #00b8c2;
+}
+
+.back-to-top {
     position: fixed;
     right: 30px;
     bottom: 30px;
@@ -25,6 +97,7 @@
     transition: 0.5s;
     z-index: 99;
 }
+/*** Button top ***/
 /*** Spinner End ***/
 
 
@@ -70,9 +143,10 @@
 }
 
 .btn.border-secondary:hover {
-    background: var(--bs-secondary) !important;
-    color: var(--bs-white) !important;
+    background: #5f5a5a !important;
+    color: #00b8c2 !important;
 }
+
 
 /*** Topbar Start ***/
 .fixed-top {
@@ -84,6 +158,7 @@
 .topbar {
     padding: 20px;
     border-radius: 230px 100px;
+    background: #5f5a5a;
 }
 
 .topbar .top-info {
@@ -92,6 +167,10 @@
     letter-spacing: 1px;
     display: flex;
     align-items: center;
+}
+
+.top-info i {
+    color: #00b8c2 !important; 
 }
 
 .topbar .top-link {
@@ -132,7 +211,7 @@
 .navbar .navbar-nav .nav-link.active,
 .fixed-top.bg-white .navbar .navbar-nav .nav-link:hover,
 .fixed-top.bg-white .navbar .navbar-nav .nav-link.active {
-    color: var(--bs-primary);
+    color: #00b8c2;
 }
 
 .navbar .dropdown-toggle::after {
@@ -158,8 +237,7 @@
 }
 
 .dropdown .dropdown-menu a:hover {
-    background: var(--bs-secondary);
-    color: var(--bs-primary);
+    background: #5f5a5a !important;
 }
 
 .navbar .nav-item:hover .dropdown-menu {
@@ -171,6 +249,10 @@
     opacity: 1;
 }
 
+.navbar-right-icon a {
+    color: #00b8c2 !important;
+}
+
 #searchModal .modal-content {
     background: rgba(255, 255, 255, .8);
 }
@@ -178,7 +260,7 @@
 
 /*** Hero Header ***/
 .hero-header {
-    background-color: #8da85d !important;
+    background-color: #5f5a5a !important;
     background-position: center center;
     background-repeat: no-repeat;
     background-size: cover;
@@ -188,14 +270,14 @@
     position: relative;
 }
 
-    .carousel-item a {
-        position: absolute;
-        top: 50%;
-        left: 50%;
-        transform: translate(-50%, -50%);
-        font-size: 25px;
-        background-color: #8da85d !important;
-    }
+.carousel-item a {
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    font-size: 25px;
+    background-color: #00b8c2 !important;
+}
 
 .carousel-control-next,
 .carousel-control-prev {
@@ -203,7 +285,7 @@
     height: 48px;
     border-radius: 48px;
     border: 1px solid var(--bs-white);
-    background: var(--bs-primary);
+    background: #00b8c2;
     position: absolute;
     top: 50%;
     transform: translateY(-50%);
@@ -219,10 +301,14 @@
 
 .page-header {
     position: relative;
-    background-color: #8da85d !important;
+    background-color: #5f5a5a !important;
     background-position: center center;
     background-repeat: no-repeat;
     background-size: cover;
+}
+
+.page-header h1{
+    color:white;
 }
 
 @media (min-width: 992px) {
@@ -277,6 +363,10 @@
 
 
 /*** Fruits Start ***/
+.fruite .fruite-categorie .fruite-name .cate-a {
+    color: #5f5a5a !important;
+}
+
 .fruite .tab-class .nav-item a.active {
     background: var(--bs-secondary) !important;
 }
@@ -294,7 +384,7 @@
 }
 
 .fruite .fruite-categorie .fruite-name a:hover {
-    color: var(--bs-secondary);
+    color: #00b8c2 !important;
 }
 
 .fruite .fruite-item {
@@ -360,33 +450,34 @@
     position: absolute;
     top: -8px;
     right: 0;
-    color: var(--bs-primary);
+    color: #00b8c2;
     padding: 5px 25px;
-    border: 1px solid var(--bs-secondary);
+    border: 1px solid #5f5a5a;
     border-radius: 20px;
     transition: 0.5s;
-
 }
 
 .vesitable .owl-nav .owl-prev:hover {
-    background: var(--bs-secondary);
+    background: #00b8c2;
     color: var(--bs-white);
+    border: 1px solid #00b8c2;
 }
 
 .vesitable .owl-nav .owl-next {
     position: absolute;
     top: -8px;
     right: 88px;
-    color: var(--bs-primary);
+    color: #00b8c2;
     padding: 5px 25px;
-    border: 1px solid var(--bs-secondary);
+    border: 1px solid #5f5a5a;
     border-radius: 20px;
     transition: 0.5s;
 }
 
 .vesitable .owl-nav .owl-next:hover {
-    background: var(--bs-secondary);
+    background: #00b8c2;
     color: var(--bs-white);
+    border: 1px solid #00b8c2;
 }
 /*** vesitable End ***/
 
@@ -486,6 +577,21 @@
 
 
 /*** Footer Start ***/
+.footer {
+    background: #5f5a5a;
+}
+
+.footer .btn-subscribe {
+    background-color: #00b8c2;
+    border-color: #00b8c2;
+}
+
+.footer .set-btn-outline-primary:hover {
+    border-color: white !important;
+    color: white !important;
+    transition: 0.5s;
+}
+
 .footer .footer-item .btn-link {
     line-height: 35px;
     color: rgba(255, 255, 255, .5);
@@ -493,7 +599,7 @@
 }
 
 .footer .footer-item .btn-link:hover {
-    color: var(--bs-secondary) !important;
+    color: #00b8c2 !important;
 }
 
 .footer .footer-item p.mb-4 {
@@ -502,13 +608,21 @@
 /*** Footer End ***/
 
 
-/*** Add disable-link Page Cart ***/
 
-.disable-link{
-    pointer-events : none;
-    text-decoration : none;
-    cursor : not-allowed;
-    opacity : 0.7;
+/*** Copyright Start ***/
+.copyright {
+    background: #5f5a5a;
+}
+/*** Copyright End ***/
+
+
+
+/*** Add disable-link Page Cart ***/
+.disable-link {
+    pointer-events: none;
+    text-decoration: none;
+    cursor: not-allowed;
+    opacity: 0.7;
 }
 
 /*** Add hidden Page Checkout ***/

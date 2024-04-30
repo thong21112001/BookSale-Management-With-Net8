@@ -46,30 +46,30 @@
     <!-- Spinner End -->
     <!-- Navbar start -->
     <div class="container-fluid fixed-top">
-        <div class="container topbar bg-primary d-none d-lg-block">
+        <div class="container topbar d-none d-lg-block">
             <div class="d-flex justify-content-between">
                 <div class="top-info ps-2">
-                    <small class="me-3"><i class="fas fa-map-marker-alt me-2 text-secondary"></i> <a href="#" class="text-white">Hải Châu, Đà Nẵng</a></small>
-                    <small class="me-3"><i class="fas fa-envelope me-2 text-secondary"></i><a href="#" class="text-white">quangthong211101@gmail.com</a></small>
+                    <small class="me-3"><i class="fas fa-map-marker-alt me-2"></i> <a href="#" class="text-white">Hải Châu, Đà Nẵng</a></small>
+                    <small class="me-3"><i class="fas fa-envelope me-2"></i><a href="#" class="text-white">quangthong211101@gmail.com</a></small>
                 </div>
             </div>
         </div>
         <div class="container px-0">
             <nav class="navbar navbar-light bg-white navbar-expand-xl">
-                <a asp-controller="Home" asp-action="Index" class="navbar-brand"><h1 class="text-primary display-6">BOOK STORE</h1></a>
+                <a asp-controller="Home" asp-action="Index" class="navbar-brand"><h1 class="set-color-h1 display-6">BOOK STORE</h1></a>
                 <button class="navbar-toggler py-2 px-3" type="button" data-bs-toggle="collapse" data-bs-target="#navbarCollapse">
                     <span class="fa fa-bars text-primary"></span>
                 </button>
                 <div class="collapse navbar-collapse bg-white" id="navbarCollapse">
                     <div class="navbar-nav mx-auto">
-                        <a asp-controller="Home" asp-action="Index" class="nav-item nav-link active text-uppercase">Home</a>
-                        <a asp-controller="Shop" asp-action="Index" class="nav-item nav-link text-uppercase">Shop</a>
+                        <a asp-controller="Home" asp-action="Index" class="nav-item nav-link active text-uppercase fw-bold">Home</a>
+                        <a asp-controller="Shop" asp-action="Index" class="nav-item nav-link text-uppercase fw-bold">Shop</a>
                     </div>
-                    <div class="d-flex m-3 me-0">
-                        <button class="btn-search btn border border-secondary btn-md-square rounded-circle bg-white me-4" data-bs-toggle="modal" data-bs-target="#searchModal"><i class="fas fa-search text-primary"></i></button>
+                    <div class="d-flex m-3 me-0 navbar-right-icon">
+                        <button class="btn-search btn border set-btn-outline-primary btn-md-square rounded-circle me-4" data-bs-toggle="modal" data-bs-target="#searchModal"><i class="fas fa-search"></i></button>
                         <a asp-controller="Cart" asp-action="Index" class="position-relative me-4 my-auto">
                             <i class="fa fa-shopping-bag fa-2x"></i>
-                            <span class="cart-number position-absolute bg-secondary rounded-circle d-flex align-items-center justify-content-center text-dark px-1" style="top: -5px; left: 15px; height: 20px; min-width: 20px;">0</span>
+                            <span class="set-cart-bg-text cart-number position-absolute rounded-circle d-flex align-items-center justify-content-center text-white px-1" style="top: -5px; left: 15px; height: 20px; min-width: 20px;">0</span>
                         </a>
 
                         <!--Hover profile -->
@@ -84,9 +84,9 @@
                             @if (@isAuthenticated)//Da dang nhap
                             {
                                 <div class="dropdown-menu m-0 bg-secondary rounded-0">
-                                    <p class="text-dark fs-5 fw-bold text-center">Information</p>
+                                    <p class="text-dark fs-5 fw-bold text-center text-uppercase">Information</p>
                                     <div class="dropdown-divider"></div>
-                                    <p class="text-center">@User.Identity?.Name</p>
+                                    <p class="text-center fw-bold">@User.Identity?.Name</p>
                                     <div class="dropdown-divider"></div>
                                     <a asp-controller="Profile" asp-action="Index" class="dropdown-item fw-bold">Profile</a>
                                     <a asp-controller="Authentication" asp-action="Logout" class="dropdown-item fw-bold">Logout</a>
@@ -130,28 +130,27 @@
     @RenderBody()
 
     <!-- Footer Start -->
-    <div class="container-fluid bg-dark text-white-50 footer pt-5 mt-5">
+    <div class="container-fluid text-white-50 footer pt-5 mt-5">
         <div class="container py-5">
-            <div class="pb-4 mb-4" style="border-bottom: 1px solid rgba(226, 175, 24, 0.5) ;">
+            <div class="pb-4 mb-4" style="border-bottom: 1px solid #00b8c2;">
                 <div class="row g-4">
                     <div class="col-lg-3">
                         <a href="#">
-                            <h1 class="text-primary mb-0">BOOK STORE</h1>
-                            <p class="text-secondary mb-0">Book products</p>
+                            <h1 class="set-color-h1 mb-0">BOOK STORE</h1>
                         </a>
                     </div>
                     <div class="col-lg-6">
                         <div class="position-relative mx-auto">
                             <input class="form-control border-0 w-100 py-3 px-4 rounded-pill" type="number" placeholder="Your Email">
-                            <button type="submit" class="btn btn-primary border-0 border-secondary py-3 px-4 position-absolute rounded-pill text-white" style="top: 0; right: 0;">Subscribe Now</button>
+                            <button type="submit" class="btn btn-subscribe border-0 border-secondary py-3 px-4 position-absolute rounded-pill text-white" style="top: 0; right: 0;">Subscribe Now</button>
                         </div>
                     </div>
                     <div class="col-lg-3">
                         <div class="d-flex justify-content-end pt-3">
-                            <a class="btn  btn-outline-secondary me-2 btn-md-square rounded-circle" href=""><i class="fab fa-twitter"></i></a>
-                            <a class="btn btn-outline-secondary me-2 btn-md-square rounded-circle" href=""><i class="fab fa-facebook-f"></i></a>
-                            <a class="btn btn-outline-secondary me-2 btn-md-square rounded-circle" href=""><i class="fab fa-youtube"></i></a>
-                            <a class="btn btn-outline-secondary btn-md-square rounded-circle" href=""><i class="fab fa-linkedin-in"></i></a>
+                            <a class="btn set-btn-outline-primary me-2 btn-md-square rounded-circle" href=""><i class="fab fa-twitter"></i></a>
+                            <a class="btn set-btn-outline-primary me-2 btn-md-square rounded-circle" href=""><i class="fab fa-facebook-f"></i></a>
+                            <a class="btn set-btn-outline-primary me-2 btn-md-square rounded-circle" href=""><i class="fab fa-youtube"></i></a>
+                            <a class="btn set-btn-outline-primary btn-md-square rounded-circle" href=""><i class="fab fa-linkedin-in"></i></a>
                         </div>
                     </div>
                 </div>
@@ -189,24 +188,24 @@
     </div>
     <!-- Footer End -->
     <!-- Copyright Start -->
-    <div class="container-fluid copyright bg-dark py-4">
+    <div class="container-fluid copyright py-4">
         <div class="container">
             <div class="row">
                 <div class="col-md-6 text-center text-md-start mb-3 mb-md-0">
-                    <span class="text-light"><a href="#"><i class="fas fa-copyright text-light me-2"></i>BookStore</a>, 04/2024.</span>
+                    <span class="text-light"><a class="a-footer" href="#"><i class="fas fa-copyright text-light me-2"></i>BookStore</a>, 04/2024.</span>
                 </div>
                 <div class="col-md-6 my-auto text-center text-md-end text-white">
                     <!--/*** This template is free as long as you keep the below author’s credit link/attribution link/backlink. ***/-->
                     <!--/*** If you'd like to use the template without the below author’s credit link/attribution link/backlink, ***/-->
                     <!--/*** you can purchase the Credit Removal License from "https://htmlcodex.com/credit-removal". ***/-->
-                    Designed By <a class="border-bottom" href="https://htmlcodex.com">HTML Codex</a>
+                    Designed By <a class="a-footer border-bottom" href="https://htmlcodex.com">HTML Codex</a>
                 </div>
             </div>
         </div>
     </div>
     <!-- Copyright End -->
     <!-- Back to Top -->
-    <a href="#" class="btn btn-primary border-3 border-primary rounded-circle back-to-top"><i class="fa fa-arrow-up"></i></a>
+    <a href="#" class="btn btn-top border-3 rounded-circle back-to-top"><i class="fa fa-arrow-up"></i></a>
 
 
     <!-- JavaScript Libraries -->

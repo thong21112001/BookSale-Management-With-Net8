@@ -28,7 +28,7 @@
                                                 <div class="fruite-img">
                                                     <img src="${buildImageUrl(book.Image, rootImagePath)}" class="img-fluid w-100 rounded-top" alt="">
                                                 </div>
-                                                <div class="p-4 border border-secondary border-top-0 rounded-bottom">
+                                                <div class="p-4 border set-border-primary border-top-0 rounded-bottom">
                                                     <h5 style="white-space: nowrap; overflow: hidden; text-overflow: ellipsis;">${book.Title}</h5>
                                                     <p>Code: ${book.Code}</p>
                                                     <p style="white-space: nowrap; overflow: hidden; text-overflow: ellipsis;">Tác giả: ${book.Author}</p>
@@ -36,7 +36,7 @@
                                 style: 'currency',
                                 currency: 'VND'
                             })}</p>
-                                                    <a class="btn btn-add-cart border border-secondary rounded-pill px-3 text-primary" data-code="${book.Code}"><i class="fa fa-shopping-bag me-2 text-primary"></i> Add to cart</a>
+                                                    <a class="btn set-btn-add-cart border rounded-pill px-3 text-white" data-code="${book.Code}"><i class="fa fa-shopping-bag me-2"></i> Add to cart</a>
                                                 </div>
                                             </div>
                                         </div>`;

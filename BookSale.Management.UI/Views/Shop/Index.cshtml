@@ -7,12 +7,12 @@
 }
 
 <!-- Single Page Header start -->
-<div class="container-fluid text-dark page-header py-5">
+<div class="container-fluid page-header py-5">
     <h1 class="text-center display-6">Shop</h1>
     <ol class="breadcrumb justify-content-center mb-0">
-        <li class="breadcrumb-item"><a class="text-dark" href="#">Home</a></li>
-        <li class="breadcrumb-item"><a class="text-dark" href="#">Pages</a></li>
-        <li class="breadcrumb-item active text-dark">Shop</li>
+        <li class="breadcrumb-item"><a class="text-white" href="#">Home</a></li>
+        <li class="breadcrumb-item"><a class="text-white" href="#">Pages</a></li>
+        <li class="breadcrumb-item active text-white">Shop</li>
     </ol>
 </div>
 <!-- Single Page Header End -->
@@ -53,7 +53,7 @@
                                     <ul class="list-unstyled fruite-categorie">
                                         <li>
                                             <div class="d-flex justify-content-between fruite-name">
-                                                <a href="/shop"><i class="fas fa-apple-alt me-2"></i>All</a>
+                                                <a class="cate-a" href="/shop"><i class="fas fa-apple-alt me-2"></i>All</a>
                                             </div>
                                         </li>
                                         @{
@@ -65,7 +65,7 @@
                                                 {
                                                     <li>
                                                         <div class="d-flex justify-content-between fruite-name">
-                                                            <a href="/shop?g=@item.Id"><i class="fas fa-apple-alt me-2"></i>@item.Name</a>
+                                                            <a class="cate-a" href="/shop?g=@item.Id"><i class="fas fa-apple-alt me-2"></i>@item.Name</a>
                                                             <span>@item.TotalBook</span>
                                                         </div>
                                                     </li>
@@ -128,11 +128,11 @@
 
                                 if (isDisabledBtn)
                                 {
-                                    <button type="button" class="btn btn-primary btn-sm mt-2" disabled id="btn-load-more">LOAD MORE</button>
+                                    <button type="button" class="btn set-btn-primary btn-sm mt-2" disabled id="btn-load-more">LOAD MORE</button>
                                 }
                                 else
                                 {
-                                    <button type="button" class="btn btn-primary btn-sm mt-2" id="btn-load-more">LOAD MORE</button>
+                                    <button type="button" class="btn set-btn-primary btn-sm mt-2" id="btn-load-more">LOAD MORE</button>
                                 }
                             }
                         </div>

@@ -5,12 +5,12 @@
     Layout = "~/Views/Shared/_Layout.cshtml";
 }
 <!-- Single Page Header start -->
-<div class="container-fluid text-dark page-header py-5">
+<div class="container-fluid page-header py-5">
     <h1 class="text-center display-6">Cart</h1>
     <ol class="breadcrumb justify-content-center mb-0">
-        <li class="breadcrumb-item"><a class="text-dark" href="#">Home</a></li>
-        <li class="breadcrumb-item"><a class="text-dark" href="#">Pages</a></li>
-        <li class="breadcrumb-item active text-dark">Cart</li>
+        <li class="breadcrumb-item"><a class="text-white" href="#">Home</a></li>
+        <li class="breadcrumb-item"><a class="text-white" href="#">Pages</a></li>
+        <li class="breadcrumb-item active text-white">Cart</li>
     </ol>
 </div>
 <!-- Single Page Header End -->
@@ -108,7 +108,7 @@
                         <h5 class="mb-0 ps-4 me-4">Total</h5>
                         <p class="mb-0 pe-4"><span id="cartTotal">@totalCart.ToString("C", CultureInfo.GetCultureInfo("vi-VN"))</span></p>
                     </div>
-                    <a id="btn-Checkout" href="/checkout?returnUrl=/checkout" class="btn border-secondary @(itemTotal > 0 ? "" : "disable-link") rounded-pill px-4 py-3 text-primary text-uppercase mb-4 ms-4">Proceed Checkout</a>
+                    <a id="btn-Checkout" href="/checkout?returnUrl=/checkout" class="btn @(itemTotal > 0 ? "" : "disable-link") rounded-pill px-4 py-3 text-uppercase mb-4 ms-4">Proceed Checkout</a>
                 </div>
             </div>
         </div>
