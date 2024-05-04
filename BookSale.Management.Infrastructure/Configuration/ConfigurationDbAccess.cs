@@ -48,6 +48,21 @@ namespace BookSale.Management.Infrastructure.Configuration
                 options.Lockout.DefaultLockoutTimeSpan = TimeSpan.FromMinutes(1);
                 options.Lockout.MaxFailedAccessAttempts = 3;    //Bao nhiêu lần đc login false
             });
+
+            //Đăng ký khi check pass của user
+            services.Configure<IdentityOptions>(options =>
+            {
+                //Check Password
+                options.Password.RequireDigit = true;   //Yêu cầu có kí tự số
+                options.Password.RequireLowercase = true;   //Yêu cầu có chữ thường
+                options.Password.RequireUppercase = true;   //Yêu cầu có chữ hoa
+                options.Password.RequireNonAlphanumeric = true; //Yêu cầu có kí tự đặc biệt
+                options.Password.RequiredLength = 8;    //Độ dài pass từ 8
+                options.Password.RequiredUniqueChars = 5;   //Ít nhất 5 kí tự khác nhau
+
+                //Check email
+                options.User.RequireUniqueEmail = true; // Yêu cầu email phải là duy nhất
+            });
         }
 
         //Cấu hình đăng ký dịch dụ, repository, dapper
@@ -59,6 +74,7 @@ namespace BookSale.Management.Infrastructure.Configuration
             services.AddTransient<IImageService, ImageService>();
             services.AddTransient<ICommonService, CommonService>();
             services.AddTransient<IVnPayService, VnPayService>();
+            services.AddTransient<IErrorMessageService, ErrorMessageService>();
 
 
 

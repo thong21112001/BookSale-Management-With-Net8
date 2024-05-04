@@ -1,11 +1,13 @@
 ﻿using AutoMapper;
 using BookSale.Management.Application.Abstracts;
 using BookSale.Management.Application.DTOs;
+using BookSale.Management.Application.DTOs.AuthenticationUser;
 using BookSale.Management.Application.DTOs.ViewModels;
 using BookSale.Management.Domain.Entities;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.EntityFrameworkCore;
+using System.Data;
 
 namespace BookSale.Management.Application.Services
 {
@@ -14,12 +16,15 @@ namespace BookSale.Management.Application.Services
         private readonly UserManager<ApplicationUser> _userManager;
         private readonly IMapper _mapper;
         private readonly IImageService _imageService;
+        private readonly RoleManager<IdentityRole> _roleManager;
 
-        public UserService(UserManager<ApplicationUser> userManager, IMapper mapper, IImageService imageService)
+        public UserService(UserManager<ApplicationUser> userManager, IMapper mapper, IImageService imageService,
+                            RoleManager<IdentityRole> roleManager)
         {
             _userManager = userManager;
             _mapper = mapper;
             _imageService = imageService;
+            _roleManager = roleManager;
         }
 
 
@@ -215,6 +220,40 @@ namespace BookSale.Management.Application.Services
                 return true;
             }
             return false;
+        }
+
+        //User register account
+        public async Task<bool> RegisterAsync(UserRegisterDTO registerDTO)
+        {
+            try
+            {
+                var applicationUser = new ApplicationUser
+                {
+                    Email = registerDTO.Email,
+                    UserName = registerDTO.Username,
+                    IsActive = true,
+                    PhoneNumber = registerDTO.Phone,
+                    MobilePhone = registerDTO.Phone,
+                };
+
+                var identityUser = await _userManager.CreateAsync(applicationUser, registerDTO.Password);
+
+                var getRoles = await _roleManager.Roles.ToListAsync();
+                var userRole = getRoles.FirstOrDefault(r => r.Name == "User");
+
+                if (identityUser.Succeeded)
+                {
+                    await _userManager.AddToRoleAsync(applicationUser, userRole.Name);
+
+                    return true;
+                }
+
+                return false;
+            }
+            catch (Exception)
+            {
+                return false;
+            }
         }
         #endregion
     }
