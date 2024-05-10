@@ -5,6 +5,9 @@ using BookSale.Management.DataAccess.DataAccess;
 using BookSale.Management.DataAccess.Repository;
 using BookSale.Management.Domain.Abstracts;
 using BookSale.Management.Domain.Entities;
+using BookSale.Management.Domain.Settings;
+using BookSale.Management.Infrastructure.Abstracts;
+using BookSale.Management.Infrastructure.Services;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.EntityFrameworkCore;
@@ -13,7 +16,7 @@ using Microsoft.Extensions.DependencyInjection;
 
 namespace BookSale.Management.Infrastructure.Configuration
 {
-	public static class ConfigurationDbAccess
+    public static class ConfigurationDbAccess
     {
         public static void RegisterDb(this IServiceCollection services, IConfiguration configuration)
         {
@@ -40,6 +43,9 @@ namespace BookSale.Management.Infrastructure.Configuration
                 options.LoginPath = "/admin/authentication/login";  //Thêm [Authorize] ở trong các Controller Admin
                 options.SlidingExpiration = true; //Nếu còn ở hệ thống sẽ gia hạn thêm cookies
             });
+
+            //Đăng ký lấy thông tin EmailHost khai báo ở appsetting.json
+            services.Configure<SmtpSettings>(configuration.GetSection("EmailHost"));
 
             //Đăng ký khi sử dụng khoá tài khoản
             services.Configure<IdentityOptions>(options =>
@@ -75,7 +81,7 @@ namespace BookSale.Management.Infrastructure.Configuration
             services.AddTransient<ICommonService, CommonService>();
             services.AddTransient<IVnPayService, VnPayService>();
             services.AddTransient<IErrorMessageService, ErrorMessageService>();
-
+            services.AddTransient<IEmailService, EmailService>();
 
 
             services.AddTransient<IUserService,UserService>();

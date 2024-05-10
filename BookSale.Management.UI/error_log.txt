@@ -1,0 +1,3 @@
+Send smtp value result: BookSale.Management.Domain.Settings.SmtpSettings
+Send smtp value result: BookSale.Management.Domain.Settings.SmtpSettings
+Send smtp value result: BookSale.Management.Domain.Settings.SmtpSettings

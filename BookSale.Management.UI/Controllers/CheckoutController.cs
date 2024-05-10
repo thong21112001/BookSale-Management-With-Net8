@@ -1,10 +1,9 @@
-﻿using Azure;
-using BookSale.Management.Application.Abstracts;
+﻿using BookSale.Management.Application.Abstracts;
 using BookSale.Management.Application.DTOs.Book;
 using BookSale.Management.Application.DTOs.Checkout;
 using BookSale.Management.Application.DTOs.VnPay;
-using BookSale.Management.Domain.Entities;
 using BookSale.Management.Domain.Enums;
+using BookSale.Management.Infrastructure.Abstracts;
 using BookSale.Management.UI.Helpers;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.Filters;
@@ -13,7 +12,7 @@ using System.Security.Claims;
 
 namespace BookSale.Management.UI.Controllers
 {
-	public class CheckoutController : Controller
+    public class CheckoutController : Controller
     {
         private readonly IUserAddressService _userAddressService;
         private readonly IBookService _bookService;
@@ -21,11 +20,13 @@ namespace BookSale.Management.UI.Controllers
         private readonly IOrderService _orderService;
         private readonly PaypalClientHelper _paypalClient;
         private readonly IVnPayService _vnPayService;
+        private readonly IEmailService _emailService;
         private bool _isAuthenticated;
 
         public CheckoutController(IUserAddressService userAddressService, IBookService bookService,
                                     ICartService cartService, IOrderService orderService,
-                                    PaypalClientHelper paypalClient, IVnPayService vnPayService)
+                                    PaypalClientHelper paypalClient, IVnPayService vnPayService,
+                                    IEmailService emailService)
         {
             _userAddressService = userAddressService;
             _bookService = bookService;
@@ -33,6 +34,7 @@ namespace BookSale.Management.UI.Controllers
             _orderService = orderService;
             _paypalClient = paypalClient;
             _vnPayService = vnPayService;
+            _emailService = emailService;
         }
 
         public override void OnActionExecuting(ActionExecutingContext context)
@@ -233,7 +235,7 @@ namespace BookSale.Management.UI.Controllers
                     BookForCarts = booksInCart.ToList()
                 };
 
-                await _cartService.Save(cart);
+                var cartResult = await _cartService.Save(cart);
 
                 var order = new OrderRequestDTO
                 {
@@ -247,7 +249,11 @@ namespace BookSale.Management.UI.Controllers
                     TotalAmount = userCheckout.TotalAmount
                 };
 
-                await _orderService.Save(order);
+                var orderResult = await _orderService.Save(order);
+
+                //Sau khi hoaàn thành luu db trả về true -> tiến hành gửi mail
+                await _emailService.SendEmailAsync("jayda74@ethereal.email", "Test Email", "This is a test email.");
+
             }
             //Xoá mặt hàng khỏi giỏ sau khi lưu toàn bộ vào data
             CartHelper.ClearCartSession(HttpContext.Session);

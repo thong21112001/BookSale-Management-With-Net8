@@ -66,6 +66,7 @@ namespace BookSale.Management.DataAccess
                         {
                             UserName = defaultUser?.Username,
                             IsActive = true,
+                            Email = "admin@gmail.com",//Xử lý lỗi khi seed data, tạo tài khoản mặc định Admin
                             AccessFailedCount = 0
                         };
 
