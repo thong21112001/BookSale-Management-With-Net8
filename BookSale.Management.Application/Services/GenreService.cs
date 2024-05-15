@@ -119,6 +119,18 @@ namespace BookSale.Management.Application.Services
 
             return _mapper.Map<IEnumerable<GenreDTO>>(genreList);
         }
+
+        public async Task<string> GetGenreForBookVM(int id)
+        {
+            var genre = await _unitOfWork.GenreRepository.GetById(id);
+
+            if (genre.Name != null)
+            {
+                return genre.Name;
+            }
+
+            return "Unknow";
+        }
         #endregion
     }
 }

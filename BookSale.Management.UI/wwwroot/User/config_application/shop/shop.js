@@ -29,7 +29,7 @@
                                                     <img src="${buildImageUrl(book.Image, rootImagePath)}" class="img-fluid w-100 rounded-top" alt="">
                                                 </div>
                                                 <div class="p-4 border set-border-primary border-top-0 rounded-bottom">
-                                                    <h5 style="white-space: nowrap; overflow: hidden; text-overflow: ellipsis;">${book.Title}</h5>
+                                                    <a href="/ProductDetail?code=${book.Code}" class="text-ellipsis set-a">${book.Title}</a>
                                                     <p>Code: ${book.Code}</p>
                                                     <p style="white-space: nowrap; overflow: hidden; text-overflow: ellipsis;">Tác giả: ${book.Author}</p>
                                                     <p class="text-dark fs-5 fw-bold mb-0">Giá: ${book.Price.toLocaleString('vi-VN', {

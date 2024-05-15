@@ -61,6 +61,55 @@
     color: darkseagreen !important;
     transition: 0.5s;
 }
+
+.text-ellipsis {
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
+    display: inline-block;
+    max-width: 100%; /* hoặc một giá trị cụ thể */
+}
+
+.set-a {
+    font-weight: bold;
+    font-size: 20px;
+    color:black;
+}
+
+.set-a:hover {
+    color: #00b8c2 !important;
+    transition: 0.5s;
+}
+/*** Product Detail ***/
+.set-title-a {
+    font-weight: bold;
+    color: black;
+}
+
+.set-title-a:hover {
+    color: #00b8c2 !important;
+    transition: 0.5s;
+}
+
+.image-container {
+    width: 100%;
+    height: auto;
+}
+
+.object-fit-cover-img {
+    width: 100%;
+    height: auto;
+    object-fit: cover;
+}
+
+.btn-viewmore {
+    background-color: #00b8c2;
+}
+
+.btn-viewmore:hover{
+    background: #5f5a5a !important;
+    color: #00b8c2 !important;
+}
 /*** Setting person ***/
 
 

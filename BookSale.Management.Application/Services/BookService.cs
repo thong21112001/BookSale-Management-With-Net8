@@ -287,6 +287,15 @@ namespace BookSale.Management.Application.Services
 
             return result;
         }
+
+        public async Task<BookDetailViewModel> GetBookViewByUser(string code)
+        {
+            var book = await _unitOfWork.BookRepository.GetBookByCodeAsync(code);
+
+            var result = _mapper.Map<BookDetailViewModel>(book);
+
+            return result;
+        }
         #endregion
     }
 }

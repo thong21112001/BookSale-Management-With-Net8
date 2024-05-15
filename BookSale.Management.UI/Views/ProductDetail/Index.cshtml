@@ -1,0 +1,210 @@
+﻿@using BookSale.Management.Application.DTOs;
+@model BookSale.Management.Application.DTOs.ViewModels.BookDetailViewModel
+
+@{
+    ViewData["Title"] = "Index";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+
+<!-- Single Page Header start -->
+<div class="container-fluid page-header py-5">
+    <h1 class="text-center display-6">Shop details</h1>
+    <ol class="breadcrumb justify-content-center mb-0">
+        <li class="breadcrumb-item"><a class="text-white" href="#">Home</a></li>
+        <li class="breadcrumb-item"><a class="text-white" href="#">Pages</a></li>
+        <li class="breadcrumb-item"><a class="text-white" href="#">Shop</a></li>
+        <li class="breadcrumb-item active text-white">Shop details</li>
+    </ol>
+</div>
+<!-- Single Page Header End -->
+<!-- Single Product Start -->
+<div class="container-fluid py-5 mt-5">
+    <div class="container py-5">
+        <div class="row g-4 mb-5">
+            <div class="col-lg-8 col-xl-9">
+                <div class="row g-4">
+                    <div class="col-lg-6">
+                        <div class="border rounded">
+                            @{
+                                string urlImg = ImageHelper.GetImageUrl(Model.Image ?? string.Empty, Context);
+                            }
+                            <a href="#">
+                                <img src="@urlImg" class="img-fluid rounded w-100" alt="Image">
+                            </a>
+                        </div>
+                    </div>
+                    <div class="col-lg-6">
+                        <h4 class="fw-bold mb-3">@Model.Title</h4>
+                        <p class="mb-3">Mục: @ViewBag.GenreForBook</p>
+                        <h5 class="fw-bold mb-3">@Model.Price.ToString("C", CultureInfo.GetCultureInfo("vi-VN"))</h5>
+                        <p class="mb-4">Tác giả: @Model.Author</p>
+                        <p class="mb-4">Nhà cung cấp: @Model.Publisher</p>
+
+                        <div class="input-group quantity mb-5" style="width: 100px;">
+                            <div class="input-group-btn">
+                                <button class="btn btn-sm btn-minus rounded-circle bg-light border">
+                                    <i class="fa fa-minus"></i>
+                                </button>
+                            </div>
+                            <input type="text" class="form-control form-control-sm text-center border-0" value="1">
+                            <div class="input-group-btn">
+                                <button class="btn btn-sm btn-plus rounded-circle bg-light border">
+                                    <i class="fa fa-plus"></i>
+                                </button>
+                            </div>
+                        </div>
+                        <a data-code="@Model.Code" class="btn set-btn-add-cart border rounded-pill px-3 text-white"><i class="fa fa-shopping-bag me-2"></i> Add to cart</a>
+                    </div>
+                    <div class="col-lg-12">
+                        <nav>
+                            <div class="nav nav-tabs mb-3">
+                                <h4>Description</h4>
+                            </div>
+                        </nav>
+                        <div class="tab-content mb-5">
+                            <div class="tab-pane active" id="nav-about" role="tabpanel" aria-labelledby="nav-about-tab">
+                                <p>
+                                    @Model.Description
+                                </p>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+
+            <div class="col-lg-4 col-xl-3">
+                <div class="row g-4 fruite">
+                    @* Categories *@
+                    <div class="col-lg-12">
+                        <div class="mb-4">
+                            <h4>Categories</h4>
+                            <ul class="list-unstyled fruite-categorie">
+                                <li>
+                                    <div class="d-flex justify-content-between fruite-name">
+                                        <a class="cate-a" href="/shop"><i class="fas fa-apple-alt me-2"></i>All</a>
+                                    </div>
+                                </li>
+
+                                @{
+                                    var getGenres = ViewBag.GenresProductDetail as IEnumerable<BookSale.Management.Application.DTOs.Genre.GenreSiteDTO>;
+
+                                    if (getGenres is not null)
+                                    {
+                                        foreach (var item in getGenres)
+                                        {
+                                            <li>
+                                                <div class="d-flex justify-content-between fruite-name">
+                                                    <a class="cate-a" href="/shop?g=@item.Id"><i class="fas fa-apple-alt me-2"></i>@item.Name</a>
+                                                    <span>@item.TotalBook</span>
+                                                </div>
+                                            </li>
+                                        }
+                                    }
+                                }
+                            </ul>
+                        </div>
+                    </div>
+                    
+                    @* Products same category *@
+                    <div class="col-lg-12">
+                        <h4 class="mb-4">Featured products</h4>
+
+                        @{
+                            string urlBook;
+                            var getBooksByGenre = ViewBag.GetBooksByGenre as IEnumerable<BookSale.Management.Application.DTOs.BookDTO>;
+                            if (getBooksByGenre != null)
+                            {
+                                foreach (var item in getBooksByGenre)
+                                {
+                                    urlBook = ImageHelper.GetImageUrl(item.Image ?? string.Empty, Context);
+
+                                    <div class="row mb-4">
+                                        <div class="col-4 d-flex align-items-center">
+                                            <div class="image-container">
+                                                <img src="@urlBook" class="img-fluid rounded object-fit-cover-img" alt="Image">
+                                            </div>
+                                        </div>
+                                        <div class="col-8">
+                                            <a asp-controller="ProductDetail" asp-action="Index" asp-route-code="@item.Code" class="set-title-a d-block">@item.Title</a>
+                                            <div class="d-flex mb-2">
+                                                <h5 class="fw-bold me-2">@item.Price.ToString("C", CultureInfo.GetCultureInfo("vi-VN"))</h5>
+                                                <h5 class="text-danger text-decoration-line-through">@item.OldPrice.ToString("C", CultureInfo.GetCultureInfo("vi-VN"))</h5>
+                                            </div>
+                                        </div>
+                                    </div>
+                                }
+                            }
+                            else
+                            {
+                                <p>NO DATA</p>
+                            }
+                        }
+                        
+                        <div class="d-flex justify-content-center my-4">
+                            <a href="/shop?g=@Model.GenreId" class="btn btn-viewmore px-4 py-3 rounded-pill text-white w-100 text-uppercase">Vew More</a>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+
+        <hr />
+        <h1 class="fw-bold mb-0">Related products</h1>
+        <div class="vesitable">
+            <div class="owl-carousel vegetable-carousel justify-content-center">
+                @{
+                    string result;
+                    var genreList = ViewData["GenreListProductDetail"] as IEnumerable<GenreDTO>;
+                    if (genreList != null)
+                    {
+                        var getBookSug = ViewBag.GetSuggesBook as IEnumerable<BookSale.Management.Application.DTOs.BookDTO>;
+
+                        if (getBookSug != null)
+                        {
+                            foreach (var item in getBookSug)
+                            {
+                                result = ImageHelper.GetImageUrl(item.Image ?? string.Empty, Context);
+
+                                <div class="border set-border-primary rounded position-relative vesitable-item">
+                                    <div class="vesitable-img">
+                                        <img src="@result" class="img-fluid w-100 rounded-top" alt="">
+                                    </div>
+                                    @{
+                                        var genre = genreList.FirstOrDefault(x => x.Id == item.GenreId);
+                                        if (genre != null)
+                                        {
+                                            <div class="text-white set-bg-primary px-3 py-1 rounded position-absolute" style="top: 10px; right: 10px;">@(genreList.FirstOrDefault(x => x.Id == item.GenreId)?.Name ?? "Unknown")</div>
+                                        }
+                                        else
+                                        {
+                                            <div class="text-white set-bg-primary px-3 py-1 rounded position-absolute" style="top: 10px; right: 10px;">NULL</div>
+                                        }
+                                    }
+                                    <div class="p-4 rounded-bottom">
+                                        <h4 style="white-space: nowrap; overflow: hidden; text-overflow: ellipsis;">@item.Title</h4>
+                                        <p style="white-space: nowrap; overflow: hidden; text-overflow: ellipsis;">@item.Author</p>
+                                        <div class="d-flex justify-content-between flex-lg-wrap">
+                                            <p class="text-dark fs-5 fw-bold mb-0">@item.Price.ToString("C", CultureInfo.GetCultureInfo("vi-VN"))</p>
+                                            <a data-code="@item.Code" class="btn set-btn-add-cart border rounded-pill px-3 text-white"><i class="fa fa-shopping-bag me-2"></i> Add to cart</a>
+                                        </div>
+                                    </div>
+                                </div>
+                            }
+                        }
+                        else
+                        {
+                            <p>NO DATA</p>
+                        }
+                    }
+                    else
+                    {
+                        <p>NO DATA</p>
+                    }
+                }
+            </div>
+        </div>
+    </div>
+</div>
+<!-- Single Product End -->

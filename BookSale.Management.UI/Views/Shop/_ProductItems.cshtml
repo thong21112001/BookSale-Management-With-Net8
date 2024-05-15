@@ -10,10 +10,10 @@
         <div class="fruite-img">
             <img src="@result" class="img-fluid w-100 rounded-top" alt="">
         </div>
-        <div class="p-4 border set-border-primary border-top-0 rounded-bottom">
-            <h5 style="white-space: nowrap; overflow: hidden; text-overflow: ellipsis;">@Model.Title</h5>
+        <div class="p-4 border set-border-primary border-top-0 rounded-bottom set-fruite-detail">
+            <a asp-controller="ProductDetail" asp-action="Index" asp-route-code="@Model.Code" class="text-ellipsis set-a">@Model.Title</a>
             <p>Code: @Model.Code</p>
-            <p style="white-space: nowrap; overflow: hidden; text-overflow: ellipsis;">Tác giả: @Model.Author</p>
+            <p class="text-ellipsis">Tác giả: @Model.Author</p>
             <p class="text-dark fs-5 fw-bold mb-0">Giá: @Model.Price.ToString("C", CultureInfo.GetCultureInfo("vi-VN"))</p>
             <a class="btn set-btn-add-cart border rounded-pill px-3 text-white" data-code="@Model.Code"><i class="fa fa-shopping-bag me-2"></i> Add to cart</a>
         </div>

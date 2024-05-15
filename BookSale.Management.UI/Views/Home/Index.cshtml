@@ -69,7 +69,7 @@
                                 }
                             }
                             <div class="p-4 rounded-bottom">
-                                <h4 style="white-space: nowrap; overflow: hidden; text-overflow: ellipsis;">@item.Title</h4>
+                                <a asp-controller="ProductDetail" asp-action="Index" asp-route-code="@item.Code" class="text-ellipsis set-a">@item.Title</a>
                                 <p style="white-space: nowrap; overflow: hidden; text-overflow: ellipsis;">@item.Author</p>
                                 <div class="d-flex justify-content-between flex-lg-wrap">
                                     <p class="text-dark fs-5 fw-bold mb-0">@item.Price.ToString("C", CultureInfo.GetCultureInfo("vi-VN"))</p>

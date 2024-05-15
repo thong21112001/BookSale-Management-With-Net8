@@ -12,5 +12,6 @@ namespace BookSale.Management.Application.Abstracts
         Task<GenreViewModel> GetById(int id);
         IEnumerable<GenreSiteDTO> GetSumBookOfGenre();
         Task<ResponseModel> Save(GenreViewModel request);
+        Task<string> GetGenreForBookVM(int id);
     }
 }
