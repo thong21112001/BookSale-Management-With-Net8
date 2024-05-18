@@ -46,14 +46,14 @@
                                     <i class="fa fa-minus"></i>
                                 </button>
                             </div>
-                            <input type="text" class="form-control form-control-sm text-center border-0" value="1">
+                            <input id="product-quantity" type="text" class="form-control form-control-sm text-center border-0" value="1">
                             <div class="input-group-btn">
                                 <button class="btn btn-sm btn-plus rounded-circle bg-light border">
                                     <i class="fa fa-plus"></i>
                                 </button>
                             </div>
                         </div>
-                        <a data-code="@Model.Code" class="btn set-btn-add-cart border rounded-pill px-3 text-white"><i class="fa fa-shopping-bag me-2"></i> Add to cart</a>
+                        <a data-code="@Model.Code" class="btn set-btn-add-quantity-cart border rounded-pill px-3 text-white"><i class="fa fa-shopping-bag me-2"></i> Add to cart</a>
                     </div>
                     <div class="col-lg-12">
                         <nav>
@@ -208,3 +208,6 @@
     </div>
 </div>
 <!-- Single Product End -->
+@section Scripts {
+    <script src="~/user/config_application/product_detail/addquantitybookintocart.js"></script>
+}

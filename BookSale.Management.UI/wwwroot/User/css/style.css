@@ -22,13 +22,14 @@
     background-color: #00b8c2 !important;
 }
 
-.set-btn-add-cart, .set-btn-format {
+.set-btn-add-cart, .set-btn-format, .set-btn-add-quantity-cart {
     background-color: #00b8c2 !important;
     border-color: #00b8c2 !important;
 }
 
 .set-btn-format:hover,
-.set-btn-add-cart:hover {
+.set-btn-add-cart:hover,
+.set-btn-add-quantity-cart:hover{
     background: #5f5a5a !important;
     color: #00b8c2 !important;
     transition: 0.5s;
