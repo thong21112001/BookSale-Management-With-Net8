@@ -19,6 +19,8 @@ namespace BookSale.Management.Domain.Entities
 
         public PaymentMethod PaymentMethod { get; set; }
 
+        public StatusProcessing Status { get; set; }
+
         [Required]
         [StringLength(50)]
         public string UserId { get; set; } = string.Empty;

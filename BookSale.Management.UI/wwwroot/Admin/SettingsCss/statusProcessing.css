@@ -1,0 +1,15 @@
+﻿.status-new{
+    color:#0000ff;
+}
+
+.status-processing {
+    color: #ffcb0d;
+}
+
+.status-cancel {
+    color: #ff0000;
+}
+
+.status-complete {
+    color: #00ff00;
+}

@@ -1,0 +1,55 @@
+﻿@{
+    ViewData["Title"] = "Index";
+    Layout = "~/Areas/Admin/Views/Shared/_Layout.cshtml";
+}
+
+@section Stylesheet {
+    <!--begin::Page Vendors Styles(used by this page)-->
+    <link href="~/Admin/assets/plugins/custom/datatables/datatables.bundle.css" rel="stylesheet" type="text/css" />
+}
+
+<!--begin::Subheader-->
+@await Html.PartialAsync("~/Areas/Admin/Views/Shared/_Subheader.cshtml")
+<!--end::Subheader-->
+<!--begin::Card-->
+<div class="card card-custom">
+	<div class="card-header flex-wrap py-5">
+		<div class="card-title">
+			<h3 class="card-label">
+				DANH SÁCH ĐẶT HÀNG
+			</h3>
+		</div>
+		<div class="card-toolbar">
+			
+		</div>
+	</div>
+	<div class="card-body">
+		<!--begin: Datatable-->
+		<table class="table table-separate table-head-custom table-checkable" id="tbl-order">
+			<thead>
+				<tr>
+					<th>Id Order</th>
+					<th>Code Order</th>
+					<th>Date</th>
+					<th>Payment Method</th>
+					<th>Status</th>
+					<th>Full Name</th>
+					<th>Total Price</th>
+				</tr>
+			</thead>
+			<tbody>
+			</tbody>
+		</table>
+		<!--end: Datatable-->
+	</div>
+</div>
+<!--end::Card-->
+
+
+@section Scripts {
+    @{
+        <partial name="_ScriptPartial" />
+    }
+    <script src="~/admin/components/order_showdata.js"></script>
+}
+

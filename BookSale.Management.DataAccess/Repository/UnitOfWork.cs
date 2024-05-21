@@ -27,7 +27,7 @@ namespace BookSale.Management.DataAccess.Repository
         public IBookRepository BookRepository => _bookRepository ??= new BookRepository(_context,_queryHandler);
         public IUserAddressRepository UserAddressRepository => _addressRepository ??= new UserAddressRepository(_context);
         public ICartRepository CartRepository => _cartRepository ??= new CartRepository(_context);
-        public IOrderRepository OrderRepository => _orderRepository ??= new OrderRepository(_context);
+        public IOrderRepository OrderRepository => _orderRepository ??= new OrderRepository(_context, _queryHandler);
 
 
         public async Task BeginTransactionAsync()
