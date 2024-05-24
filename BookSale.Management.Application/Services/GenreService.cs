@@ -37,16 +37,28 @@ namespace BookSale.Management.Application.Services
 
             var genresDTO = _mapper.Map<IEnumerable<GenreDTO>>(genres);
 
-            //Pagination
-            int totalRecords = genres.Count();
+			// Tính toán RecordsTotal
+			int totalRecords = genres.Count();
 
-            var result = genresDTO.Skip(request.SkipItems).Take(request.PageSize).ToList();
+			// Tính toán RecordsFiltered
+			int filteredRecords;
+			if (string.IsNullOrEmpty(request.keyword))
+			{
+				filteredRecords = totalRecords;
+			}
+			else
+			{
+				filteredRecords = genres.Count(g => g.Name.Contains(request.keyword) || g.Description.Contains(request.keyword));
+			}
+
+			// Lấy genre từ database -> Data
+			var result = genresDTO.Skip(request.SkipItems).Take(request.PageSize).ToList();
 
             return new ResponseDataTable<GenreDTO>
             {
                 Draw = request.Draw,
                 RecordsTotal = totalRecords,
-                RecordsFiltered = totalRecords,
+                RecordsFiltered = filteredRecords,
                 Data = result
             };
         }

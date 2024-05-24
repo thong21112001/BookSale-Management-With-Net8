@@ -1,7 +1,6 @@
 ﻿function registerDatatable(elementName, columns, urlApi) {
     $(elementName).DataTable({
-        scrollX: true,
-        scrollY: 300,
+        paging: true,
         processing: true,
         serverSide: true,
         columns: columns,
@@ -9,7 +8,10 @@
             url: urlApi,
             type: 'POST',
             dataType: 'json',
-            dataSrc: 'Data' // Thêm tùy chọn dataSrc ở đây để chỉ định rằng class ResponseDataTable có thuộc tính trả về là Data
+            dataSrc: function (json) {
+                console.log('Server Response:', json);
+                return json.Data;
+            } // Thêm tùy chọn dataSrc ở đây để chỉ định rằng class ResponseDataTable có thuộc tính trả về là Data
         }
     });
 }

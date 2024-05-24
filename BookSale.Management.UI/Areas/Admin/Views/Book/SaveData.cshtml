@@ -5,6 +5,11 @@
     Layout = "~/Areas/Admin/Views/Shared/_Layout.cshtml";
 }
 
+@section Stylesheet {
+	<!--begin::waiting (used by this page)-->
+    <link href="~/admin/settingscss/backgroundwaiting.css" rel="stylesheet" />
+}
+
 <h1>@(Model.Id == 0 ? "Create" : "Update") Data</h1>
 
 <form class="forms-sample" asp-area="admin" asp-controller="book" asp-action="savedata"
@@ -147,6 +152,10 @@
 </form>
 
 @section Scripts {
+    <!--begin::Add background waiting js-->
+    <script src="~/lib/background-waiting/jquery.blockui.js"></script>
+    <script src="~/admin/settingsjs/background_waiting.js"></script>
+
     <script src="~/lib/jquery-validation/dist/jquery.validate.min.js"></script>
     <script src="~/lib/jquery-validation-unobtrusive/jquery.validate.unobtrusive.min.js"></script>
 
