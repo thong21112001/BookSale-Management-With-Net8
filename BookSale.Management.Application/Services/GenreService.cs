@@ -35,31 +35,31 @@ namespace BookSale.Management.Application.Services
         {
             var genres = await _unitOfWork.GenreRepository.GetAllGenre();
 
-            var genresDTO = _mapper.Map<IEnumerable<GenreDTO>>(genres);
+            // 1. Lọc dữ liệu dựa trên từ khóa tìm kiếm
+            if (!string.IsNullOrEmpty(request.keyword))
+            {
+                genres = genres.Where(g =>
+                    g.Name != null &&
+                    g.Name.Contains(request.keyword, StringComparison.OrdinalIgnoreCase)
+                // Thêm các trường khác cần tìm kiếm (nếu có)
+                );
+            }
 
-			// Tính toán RecordsTotal
-			int totalRecords = genres.Count();
+            // Tính toán RecordsTotal
+            int totalRecords = genres.Count();
 
-			// Tính toán RecordsFiltered
-			int filteredRecords;
-			if (string.IsNullOrEmpty(request.keyword))
-			{
-				filteredRecords = totalRecords;
-			}
-			else
-			{
-				filteredRecords = genres.Count(g => g.Name.Contains(request.keyword) || g.Description.Contains(request.keyword));
-			}
+            // Lấy genre từ database -> Data và Phân trang
+            var result = genres.Skip(request.SkipItems).Take(request.PageSize).ToList();
 
-			// Lấy genre từ database -> Data
-			var result = genresDTO.Skip(request.SkipItems).Take(request.PageSize).ToList();
+            // Map sau khi phân trang
+            var genresDTO = _mapper.Map<IEnumerable<GenreDTO>>(result);
 
             return new ResponseDataTable<GenreDTO>
             {
                 Draw = request.Draw,
                 RecordsTotal = totalRecords,
-                RecordsFiltered = filteredRecords,
-                Data = result
+                RecordsFiltered = totalRecords,// Khi tìm kiếm, recordsFiltered thường bằng totalRecords
+                Data = genresDTO
             };
         }
 
@@ -114,7 +114,7 @@ namespace BookSale.Management.Application.Services
         //Lấy toàn bộ sách trong genre ví dụ ( Comic - Tổng sách = 5)
         public IEnumerable<GenreSiteDTO> GetSumBookOfGenre()
         {
-            var result = _unitOfWork.GenreRepository.Table.Select(x => new GenreSiteDTO
+            var result = _unitOfWork.GenreRepository.Table.Where(x => x.IsActive == true).Select(x => new GenreSiteDTO
             {
                 Id = x.Id,
                 Name = x.Name,

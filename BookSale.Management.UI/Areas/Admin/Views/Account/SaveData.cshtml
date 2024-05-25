@@ -104,19 +104,30 @@
         </label>
     </div>
 
-    <div class="row">
-        @{
-            if (!string.IsNullOrEmpty(Model.Id))
-            {
-                <img src="~/images/users/@(Model.Id).png" alt="No image" height="150" id="img-avatar"/>
-            }
-            else
-            {
-                <img src="~/images/image.png" alt="No image" height="150" id="img-avatar"/>
-            }
-        }
-        <div class="col-lg-8">
-            <input type="file" class="form-control-file" asp-for="Avatar">
+    <div id="imageInput" class="row">
+        <div class="col-4">
+            <div class="card">
+                <div class="card-body">
+                    <div class="row">
+                        <div class="col-4">
+                            @{
+                                if (!string.IsNullOrEmpty(Model.Id))
+                                {
+                                    <img src="~/images/users/@(Model.Id).png" alt="Image" class="img-fluid" id="img-avatar" />
+                                }
+                                else
+                                {
+                                    <img src="~/images/image.png" alt="No image" class="img-fluid" id="img-avatar" />
+                                }
+                            }
+                        </div>
+
+                        <div class="col-8">
+                            <input type="file" class="form-control-file" asp-for="Avatar">
+                        </div>
+                    </div>
+                </div>
+            </div>
         </div>
     </div>
 
