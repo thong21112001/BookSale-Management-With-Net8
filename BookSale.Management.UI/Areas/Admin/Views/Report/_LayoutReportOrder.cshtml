@@ -1,0 +1,118 @@
+﻿@using System.Globalization
+@model BookSale.Management.Application.DTOs.Report.ReportOrderDTO
+
+<style>
+    body {
+        font-family: Arial, sans-serif;
+    }
+
+    .container {
+        max-width: 800px;
+        margin: 0 auto;
+        padding-top: 20px;
+    }
+
+    .header {
+        text-align: center;
+        margin-bottom: 20px;
+    }
+
+    .order-details {
+        border-collapse: collapse;
+        width: 100%;
+        margin-top: 20px;
+    }
+
+        .order-details th, .order-details td {
+            border: 1px solid #ddd;
+            padding: 8px;
+            text-align: left;
+        }
+
+    .customer-info {
+        margin-top: 20px;
+    }
+
+    .section-title {
+        font-weight: bold;
+        color: red;
+        margin-top: 20px;
+    }
+
+    .order-total {
+        text-align: right;
+    }
+
+        .order-total th, .order-total td {
+            border: none;
+            padding: 8px;
+        }
+
+    .total-amount {
+        color: blue;
+        font-weight: bold;
+    }
+</style>
+
+
+<div class="container">
+    <div class="header">
+        <h1>Order Confirmation</h1>
+    </div>
+
+    <div class="order-info">
+        <div class="section-title">Order Information</div>
+        <p>Code: @Model.Code</p>
+        <p>Created On: @Model.CreateOn.ToString("dd/MM/yyyy hh:mm")</p>
+    </div>
+
+    <div class="customer-info">
+        <div class="section-title">Customer Information</div>
+        <p><strong>Name:</strong> @Model.Address.Name</p>
+        <p><strong>Phone:</strong> @Model.Address.Phone</p>
+        <p><strong>Email:</strong> @Model.Address.Email</p>
+        <p><strong>Address:</strong> @Model.Address.Address</p>
+    </div>
+
+    <table class="order-details">
+        <thead>
+            <tr>
+                <th>Product</th>
+                <th>Quantity</th>
+                <th>Unit Price</th>
+                <th>Total</th>
+            </tr>
+        </thead>
+        <tbody>
+            @{
+                var books = Model.Details;
+                double total = 0;
+
+                foreach (var item in books)
+                {
+                    <tr>
+                        <td>@item.ProductName</td>
+                        <td>@item.Quantity</td>
+                        <td>@item.Price.ToString("C", CultureInfo.GetCultureInfo("vi-VN"))</td>
+                        <td>@((item.Price * item.Quantity).ToString("C", CultureInfo.GetCultureInfo("vi-VN")))</td>
+                    </tr>
+
+                    total += (item.Price * item.Quantity);
+                }
+            }
+        </tbody>
+    </table>
+
+    <table class="order-total">
+        <tbody>
+            <tr>
+                <th>Discount</th>
+                <td>0%</td>
+            </tr>
+            <tr>
+                <th>Total</th>
+                <td class="total-amount">@total.ToString("C", CultureInfo.GetCultureInfo("vi-VN"))</td>
+            </tr>
+        </tbody>
+    </table>
+</div>

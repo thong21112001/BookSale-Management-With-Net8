@@ -8,6 +8,8 @@ using BookSale.Management.Domain.Entities;
 using BookSale.Management.Domain.Settings;
 using BookSale.Management.Infrastructure.Abstracts;
 using BookSale.Management.Infrastructure.Services;
+using DinkToPdf.Contracts;
+using DinkToPdf;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.EntityFrameworkCore;
@@ -82,9 +84,12 @@ namespace BookSale.Management.Infrastructure.Configuration
             services.AddTransient<IVnPayService, VnPayService>();
             services.AddTransient<IErrorMessageService, ErrorMessageService>();
             services.AddTransient<IEmailService, EmailService>();
+            services.AddTransient<IPDFService, PDFService>();
 
+            //Convert html sang pdf ở order admin
+            services.AddSingleton(typeof(IConverter), new SynchronizedConverter(new PdfTools()));
 
-            services.AddTransient<IUserService,UserService>();
+			services.AddTransient<IUserService,UserService>();
             services.AddTransient<IRoleService, RoleService>();
             services.AddTransient<IAuthenticationService, AuthenticationService>();
             services.AddTransient<IGenreService, GenreService>();

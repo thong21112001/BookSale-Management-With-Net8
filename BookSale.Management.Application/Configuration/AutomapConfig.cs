@@ -2,6 +2,7 @@
 using BookSale.Management.Application.DTOs;
 using BookSale.Management.Application.DTOs.Book;
 using BookSale.Management.Application.DTOs.Checkout;
+using BookSale.Management.Application.DTOs.Report;
 using BookSale.Management.Application.DTOs.ViewModels;
 using BookSale.Management.Domain.Entities;
 
@@ -49,7 +50,15 @@ namespace BookSale.Management.Application.Configuration
 
             CreateMap<Order, OrderRequestDTO>()
               .ReverseMap();
-        }
+
+			CreateMap<ApplicationUser, OrderAddressDTO>()
+				.ForMember(dest => dest.Name, source => source.MapFrom(src => src.Fullname))
+				.ForMember(dest => dest.Phone, source => source.MapFrom(src => src.PhoneNumber))
+			    .ReverseMap();
+
+			CreateMap<OrderDetail, OrderDetailDTO>()
+			  .ReverseMap();
+		}
 
     }
 }

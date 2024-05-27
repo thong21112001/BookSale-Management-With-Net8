@@ -24,5 +24,7 @@ namespace BookSale.Management.Domain.Entities
         [Required]
         [StringLength(50)]
         public string UserId { get; set; } = string.Empty;
+
+        public ICollection<OrderDetail> Details { get; set; }
     }
 }

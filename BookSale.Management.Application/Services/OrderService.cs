@@ -3,9 +3,11 @@ using BookSale.Management.Application.Abstracts;
 using BookSale.Management.Application.DTOs;
 using BookSale.Management.Application.DTOs.Checkout;
 using BookSale.Management.Application.DTOs.Order;
+using BookSale.Management.Application.DTOs.Report;
 using BookSale.Management.Domain.Abstracts;
 using BookSale.Management.Domain.Entities;
 using BookSale.Management.Domain.Enums;
+using Microsoft.EntityFrameworkCore;
 
 namespace BookSale.Management.Application.Services
 {
@@ -52,6 +54,46 @@ namespace BookSale.Management.Application.Services
 				// Log or handle the exception here
 				Console.WriteLine($"Error in GetAllOrderPaginationAsync: {ex.Message}");
 				throw; // Rethrow the exception
+			}
+		}
+
+		public async Task<ReportOrderDTO> GetReportByIdAsync(string id)
+		{
+			try
+			{
+                //Get 1 order tu id truyen vao
+                var order = await _unitOfWork.Table<Order>()
+                             .Where(x => x.Id == id)
+                             .Include(x => x.Details)
+                             .SingleAsync();
+
+                var user = await _unitOfWork.Table<ApplicationUser>()
+                                            .Where(u => u.Id == order.UserId)
+                                            .SingleAsync();
+
+                var details = order.Details.Join(_unitOfWork.Table<Book>(), x => x.ProductId,
+                                                                                        y => y.Id,
+                                                                                        (detail, book) => new OrderDetailDTO
+                                                                                        {
+                                                                                            Price = detail.UnitPrice,
+                                                                                            Quantity = detail.Quantity,
+                                                                                            ProductName = book.Title
+                                                                                        }).ToList();
+
+                var address = _mapper.Map<OrderAddressDTO>(user);
+
+                return new ReportOrderDTO
+                {
+                    Code = order.Code,
+                    CreateOn = order.CreatedOn,
+					Address = address,
+                    Details = details
+                };
+            }
+			catch (Exception ex)
+			{
+                File.AppendAllText("error_log.txt", $"Bug: {ex}\n");
+                throw;
 			}
 		}
 		#endregion

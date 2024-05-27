@@ -10,7 +10,7 @@
                             &nbsp
 							<a onClick=Delete('/admin/order/delete/${key}') class="btn btn-icon btn-danger btn-sm mr-2"><i class="far fa-trash-alt"></i></a>
                             &nbsp
-                            <a class="btn-dowload btn btn-icon btn-info btn-sm mr-2"><i class="far fa-arrow-alt-circle-down"></i></a>
+                            <a href="/admin/report/exportpdforder?id=${key}" class="btn-dowload btn btn-icon btn-info btn-sm mr-2"><i class="far fa-arrow-alt-circle-down"></i></a>
                     </span>
                 `
             }
