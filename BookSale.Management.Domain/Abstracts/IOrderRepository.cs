@@ -6,5 +6,6 @@ namespace BookSale.Management.Domain.Abstracts
     {
         Task Save(Order order);
         Task<(IEnumerable<T>, int)> GetAllOrderByPagination<T>(int pageIndex, int pageSize, string keyword);
-	}
+        Task<IEnumerable<T>> GetReportOrderByExcelAsync<T>(string fromday, string today, int genreId, int status);
+    }
 }

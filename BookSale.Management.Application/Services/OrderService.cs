@@ -8,6 +8,7 @@ using BookSale.Management.Domain.Abstracts;
 using BookSale.Management.Domain.Entities;
 using BookSale.Management.Domain.Enums;
 using Microsoft.EntityFrameworkCore;
+using System.Globalization;
 
 namespace BookSale.Management.Application.Services
 {
@@ -136,6 +137,17 @@ namespace BookSale.Management.Application.Services
 				await _unitOfWork.RollbackTransactionAsync();
 				return false;
 			}
+		}
+
+		public async Task<IEnumerable<ResponseOrderManagementDTO>> GetReportOrderAsync(ReportOrderManagementDTO request)
+		{
+            DateTime startD = DateTime.ParseExact(request.FromDay, "dd/MM/yyyy", new CultureInfo("vi-VN"));
+            DateTime endD = DateTime.ParseExact(request.ToDay, "dd/MM/yyyy", new CultureInfo("vi-VN"));
+
+			var result = await _unitOfWork.OrderRepository.GetReportOrderByExcelAsync<ResponseOrderManagementDTO>(startD.ToString("yyyy/MM/dd"), 
+																				endD.ToString("yyyy/MM/dd"), request.GenreId, (int)request.Status);
+
+			return result;
 		}
 		#endregion
 	}

@@ -34,5 +34,19 @@ namespace BookSale.Management.DataAccess.Repository
 
 			return (result, totalRecords);  //Trả về list T từ storeProcedure trong Db và tổng records.
 		}
-	}
+
+        public async Task<IEnumerable<T>> GetReportOrderByExcelAsync<T>(string fromday, string today, int genreId, int status)
+        {
+            DynamicParameters parameters = new DynamicParameters();
+
+            parameters.Add("fromday", fromday, System.Data.DbType.String, System.Data.ParameterDirection.Input);
+            parameters.Add("today", today, System.Data.DbType.String, System.Data.ParameterDirection.Input);
+            parameters.Add("genreId", genreId, System.Data.DbType.Int32, System.Data.ParameterDirection.Input);
+            parameters.Add("status", status, System.Data.DbType.Int32, System.Data.ParameterDirection.Input);
+
+            var result = await _sQLQueryHandler.ExecuteStoreProcedureReturnListAsync<T>("spGetReportOrderByExcelAsync", parameters);
+
+            return result;  //Trả về list T từ storeProcedure trong Db.
+        }
+    }
 }

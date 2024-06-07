@@ -1,5 +1,131 @@
-﻿@*
-    For more information on enabling MVC for empty projects, visit https://go.microsoft.com/fwlink/?LinkID=397860
-*@
+﻿@model IEnumerable<BookSale.Management.Application.DTOs.Report.ResponseOrderManagementDTO>
+@using BookSale.Management.Domain.Enums
+@using System.Globalization
+
 @{
+    ViewData["Title"] = "Index";
+    Layout = "~/Areas/Admin/Views/Shared/_Layout.cshtml";
+}
+
+@section Stylesheet{
+    <link rel=”stylesheet” href=”https://cdnjs.cloudflare.com/ajax/libs/bootstrap-datepicker/1.9.0/css/bootstrap-datepicker.min.css”>
+}
+
+
+<!--begin::Subheader-->
+@await Html.PartialAsync("~/Areas/Admin/Views/Shared/_Subheader.cshtml")
+
+<div class="container-fluid">
+    <div class="row">
+        <div class="col-md-4 col-lg-4">
+            <div class="card">
+                <div class="card-body">
+                    <h4 class="card-title">Filter</h4>
+                    <h6 class="card-subtitle"></h6>
+                    <div class="example">
+                        <div class="input-group-datepicker input-group" id="date-range">
+                            <input type="text" class="form-control" name="start" id="start" />
+
+                            <div class="input-group-append">
+                                <span class="input-group-text bg-info b-0 text-white">TO</span>
+                            </div>
+
+                            <input type="text" class="form-control" name="end" id="end" />
+                        </div>
+                    </div>
+                    <div class="example mt-2">
+                        <div class="form-group">
+                            <label class="control-label">Genre</label>
+                            <select id="option-genre" name="genre" class="form-control">
+                                <option value="">Please select</option>
+                                @{
+                                    var genres = ViewBag.Genres as IEnumerable<SelectListItem>;
+                                    foreach (var genre in genres)
+                                    {
+                                        <option value="@genre.Value">@genre.Text</option>
+                                    }
+                                }
+                            </select>
+                        </div>
+                    </div>
+                    <div class="example mt-2">
+                        <div class="form-group">
+                            <label class="control-label">Status</label>
+                            <select id="option-status" name="genre" class="form-control">
+                                <option value="">Please select</option>
+                                @{
+                                    var statusItems = (IEnumerable<StatusProcessing>)Enum.GetValues(typeof(StatusProcessing));
+                                    foreach (var status in statusItems)
+                                    {
+                                        <option value="@((int)status)">@Enum.GetName(status)</option>
+                                    }
+                                }
+                            </select>
+                        </div>
+                    </div>
+                    <div class="d-flex no-block align-items-center">
+                        <div class="ml-auto">
+                            <button id="btn-submit" class="btn waves-effect waves-light btn-info"><i class="ti-reload"></i> Submit</button>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div class="col-md-8 col-lg-8">
+            <div class="table-responsive">
+                <div class="d-flex justify-content align-items-center">
+                    <div class="ml-auto">
+                        <button class="btn waves-effect btn-danger"><i class="ti-save"></i> Export</button>
+                    </div>
+                </div>
+                <br>
+                <table class="table product-overview">
+                    <thead>
+                        <tr class="table-success">
+                            <th class="text-center">Order Code</th>
+                            <th class="text-center">Customer</th>
+                            <th class="text-center">Created On</th>
+                            <th class="text-center">Quantity</th>
+                            <th class="text-center">Total</th>
+                            <th class="text-center">Status</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        @{
+                            var data = Model;
+
+                            if (data.Any())
+                            {
+                                foreach (var item in data)
+                                {
+                                    <tr>
+                                        <td style="width: 150px;">@item.Code</td>
+                                        <td>@item.CustomerName</td>
+                                        <td style="width: 150px;text-align:center;">
+                                            @item.CreatedOn.ToString("dd/MM/yyyy")
+                                        </td>
+                                        <td style="text-align:center; width: 100px;">@item.TotalQuantity</td>
+                                        <td style="text-align:right; width: 200px;">@item.TotalPrice.ToString("C",CultureInfo.GetCultureInfo("vi-VN"))</td>
+                                        <td style="text-align:center; width: 150px;">@(Enum.GetName(item.Status))</td>
+                                    </tr>
+                                }
+                            }
+                            else
+                            {
+                                <tr>
+                                    <td colspan="6">NO DATA</td>
+                                </tr>
+                            }
+                        }
+                    </tbody>
+                </table>
+            </div>
+        </div>
+    </div>
+</div>
+
+@section Scripts {
+    <script src=”https://cdnjs.cloudflare.com/ajax/libs/bootstrap-datepicker/1.9.0/js/bootstrap-datepicker.min.js”></script>
+    <script src="~/admin/settingsjs/toast_allpage.js"></script>
+    <script src="~/admin/components/report/datetimepicker_setting.js"></script>
 }

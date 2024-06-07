@@ -9,6 +9,6 @@ namespace BookSale.Management.Application.Abstracts
         Task<bool> Save(OrderRequestDTO requestDTO);
 		Task<ResponseDataTable<object>> GetAllOrderPaginationAsync(RequestDataTable request);
 		Task<ReportOrderDTO> GetReportByIdAsync(string id);
-
-	}
+        Task<IEnumerable<ResponseOrderManagementDTO>> GetReportOrderAsync(ReportOrderManagementDTO request);
+    }
 }

@@ -5,6 +5,7 @@ using BookSale.Management.Application.DTOs.Genre;
 using BookSale.Management.Application.DTOs.ViewModels;
 using BookSale.Management.Domain.Abstracts;
 using BookSale.Management.Domain.Entities;
+using Microsoft.AspNetCore.Mvc.Rendering;
 
 namespace BookSale.Management.Application.Services
 {
@@ -21,6 +22,18 @@ namespace BookSale.Management.Application.Services
 
 
         #region Implement function into Admin
+        //Hàm lấy tất cả genre hiển thị lên dropdownlist
+        public async Task<IEnumerable<SelectListItem>> GetGenreForDropDownList()
+        {
+            var genres = await _unitOfWork.GenreRepository.GetAllGenre();
+
+            return genres.Select(x => new SelectListItem
+            {
+                Value = x.Id.ToString(),
+                Text = x.Name
+            });
+        }
+
         //Lấy genre theo id truyền vào
         public async Task<GenreViewModel> GetById(int id)
         {
