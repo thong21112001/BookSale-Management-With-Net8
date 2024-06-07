@@ -39,6 +39,9 @@ Hướng dẫn cài đặt các yêu cầu trước khi chạy dự án.
     lệnh cài đặt 2
     ```
 
-## Cách Sử Dụng
+### Cách Sử Dụng
 
 Đang cập nhập thêm
+
+## File chạy restore SQL
+* 🖥️  Google Drive tải file .bak để restore sql này về [SQL](https://drive.google.com/file/d/1r2ZVxVdcfP_X4lW_0sSXx-OnbJUgmJOl/view?usp=drive_link)
