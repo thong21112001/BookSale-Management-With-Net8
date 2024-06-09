@@ -85,6 +85,7 @@ namespace BookSale.Management.Infrastructure.Configuration
             services.AddTransient<IErrorMessageService, ErrorMessageService>();
             services.AddTransient<IEmailService, EmailService>();
             services.AddTransient<IPDFService, PDFService>();
+            services.AddTransient<IExcelHandlerService, ExcelHandlerService>();
 
             //Convert html sang pdf ở order admin
             services.AddSingleton(typeof(IConverter), new SynchronizedConverter(new PdfTools()));

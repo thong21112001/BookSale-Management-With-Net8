@@ -12,12 +12,15 @@ namespace BookSale.Management.UI.Areas.Admin.Controllers
         private readonly IPDFService _pDFService;
         private readonly IOrderService _orderService;
         private readonly IGenreService _genreService;
+        private readonly IExcelHandlerService _excelHandlerService;
 
-        public ReportController(IPDFService pDFService, IOrderService orderService, IGenreService genreService)
+        public ReportController(IPDFService pDFService, IOrderService orderService, IGenreService genreService, 
+                                IExcelHandlerService excelHandlerService)
         {
             _pDFService = pDFService;
             _orderService = orderService;
             _genreService = genreService;
+            _excelHandlerService = excelHandlerService;
         }
 
         [Breadscrum("Order", "Report")]
@@ -33,6 +36,8 @@ namespace BookSale.Management.UI.Areas.Admin.Controllers
                 responseOrderDTO = await _orderService.GetReportOrderAsync(requestOrder);
             }
 
+            ViewBag.FilterData = requestOrder;
+
             return View(responseOrderDTO);
 		}
 
@@ -47,5 +52,15 @@ namespace BookSale.Management.UI.Areas.Admin.Controllers
 
 			return File(result, "application/pdf", $"{DateTime.Now.Ticks}.pdf");
 		}
-	}
+
+        [HttpGet]
+        public async Task<IActionResult> ExportExcelOrder(ReportOrderManagementDTO requestOrder)
+        {
+            var responseOrderDTO = await _orderService.GetReportOrderAsync(requestOrder);
+
+            var stream = await _excelHandlerService.Export<ResponseOrderManagementDTO>(responseOrderDTO.ToList());
+
+            return File(stream, "application/vnd.openxmlformats-officedocument.spreadsheetml.sheet", $"OrdersReport{DateTime.Now.Ticks}.xlsx");
+        }
+    }
 }

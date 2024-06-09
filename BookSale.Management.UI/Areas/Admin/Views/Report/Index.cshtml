@@ -5,6 +5,8 @@
 @{
     ViewData["Title"] = "Index";
     Layout = "~/Areas/Admin/Views/Shared/_Layout.cshtml";
+
+    var filters = ViewBag.FilterData as BookSale.Management.Application.DTOs.Report.ReportOrderManagementDTO;
 }
 
 @section Stylesheet{
@@ -24,13 +26,13 @@
                     <h6 class="card-subtitle"></h6>
                     <div class="example">
                         <div class="input-group-datepicker input-group" id="date-range">
-                            <input type="text" class="form-control" name="start" id="start" />
+                            <input type="text" class="form-control" name="start" id="start" value="@filters.FromDay"/>
 
                             <div class="input-group-append">
                                 <span class="input-group-text bg-info b-0 text-white">TO</span>
                             </div>
 
-                            <input type="text" class="form-control" name="end" id="end" />
+                            <input type="text" class="form-control" name="end" id="end" value="@filters.ToDay" />
                         </div>
                     </div>
                     <div class="example mt-2">
@@ -42,7 +44,14 @@
                                     var genres = ViewBag.Genres as IEnumerable<SelectListItem>;
                                     foreach (var genre in genres)
                                     {
-                                        <option value="@genre.Value">@genre.Text</option>
+                                        if (filters.GenreId == Convert.ToInt32(genre.Value))
+                                        {
+                                            <option value="@genre.Value" selected>@genre.Text</option>
+                                        }
+                                        else
+                                        {
+                                            <option value="@genre.Value">@genre.Text</option>
+                                        }
                                     }
                                 }
                             </select>
@@ -57,7 +66,14 @@
                                     var statusItems = (IEnumerable<StatusProcessing>)Enum.GetValues(typeof(StatusProcessing));
                                     foreach (var status in statusItems)
                                     {
-                                        <option value="@((int)status)">@Enum.GetName(status)</option>
+                                        if (filters.Status == status)
+                                        {
+                                            <option value="@((int)status)" selected>@Enum.GetName(status)</option>
+                                        }
+                                        else
+                                        {
+                                            <option value="@((int)status)">@Enum.GetName(status)</option>
+                                        }
                                     }
                                 }
                             </select>
@@ -75,7 +91,7 @@
             <div class="table-responsive">
                 <div class="d-flex justify-content align-items-center">
                     <div class="ml-auto">
-                        <button class="btn waves-effect btn-danger"><i class="ti-save"></i> Export</button>
+                        <button id="btn-export" class="btn waves-effect btn-danger"><i class="ti-save"></i> Export</button>
                     </div>
                 </div>
                 <br>

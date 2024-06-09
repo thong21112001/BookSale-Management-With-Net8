@@ -41,19 +41,29 @@
 
     function registerEvent() {
         $(document).on('click', '#btn-submit', function () {
-
-            const fromD = $('#start').val();
-            const toD = $('#end').val();
-            const genre = $('#option-genre').val();
-            const status = $('#option-status').val();
-
-            if (!fromD || !toD) {
-                showToastAllPage("error", "Hãy chọn thời gian trước khi lọc !!!");
-                return;
-            }
-
+            const { fromD, toD, genre, status } = getFilterData();
             location.href = `/admin/report?fromday=${fromD}&today=${toD}&genreid=${genre}&status=${status}`;
         });
+
+        $(document).on('click', '#btn-export', function () {
+            const { fromD, toD, genre, status } = getFilterData();
+            location.href = `/admin/report/exportexcelorder?fromday=${fromD}&today=${toD}&genreid=${genre}&status=${status}`;
+        });
+    }
+
+    function getFilterData() {
+        const fromD = $('#start').val();
+        const toD = $('#end').val();
+
+        if (!fromD || !toD) {
+            showToastAllPage("error", "Hãy chọn thời gian trước khi lọc !!!");
+            return;
+        }
+
+        const genre = $('#option-genre').val();
+        const status = $('#option-status').val();
+
+        return {fromD, toD, genre, status};
     }
 
     intital();
