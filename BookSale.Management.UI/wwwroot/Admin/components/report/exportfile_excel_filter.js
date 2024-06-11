@@ -4,7 +4,7 @@
         registerEvent();
     }
 
-
+    //Setting phần datetime lên input
     function registerDateTime() {
         var dateRange = $('#date-range');
         var dateStart = dateRange.find('input[name="start"]').datepicker({
@@ -38,19 +38,22 @@
         });
     }
 
-
+    
     function registerEvent() {
+        //Nút lọc dữ liệu
         $(document).on('click', '#btn-submit', function () {
             const { fromD, toD, genre, status } = getFilterData();
             location.href = `/admin/report?fromday=${fromD}&today=${toD}&genreid=${genre}&status=${status}`;
         });
 
+        //Nút xuất dữ liệu ra excel
         $(document).on('click', '#btn-export', function () {
             const { fromD, toD, genre, status } = getFilterData();
             location.href = `/admin/report/exportexcelorder?fromday=${fromD}&today=${toD}&genreid=${genre}&status=${status}`;
         });
     }
 
+    //Hàm kiểm tra lọc, lấy dữ liệu đầu vào
     function getFilterData() {
         const fromD = $('#start').val();
         const toD = $('#end').val();
