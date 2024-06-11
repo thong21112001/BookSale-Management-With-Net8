@@ -1,5 +1,5 @@
 ﻿using BookSale.Management.Application.Abstracts;
-using BookSale.Management.Application.DTOs;
+using BookSale.Management.Application.DTOs.User;
 using BookSale.Management.Application.DTOs.ViewModels;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.Filters;

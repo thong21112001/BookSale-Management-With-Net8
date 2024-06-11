@@ -1,5 +1,6 @@
 ﻿using BookSale.Management.Application.DTOs;
 using BookSale.Management.Application.DTOs.AuthenticationUser;
+using BookSale.Management.Application.DTOs.User;
 using BookSale.Management.Application.DTOs.ViewModels;
 
 namespace BookSale.Management.Application.Abstracts

@@ -1,6 +1,6 @@
 ﻿using Microsoft.AspNetCore.Mvc.ModelBinding.Validation;
 
-namespace BookSale.Management.Application.DTOs
+namespace BookSale.Management.Application.DTOs.User
 {
     public class UserProfileDTO
     {

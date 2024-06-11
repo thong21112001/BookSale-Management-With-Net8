@@ -1,4 +1,4 @@
-﻿namespace BookSale.Management.Application.DTOs
+﻿namespace BookSale.Management.Application.DTOs.User
 {
     public class UserModel
     {

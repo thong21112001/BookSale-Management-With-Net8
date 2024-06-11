@@ -1,4 +1,4 @@
-﻿namespace BookSale.Management.Application.DTOs
+﻿namespace BookSale.Management.Application.DTOs.Book
 {
 	//Phải đặt đúng thứ tự như trong store procedure Select
 	public class BookDTO

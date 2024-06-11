@@ -1,11 +1,12 @@
 ﻿using BookSale.Management.Application.Abstracts;
 using BookSale.Management.Application.DTOs;
+using BookSale.Management.Application.DTOs.User;
 using BookSale.Management.UI.Ultility;
 using Microsoft.AspNetCore.Mvc;
 
 namespace BookSale.Management.UI.Areas.Admin.Controllers
 {
-	public class AccountController : BaseController
+    public class AccountController : BaseController
 	{
         private readonly IUserService _userService;
         private readonly IRoleService _roleService;

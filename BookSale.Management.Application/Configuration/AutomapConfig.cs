@@ -1,8 +1,9 @@
 ﻿using AutoMapper;
-using BookSale.Management.Application.DTOs;
 using BookSale.Management.Application.DTOs.Book;
 using BookSale.Management.Application.DTOs.Checkout;
+using BookSale.Management.Application.DTOs.Genre;
 using BookSale.Management.Application.DTOs.Report;
+using BookSale.Management.Application.DTOs.User;
 using BookSale.Management.Application.DTOs.ViewModels;
 using BookSale.Management.Domain.Entities;
 

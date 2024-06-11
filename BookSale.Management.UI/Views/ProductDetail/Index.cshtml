@@ -1,4 +1,4 @@
-﻿@using BookSale.Management.Application.DTOs;
+﻿@using BookSale.Management.Application.DTOs.Genre;
 @model BookSale.Management.Application.DTOs.ViewModels.BookDetailViewModel
 
 @{
@@ -112,7 +112,7 @@
 
                         @{
                             string urlBook;
-                            var getBooksByGenre = ViewBag.GetBooksByGenre as IEnumerable<BookSale.Management.Application.DTOs.BookDTO>;
+                            var getBooksByGenre = ViewBag.GetBooksByGenre as IEnumerable<BookSale.Management.Application.DTOs.Book.BookDTO>;
                             if (getBooksByGenre != null)
                             {
                                 foreach (var item in getBooksByGenre)
@@ -159,7 +159,7 @@
                     var genreList = ViewData["GenreListProductDetail"] as IEnumerable<GenreDTO>;
                     if (genreList != null)
                     {
-                        var getBookSug = ViewBag.GetSuggesBook as IEnumerable<BookSale.Management.Application.DTOs.BookDTO>;
+                        var getBookSug = ViewBag.GetSuggesBook as IEnumerable<BookSale.Management.Application.DTOs.Book.BookDTO>;
 
                         if (getBookSug != null)
                         {

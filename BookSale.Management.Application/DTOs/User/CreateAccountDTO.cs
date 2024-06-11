@@ -1,7 +1,7 @@
 ﻿using Microsoft.AspNetCore.Http;
 using System.ComponentModel.DataAnnotations;
 
-namespace BookSale.Management.Application.DTOs
+namespace BookSale.Management.Application.DTOs.User
 {
     public class CreateAccountDTO
     {

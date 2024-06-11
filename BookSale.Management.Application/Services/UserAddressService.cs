@@ -1,6 +1,7 @@
 ﻿using AutoMapper;
 using BookSale.Management.Application.Abstracts;
 using BookSale.Management.Application.DTOs;
+using BookSale.Management.Application.DTOs.User;
 using BookSale.Management.Domain.Abstracts;
 using BookSale.Management.Domain.Entities;
 using Microsoft.AspNetCore.Identity;

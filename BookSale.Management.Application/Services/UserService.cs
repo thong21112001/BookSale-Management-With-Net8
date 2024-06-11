@@ -2,6 +2,7 @@
 using BookSale.Management.Application.Abstracts;
 using BookSale.Management.Application.DTOs;
 using BookSale.Management.Application.DTOs.AuthenticationUser;
+using BookSale.Management.Application.DTOs.User;
 using BookSale.Management.Application.DTOs.ViewModels;
 using BookSale.Management.Domain.Entities;
 using Microsoft.AspNetCore.Http;
