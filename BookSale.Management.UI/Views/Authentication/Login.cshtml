@@ -42,6 +42,16 @@
 
                 <a asp-controller="Authentication" asp-action="Register" class="btn set-btn-format px-4 text-uppercase text-white">Register</a>
             </div>
+
+            <hr />
+
+            <div class="text-center align-items-center justify-content-center pt-4">
+                <a href="/authentication/external?provider=Google" class="login-with-google-btn">
+                    Sign in with Google
+                </a>
+
+                <a asp-controller="Authentication" asp-action="Register" class="btn set-btn-format px-4 text-uppercase text-white">Facebook</a>
+            </div>
         </form>
     </div>
 </div>

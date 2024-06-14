@@ -1,0 +1,35 @@
+﻿@model BookSale.Management.Application.DTOs.ViewModels.ExternalLoginModel
+
+<h1>@ViewData["Title"]</h1>
+
+<!-- Single Page Header start -->
+<div class="container-fluid page-header py-5">
+    <h1 class="text-center display-6 text-uppercase" id="external-login-title">Associate your @Model.Provider account</h1>
+    <hr />
+    <p id="external-login-description" class="text-info">
+        You've successfully authenticated with <strong>@Model.Provider</strong>.
+        Please enter an email address for this site below and click the Register button to finish
+        logging in.
+    </p>
+</div>
+<!-- Single Page Header End -->
+
+
+<!--begin::Login Sign in form-->
+<div class="container-fluid py-5">
+    <p class="text-danger text-center">@Html.Raw(TempData["Errors"])</p>
+
+    <div class="container py-5 d-flex justify-content-center">
+
+        <form class="form" method="post" asp-controller="Authentication" asp-action="ConfirmationExternal" asp-antiforgery="true">
+            <div class="form-item w-100 my-3">
+                <input type="text" class="form-control text-dark bg-white-o-5 fw-bold" placeholder="Email" asp-for="Email">
+            </div>
+
+            <div class="text-center align-items-center justify-content-center pt-4">
+                <button type="submit" class="btn set-btn-format px-4 text-uppercase text-white">Register</button>
+            </div>
+        </form>
+    </div>
+</div>
+<!--end::Login Sign in form-->

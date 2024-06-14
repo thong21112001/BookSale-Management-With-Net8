@@ -106,9 +106,15 @@ namespace BookSale.Management.Infrastructure.Configuration
         }
         
         //Xác thực người dùng với Authorize ở trên mỗi controller, làm ngắn gọn code, không lặp
-        public static void AddAuthorizationGlobal(this IServiceCollection services)
+        public static void AddAuthorizationGlobal(this IServiceCollection services, IConfiguration configuration)
         {
             var authorizedAdmin = new AuthorizationPolicyBuilder().RequireAuthenticatedUser().Build();
+
+            services.AddAuthentication().AddGoogle(googleOptions =>
+            {
+                googleOptions.ClientId = configuration["Authentication:Google:ClientId"];
+                googleOptions.ClientSecret = configuration["Authentication:Google:ClientSecret"];
+            });
 
             services.AddAuthorization(options =>
             {

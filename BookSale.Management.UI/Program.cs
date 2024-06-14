@@ -1,4 +1,4 @@
-﻿using BookSale.Management.DataAccess;
+using BookSale.Management.DataAccess;
 using BookSale.Management.Infrastructure.Configuration;
 using BookSale.Management.UI.Helpers;
 
@@ -15,7 +15,7 @@ builder.Services.AddDatabaseDeveloperPageExceptionFilter();
 
 builder.Services.AddControllersWithViews();
 
-builder.Services.AddAuthorizationGlobal();
+builder.Services.AddAuthorizationGlobal(builder.Configuration);
 
 //Đăng ký session
 builder.Services.AddSession(options =>
