@@ -1,47 +1,51 @@
-# BOOK SALE
+# Mục lục
+- [Giới thiệu về BOOK-STORE-MANAGEMENT](#BOOKSTOREMANAGEMENT)
+- [Tổng quan về dự án](#Tổng-quan-về-dự-án)
+- [Cấu trúc của dự án](#Cấu-trúc-các-thành-phần-trong-solution)
+- [Lưu ý khi tải và chạy dự án](#Một-vài-lưu-ý-khi-đọc-code)
+- [File restore SQL](#Link-SQL)
+- [Liên hệ](#Liên-hệ)
 
-Dự án bắt đầu vào 18/02/2024, các công nghệ gồm có .Net 8, Jquery và nhiều hơn nữa
+# BOOKSTOREMANAGEMENT
+Chào mừng đến với project book-store-management, dự án được tạo với mục đích giúp nâng cao kĩ năng và tìm hiểu một vài thư viện!
 
-## Bắt Đầu
+Book-store-management, với các tính năng:
+- Thanh toán qua paypal, momo, vnpay.
+- Thống kê, lọc, xuất báo cáo dưới dạng excel hoặc pdf.
+- Sử dụng mô hình Clean Architechture để thiết kế dự án.
+- Tích hợp đăng nhập với google, facebook.
+- Và còn rất nhiều tính năng khác đang được phát triển và thêm vào dự án từng ngày.
 
-Dự án đang được thực hiện theo các bước đã từng học hỏi và tìm hiểu, chưa đẩy lên nhánh chính.
+# Tổng quan về dự án
+- Dự án được phát triển trên .NET 8, có thể chạy trên tất cả các nền tảng mà .NET 8 hỗ trợ.
+- Sử dụng tối thiểu các thư viện bên ngoài, kể cả các thư viện hỗ trợ HTTP từ .NET SDK.
+- Sử dụng SQL Server 2022 để kết nối database, lưu trữ dữ liệu cho dự án.
 
-### Yêu Cầu Tiền Điều Kiện
+# Cấu trúc các thành phần trong solution
+Tìm hiểu về thứ tự cũng như folder dự án bao gồm những gì:
+- Thứ tự của các tầng: Presentation -> Infrastructure -> Application -> Domain.
+- Các folder dự án bao gồm: Presentation/testing(UI), Application(Application), Infrastructure(DataAcess and Infrastructure, Domain(Core)). 
 
-Dưới đây là danh sách các yêu cầu cần thiết để cài đặt phần mềm và làm việc với dự án:
+Các dự án trong solution được chia thành các nhóm sau:
+- Presentation(UI) liên kết với Infrastructure(Có 2 project là DataAccess và Infrastructure).
+- Infrastructure(project Infrastructure) liên kết với Application và Infrastructure(project DataAccess).
+- Infrastructure(project DataAccess) liên kết đến Domain(Core).
+- Application liên kết đến Domain(Core).
 
-- Yêu cầu 1: Có cài visual studio 2022, sql server 2019 (Có thể dùng bản cao hơn).
-- Yêu cầu 2: Có hiểu biết về Clean Architechture để chỉnh sửa code.
+Giải thích:
+- Presentation : Tầng UI dùng để giao tiếp với người dùng có chứa các Controller và View, các setting, các layout...
+- Infrastructure(project Infrastructure) : Sử dụng để cấu hình, đăng ký dịch vụ, sử dụng các thư viện bên ngoài.
+- Infrastructure(project DataAccess) : Sử dụng để cấu hình database, triển khai các repository, các migrations, Dapper.
+- Domain(Core) : Sử dụng để tạo các entities(các bảng cho database), các enum cần dùng, Setting mặc định(admin, smtp, page), các Abstracts của Repository.
+- Application : Chứa các Service và Abstracts của Service, các DTO, cấu hình automap
 
-### Thư viện, phương thức thanh toán sử dụng
+# Một vài lưu ý khi đọc code:
+- Cần có kiến thức về Clean Architechture, .Net, C#, SQL.
+- Cần tìm hiểu các thư viện sử dụng trong dự án.
 
-Dưới đây là thông tin:
-- Phương thức thanh toán: Paypal, Momo, VNPay.
-- Thư viện: Entity Framework Core, ASP.NET Core MVC, ASP.NET Core Identity, Newtonsoft.Json, AutoMapper...
-- Công Nghệ: 
+# Link SQL
+* 🖥️  Google Drive tải file .bak để restore sql này về : [SQL](https://drive.google.com/file/d/1r2ZVxVdcfP_X4lW_0sSXx-OnbJUgmJOl/view?usp=drive_link)
 
-Dưới đây là danh sách các yêu cầu cần thiết để cài đặt phần mềm và làm việc với dự án:
-
-- Yêu cầu 1: Có cài visual studio 2022, sql server 2019 (Có thể dùng bản cao hơn).
-- Yêu cầu 2: Có hiểu biết về Clean Architechture để chỉnh sửa code.
-
-### Cài Đặt
-
-Hướng dẫn cài đặt các yêu cầu trước khi chạy dự án.
-
-1. **Bước 1:** Cài Đặt Dependencies
-    ```bash
-    lệnh cài đặt 1
-    ```
-
-2. **Bước 2:** Khởi Chạy Dự Án
-    ```bash
-    lệnh cài đặt 2
-    ```
-
-### Cách Sử Dụng
-
-Đang cập nhập thêm
-
-## File chạy restore SQL
-* 🖥️  Google Drive tải file .bak để restore sql này về [SQL](https://drive.google.com/file/d/1r2ZVxVdcfP_X4lW_0sSXx-OnbJUgmJOl/view?usp=drive_link)
+# Liên hệ
+* 🖥️  Facebook : [Trần Quang Thông](https://www.facebook.com/quangthong211101)
+* ✉️  Email : [quangthong211101@gmail.com](mailto:quangthong211101@gmail.com)
