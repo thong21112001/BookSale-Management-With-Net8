@@ -5,6 +5,7 @@
 - [Lưu ý khi tải và chạy dự án](#Một-vài-lưu-ý-khi-đọc-code)
 - [File restore SQL](#Link-SQL)
 - [Liên hệ](#Liên-hệ)
+- [Công nghệ sử dụng](#Công-nghệ)
 
 # BOOKSTOREMANAGEMENT
 Chào mừng đến với project book-store-management, dự án được tạo với mục đích giúp nâng cao kĩ năng và tìm hiểu một vài thư viện!
@@ -49,3 +50,15 @@ Giải thích:
 # Liên hệ
 * 🖥️  Facebook : [Trần Quang Thông](https://www.facebook.com/quangthong211101)
 * ✉️  Email : [quangthong211101@gmail.com](mailto:quangthong211101@gmail.com)
+
+# Công nghệ
+<p align="left">
+  <img src="https://cdn.jsdelivr.net/gh/devicons/devicon/icons/html5/html5-original.svg" alt="HTML" width="40" height="40"/>
+  <img src="https://cdn.jsdelivr.net/gh/devicons/devicon/icons/css3/css3-original.svg" alt="CSS" width="40" height="40"/>
+  <img src="https://cdn.jsdelivr.net/gh/devicons/devicon/icons/bootstrap/bootstrap-original.svg" alt="Bootstrap" width="40" height="40"/>
+  <img src="https://cdn.jsdelivr.net/gh/devicons/devicon/icons/javascript/javascript-original.svg" alt="JavaScript" width="40" height="40"/>
+  <img src="https://cdn.jsdelivr.net/gh/devicons/devicon/icons/jquery/jquery-original.svg" alt="jQuery" width="40" height="40"/>
+  <img src="https://cdn.jsdelivr.net/gh/devicons/devicon/icons/csharp/csharp-original.svg" alt="C#" width="40" height="40"/>
+  <img src="https://cdn.jsdelivr.net/gh/devicons/devicon/icons/dotnetcore/dotnetcore-original.svg" alt=".NET" width="40" height="40"/>
+  <img src="https://cdn.jsdelivr.net/gh/devicons/devicon/icons/microsoftsqlserver/microsoftsqlserver-plain.svg" alt="SQL Server" width="40" height="40"/>
+</p>
