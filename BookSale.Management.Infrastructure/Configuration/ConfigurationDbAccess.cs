@@ -110,11 +110,17 @@ namespace BookSale.Management.Infrastructure.Configuration
         {
             var authorizedAdmin = new AuthorizationPolicyBuilder().RequireAuthenticatedUser().Build();
 
-            services.AddAuthentication().AddGoogle(googleOptions =>
-            {
-                googleOptions.ClientId = configuration["Authentication:Google:ClientId"];
-                googleOptions.ClientSecret = configuration["Authentication:Google:ClientSecret"];
-            });
+            services.AddAuthentication()
+                .AddGoogle(googleOptions =>
+                    {
+                        googleOptions.ClientId = configuration["Authentication:Google:ClientId"];
+                        googleOptions.ClientSecret = configuration["Authentication:Google:ClientSecret"];
+                    })
+                .AddFacebook(facebookOptions =>
+                    {
+                        facebookOptions.AppId = configuration["Authentication:Facebook:AppId"];
+                        facebookOptions.AppSecret = configuration["Authentication:Facebook:AppSecret"];
+                    });
 
             services.AddAuthorization(options =>
             {

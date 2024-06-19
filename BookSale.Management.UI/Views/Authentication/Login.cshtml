@@ -45,12 +45,14 @@
 
             <hr />
 
-            <div class="text-center align-items-center justify-content-center pt-4">
+            <div class="text-center align-items-center justify-content-center">
                 <a href="/authentication/external?provider=Google" class="login-with-google-btn">
                     Sign in with Google
                 </a>
 
-                <a asp-controller="Authentication" asp-action="Register" class="btn set-btn-format px-4 text-uppercase text-white">Facebook</a>
+                <a href="/authentication/external?provider=Facebook" class="login-with-facebook-btn">
+                    Sign in with Facebook
+                </a>
             </div>
         </form>
     </div>
