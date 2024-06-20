@@ -64,12 +64,12 @@
 
 
 @section Scripts{
-    @* Thêm đoạn script vào *@
+    @* Thêm đoạn captcha vào *@
     <script src="https://www.google.com/recaptcha/api.js?onload=onloadCallback&render=explicit" async defer></script>
 	@{
 		<partial name="_ValidationScriptsPartial" />
 	}
-    @* Thêm đoạn script vào *@
+    @* Thêm đoạn captcha vào *@
     <script>
         var onloadCallback = function () {
             grecaptcha.render('recaptcha', {

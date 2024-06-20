@@ -42,7 +42,7 @@ builder.Services.AddSingleton(x =>
     )
 );
 
-//Thêm vào Đăng ký reCaptcha
+//Thêm vào Đăng ký reCaptcha của google
 builder.Services.AddreCAPTCHAV2(x =>
 {
     x.SiteKey = "YourSiteKey";

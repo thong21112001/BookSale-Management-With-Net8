@@ -17,6 +17,7 @@ namespace BookSale.Management.UI.Models
 
 		public bool HasRememberMe { get; set; }
 
+		//Thêm vào lấy token captcha
         public string CaptchaToken { get; set; } = string.Empty;
     }
 }
