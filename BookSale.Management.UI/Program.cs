@@ -42,12 +42,11 @@ builder.Services.AddSingleton(x =>
     )
 );
 
-//Đăng ký reCaptcha
-
+//Thêm vào Đăng ký reCaptcha
 builder.Services.AddreCAPTCHAV2(x =>
 {
-    x.SiteKey = "6LeiPv0pAAAAACCkHz4R5YXrZCCGKwzBE6DvBSyx";
-    x.SiteSecret = "6LeiPv0pAAAAAM9WgVe5jYhYTv9Gnuyq8B6-iPns";
+    x.SiteKey = "YourSiteKey";
+    x.SiteSecret = "YourSiteSecret";
 });
 
 var app = builder.Build();

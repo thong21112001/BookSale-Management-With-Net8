@@ -19,7 +19,7 @@ namespace BookSale.Management.UI.Controllers
         private readonly IErrorMessageService _errorMessageService;
         private readonly SignInManager<ApplicationUser> _signInManager;
         private readonly IUserStore<ApplicationUser> _userStore;
-        private readonly IreCAPTCHASiteVerifyV2 _siteVerify;
+        private readonly IreCAPTCHASiteVerifyV2 _siteVerify; //Thêm vào
 
         public AuthenticationController(IAuthenticationService authenticationService, IUserService userService,
                                         UserManager<ApplicationUser> userManager, IErrorMessageService errorMessageService,
@@ -48,6 +48,7 @@ namespace BookSale.Management.UI.Controllers
         [ValidateAntiForgeryToken] //Thêm cái này ngoài form Login asp-antiforgery="true"
         public async Task<IActionResult> Login(UserLoginModel userLoginModel)
         {
+            //Thêm vào
             //Get token captcha từ google
             var response = await _siteVerify.Verify(new reCAPTCHASiteVerifyRequest
             {
@@ -60,6 +61,7 @@ namespace BookSale.Management.UI.Controllers
                 TempData["Errors"] = "Captcha lỗi !!!";
                 return View(userLoginModel);
             }
+            //End Thêm vào
 
             //Coi thử có thoả điều kiện trong LoginModel không, nếu không trả về false
             if (!ModelState.IsValid)
