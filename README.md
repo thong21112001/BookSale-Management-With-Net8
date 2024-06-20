@@ -15,6 +15,7 @@ Book-store-management, với các tính năng:
 - Thống kê, lọc, xuất báo cáo dưới dạng excel hoặc pdf.
 - Sử dụng mô hình Clean Architechture để thiết kế dự án.
 - Tích hợp đăng nhập với google, facebook.
+- Tích hợp reCaptcha V2 của google
 - Và còn rất nhiều tính năng khác đang được phát triển và thêm vào dự án từng ngày.
 
 # Tổng quan về dự án
