@@ -1,6 +1,7 @@
 using BookSale.Management.DataAccess;
 using BookSale.Management.Infrastructure.Configuration;
 using BookSale.Management.UI.Helpers;
+using Owl.reCAPTCHA;
 
 var builder = WebApplication.CreateBuilder(args);
 var builderRazor = builder.Services.AddRazorPages();
@@ -40,6 +41,14 @@ builder.Services.AddSingleton(x =>
         builder.Configuration["PaypalCheckout:Mode"]
     )
 );
+
+//Đăng ký reCaptcha
+
+builder.Services.AddreCAPTCHAV2(x =>
+{
+    x.SiteKey = "6LeiPv0pAAAAACCkHz4R5YXrZCCGKwzBE6DvBSyx";
+    x.SiteSecret = "6LeiPv0pAAAAAM9WgVe5jYhYTv9Gnuyq8B6-iPns";
+});
 
 var app = builder.Build();
 

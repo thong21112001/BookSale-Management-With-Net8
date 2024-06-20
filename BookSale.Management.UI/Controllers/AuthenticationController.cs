@@ -5,6 +5,8 @@ using BookSale.Management.Domain.Entities;
 using BookSale.Management.UI.Models;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Mvc;
+using Owl.reCAPTCHA;
+using Owl.reCAPTCHA.v2;
 using System.Security.Claims;
 
 namespace BookSale.Management.UI.Controllers
@@ -17,10 +19,12 @@ namespace BookSale.Management.UI.Controllers
         private readonly IErrorMessageService _errorMessageService;
         private readonly SignInManager<ApplicationUser> _signInManager;
         private readonly IUserStore<ApplicationUser> _userStore;
+        private readonly IreCAPTCHASiteVerifyV2 _siteVerify;
 
         public AuthenticationController(IAuthenticationService authenticationService, IUserService userService,
                                         UserManager<ApplicationUser> userManager, IErrorMessageService errorMessageService,
-                                        SignInManager<ApplicationUser> signInManager, IUserStore<ApplicationUser> userStore)
+                                        SignInManager<ApplicationUser> signInManager, IUserStore<ApplicationUser> userStore,
+                                        IreCAPTCHASiteVerifyV2 siteVerify)
         {
             _authenticationService = authenticationService;
             _userService = userService;
@@ -28,6 +32,7 @@ namespace BookSale.Management.UI.Controllers
             _errorMessageService = errorMessageService;
             _signInManager = signInManager;
             _userStore = userStore;
+            _siteVerify = siteVerify;
         }
 
         #region Login Function
@@ -43,6 +48,19 @@ namespace BookSale.Management.UI.Controllers
         [ValidateAntiForgeryToken] //Thêm cái này ngoài form Login asp-antiforgery="true"
         public async Task<IActionResult> Login(UserLoginModel userLoginModel)
         {
+            //Get token captcha từ google
+            var response = await _siteVerify.Verify(new reCAPTCHASiteVerifyRequest
+            {
+                Response = userLoginModel.CaptchaToken,
+                RemoteIp = HttpContext.Connection.RemoteIpAddress.ToString()
+            });
+
+            if (!response.Success)
+            {
+                TempData["Errors"] = "Captcha lỗi !!!";
+                return View(userLoginModel);
+            }
+
             //Coi thử có thoả điều kiện trong LoginModel không, nếu không trả về false
             if (!ModelState.IsValid)
             {
@@ -52,7 +70,7 @@ namespace BookSale.Management.UI.Controllers
 
                 TempData["Errors"] = string.Join("<br/>", errors);
 
-                return View();
+                return View(userLoginModel);
             }
 
             var result = await _authenticationService.CheckLogin(userLoginModel.Username, userLoginModel.Password, userLoginModel.HasRememberMe);

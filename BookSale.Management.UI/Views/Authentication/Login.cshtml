@@ -20,6 +20,7 @@
 
         <form class="form" method="post" asp-controller="Authentication" asp-action="Login" asp-antiforgery="true">
             <input type="hidden" value="@ViewBag.ReturnUrl" asp-for="ReturnUrl">
+            <input type="hidden" asp-for="CaptchaToken">
 
 
             <div class="form-item w-100 my-3">
@@ -36,6 +37,8 @@
                 <input type="checkbox" class="form-check-input set-bg-checkbox border-0" id="HasRememberMe" asp-for="HasRememberMe">
                 <label class="form-check-label" for="HasRememberMe">Remember me</label>
             </div>
+
+            <div id="recaptcha"></div>
 
             <div class="text-center align-items-center justify-content-center pt-4">
                 <button type="submit" class="btn set-btn-format px-4 text-uppercase text-white">Login</button>
@@ -61,8 +64,19 @@
 
 
 @section Scripts{
+    <script src="https://www.google.com/recaptcha/api.js?onload=onloadCallback&render=explicit" async defer></script>
 	@{
 		<partial name="_ValidationScriptsPartial" />
 	}
+    <script>
+        var onloadCallback = function () {
+            grecaptcha.render('recaptcha', {
+                'sitekey': '6LeiPv0pAAAAACCkHz4R5YXrZCCGKwzBE6DvBSyx',
+                'callback': function (response) {
+                    $('#CaptchaToken').val(response);
+                }
+            });
+        };
+    </script>
 }
 

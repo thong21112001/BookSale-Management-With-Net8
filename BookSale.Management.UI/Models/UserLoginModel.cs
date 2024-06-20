@@ -16,5 +16,7 @@ namespace BookSale.Management.UI.Models
         public string ReturnUrl { get; set; } = string.Empty;
 
 		public bool HasRememberMe { get; set; }
-	}
+
+        public string CaptchaToken { get; set; } = string.Empty;
+    }
 }
